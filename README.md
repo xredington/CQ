@@ -1,7 +1,13 @@
 # CQ
 
-A [Claude Code](https://claude.com/claude-code) skill for building modern
-websites with [21st.dev](https://21st.dev/) Magic components.
+A collection of [Claude Code](https://claude.com/claude-code) skills for
+building modern websites and professional UI/UX — combining
+[21st.dev](https://21st.dev/) Magic components with the
+[UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+design-intelligence skill set.
+
+All skills live under `.claude/skills/` and activate automatically when your
+request matches their triggers.
 
 ## `website-creation` skill
 
@@ -26,3 +32,32 @@ Add the server to `.mcp.json` and set a `TWENTYFIRST_API_KEY` (get one at
 <https://21st.dev/magic/console>). Full instructions in
 `.claude/skills/website-creation/references/magic-mcp.md`. Then type `/ui`
 followed by a component description in your AI chat.
+
+## UI/UX Pro Max skills
+
+Imported from
+[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+(MIT — © Next Level Builder; license preserved at
+`.claude/skills/.attribution/ui-ux-pro-max-LICENSE`). This adds a searchable
+design-intelligence database and several companion skills:
+
+- **`ui-ux-pro-max`** — the flagship: a local searchable database of 84 UI
+  styles, 192 color palettes, 74 font pairings, 98 UX guidelines, 25 chart
+  types, and more across 22 tech stacks, plus automatic design-system
+  generation. Query it directly:
+
+  ```bash
+  python .claude/skills/ui-ux-pro-max/scripts/search.py "saas landing page" --domain style
+  python .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system -p "Serenity Spa"
+  ```
+
+- **`design-system`** — token architecture (primitive→semantic→component),
+  component specs, and slide generation.
+- **`ui-styling`** — shadcn/ui + Tailwind component styling and theming.
+- **`brand`** — brand voice, visual identity, messaging, consistency checks.
+- **`design`** — logos, corporate identity, presentations, icons, social images.
+- **`banner-design`** — social/ad/web/print banners with art-direction options.
+- **`slides`** — strategic HTML presentations with Chart.js.
+
+These activate automatically for UI/UX, design-system, branding, and visual
+work. Upstream project: <https://uupm.cc>.
