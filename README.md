@@ -11,7 +11,7 @@ Self-contained, single-file HTML prototypes — no build step. Open in a browser
 
 | Version | Path | Look |
 |---|---|---|
-| **Dark 3D (primary)** | [`revamp-dark/index.html`](revamp-dark/index.html) | Dark theme, animated 3D landing (glowing cloud orb, floating glass solution tiles, mouse-parallax), neon-green accents. |
+| **Dark 3D (primary)** | [`revamp-dark/index.html`](revamp-dark/index.html) | Dark theme (with a **light/dark toggle**), animated 3D landing (glowing cloud orb, floating glass solution tiles, mouse-parallax), neon-green accents, and an ISV listing-plans section. |
 | Light modern | [`revamp/index.html`](revamp/index.html) | Light theme, refined Enterprise-SaaS marketplace look. |
 
 Both share the same functionality — SPA routing, an **AI Solution Finder**,
