@@ -28,10 +28,17 @@ landing page, hero section, pricing table, navbar, or any web front-end.
 
 ### Using 21st.dev Magic MCP
 
-Add the server to `.mcp.json` and set a `TWENTYFIRST_API_KEY` (get one at
-<https://21st.dev/magic/console>). Full instructions in
-`.claude/skills/website-creation/references/magic-mcp.md`. Then type `/ui`
-followed by a component description in your AI chat.
+The Magic MCP server is already wired up in [`.mcp.json`](.mcp.json) at the repo
+root. To activate it:
+
+1. Get an API key at <https://21st.dev/magic/console>.
+2. `cp .env.example .env` and set `TWENTYFIRST_API_KEY`, then
+   `export TWENTYFIRST_API_KEY="your-key"` in your shell (`.env` is gitignored).
+3. Start Claude Code in this repo and approve the `magic` MCP server when
+   prompted.
+4. Type `/ui` followed by a component description in your AI chat.
+
+Full details in `.claude/skills/website-creation/references/magic-mcp.md`.
 
 ## UI/UX Pro Max skills
 
