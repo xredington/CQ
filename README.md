@@ -1,10 +1,30 @@
-# CQ
+# CQ — CloudQuarks
 
-A collection of [Claude Code](https://claude.com/claude-code) skills for
-building modern websites and professional UI/UX — combining
-[21st.dev](https://21st.dev/) Magic components with the
-[UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-design-intelligence skill set.
+A design workspace for **CloudQuarks**, Redington's cloud & ISV marketplace for
+MEA and South Asia. It contains the marketplace prototype (two design
+directions) plus the [Claude Code](https://claude.com/claude-code) skills and
+[21st.dev](https://21st.dev/) tooling used to build and revamp it.
+
+## The prototype
+
+Self-contained, single-file HTML prototypes — no build step. Open in a browser.
+
+| Version | Path | Look |
+|---|---|---|
+| **Dark 3D (primary)** | [`revamp-dark/index.html`](revamp-dark/index.html) | Dark theme, animated 3D landing (glowing cloud orb, floating glass solution tiles, mouse-parallax), neon-green accents. |
+| Light modern | [`revamp/index.html`](revamp/index.html) | Light theme, refined Enterprise-SaaS marketplace look. |
+
+Both share the same functionality — SPA routing, an **AI Solution Finder**,
+full **English / Arabic (RTL)** bilingual support, a "Try a Solution"
+interactive demo engine (upload your own CSV/Excel), ISV **detail pages**, and a
+first-visit **guided tour**. Previews live alongside each file
+(`preview-*.png`).
+
+The design system is grounded in the `ui-ux-pro-max` skill's design database
+(a Marketplace + Enterprise-SaaS pattern) and the 21st.dev / `website-creation`
+conventions below.
+
+## Skills
 
 All skills live under `.claude/skills/` and activate automatically when your
 request matches their triggers.
