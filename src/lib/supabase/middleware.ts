@@ -8,6 +8,11 @@ type CookieToSet = { name: string; value: string; options: CookieOptions };
  * auth callback requires a signed-in user.
  */
 export async function updateSession(request: NextRequest) {
+  // DEMO MODE: no real sessions — every route renders as the demo member.
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === "1") {
+    return NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(

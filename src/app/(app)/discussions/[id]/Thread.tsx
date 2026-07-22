@@ -266,8 +266,8 @@ export function Thread({
           table: "replies",
           filter: `post_id=eq.${post.id}`,
         },
-        async (payload) => {
-          const incoming = payload.new as Reply;
+        async (payload: { new: Reply }) => {
+          const incoming = payload.new;
           if (repliesRef.current.some((r) => r.id === incoming.id)) return;
           if (incoming.author_id === viewer.id) return; // own replies are optimistic
           const { data: author } = await supabase
@@ -307,8 +307,8 @@ export function Thread({
           schema: "public",
           table: "replies",
         },
-        (payload) => {
-          const removed = payload.old as { id?: string };
+        (payload: { old: { id?: string } }) => {
+          const removed = payload.old;
           if (removed.id) {
             setReplies((prev) => prev.filter((r) => r.id !== removed.id));
           }

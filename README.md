@@ -49,6 +49,16 @@ Vercel. Small deps only: `zod`, `react-hook-form`, `date-fns` +
 
 `npm run build` · `npm run typecheck` · `npm run lint` all must stay green.
 
+### Demo mode (no Supabase needed)
+
+For design previews without a backend, set `NEXT_PUBLIC_DEMO_MODE=1` in
+`.env.local` and run `npm run dev` — the app renders every screen from
+in-memory fixtures (`src/lib/demo/`) mirroring the seed data, signed in as
+the admin. Dev-only: no real auth, RLS or realtime. Never set this flag in
+production. Test sign-in accounts for the real stack are in
+`supabase/seed.sql`: `demo.cto@codehive.test`, `demo.cio@codehive.test`,
+`demo.member@codehive.test`.
+
 ## Layout
 
 ```

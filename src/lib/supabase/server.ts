@@ -3,9 +3,16 @@ import { cookies } from "next/headers";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
+import { createDemoClient, isDemoMode } from "@/lib/demo/mock";
+
 /** Cookie-based Supabase client for server components and server actions. */
 export function createClient() {
   const cookieStore = cookies();
+  if (isDemoMode()) {
+    return createDemoClient(
+      () => cookieStore.get("demo_member")?.value ?? null
+    );
+  }
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

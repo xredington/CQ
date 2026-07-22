@@ -266,3 +266,15 @@ insert into public.spotlights (id, member_id, headline, story_md, metric_label, 
    'Getting 3,000 physicians to actually use clinical AI',
    E'Lotus Health Group''s clinical-documentation Copilot was technically live for months — and stuck at 20% weekly usage.\n\n**The turn**\n\nKavya Nair scrapped the hospital-level champion model and named a champion per ward. Her team shipped templates for the five most common note types and published time-saved numbers every Friday.\n\n**The result**\n\nWeekly usage reached 74% across 12 hospitals. The discharge-summary template alone saves 11 minutes per patient — time that goes back to the bedside.\n\n**What she''d tell a peer**\n\n"Adoption is a ward-by-ward campaign, not a deployment milestone."',
    'Physician weekly usage', '20%', '74%', 'published', now() - interval '8 days');
+
+-- ── Test accounts (for pilot/demo sign-in checks; remove before launch) ─────
+insert into public.members (id, full_name, email, company, designation, industry, country, bio, referred_by, joined_event_id, role, status) values
+  ('a0000000-0000-4000-8000-000000000101', 'Demo CTO', 'demo.cto@codehive.test', 'Demo Bank', 'CTO',
+   'banking-financial-services', 'UAE', 'Test account for sign-in and member-flow checks.',
+   'a0000000-0000-4000-8000-000000000001', 'e0000000-0000-4000-8000-000000000002', 'member', 'active'),
+  ('a0000000-0000-4000-8000-000000000102', 'Demo CIO', 'demo.cio@codehive.test', 'Demo Retail Group', 'CIO',
+   'retail', 'India', 'Test account for sign-in and member-flow checks.',
+   'a0000000-0000-4000-8000-000000000009', 'e0000000-0000-4000-8000-000000000003', 'member', 'active'),
+  ('a0000000-0000-4000-8000-000000000103', 'Demo Member', 'demo.member@codehive.test', 'Demo Telecom', 'Head of Digital',
+   'telecom', 'Kenya', 'Test account for sign-in and member-flow checks.',
+   null, 'e0000000-0000-4000-8000-000000000004', 'member', 'invited');
