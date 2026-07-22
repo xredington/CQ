@@ -384,6 +384,5 @@ export function createDemoClient(getEmail: () => string | null) {
       return channelStub;
     },
     removeChannel() {},
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any;
+  } as unknown as ReturnType<typeof import("@supabase/supabase-js").createClient>;
 }
