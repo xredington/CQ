@@ -358,6 +358,9 @@ export function createDemoClient(getEmail: () => string | null) {
       async signInWithOtp() {
         return { error: null };
       },
+      async signInWithPassword() {
+        return { data: {}, error: null };
+      },
       async signOut() {
         return { error: null };
       },
