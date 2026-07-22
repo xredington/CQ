@@ -278,3 +278,18 @@ insert into public.members (id, full_name, email, company, designation, industry
   ('a0000000-0000-4000-8000-000000000103', 'Demo Member', 'demo.member@codehive.test', 'Demo Telecom', 'Head of Digital',
    'telecom', 'Kenya', 'Test account for sign-in and member-flow checks.',
    null, 'e0000000-0000-4000-8000-000000000004', 'member', 'invited');
+
+-- ── Initial admin (stakeholder-provided) and real test inboxes ──────────────
+-- Test accounts use Gmail plus-aliases: mail arrives in x.redington@gmail.com.
+insert into public.members (id, full_name, email, company, designation, industry, country, bio, referred_by, joined_event_id, role, status) values
+  ('a0000000-0000-4000-8000-000000000100', 'Harsh Kank', 'harsh.kank@redingtongroup.com', 'Redington SSG', 'Community Admin',
+   'technology', 'India', 'CodeHive administrator.', null, null, 'admin', 'invited'),
+  ('a0000000-0000-4000-8000-000000000104', 'Test CTO', 'x.redington+cto@gmail.com', 'Test Bank', 'CTO',
+   'banking-financial-services', 'UAE', 'Real-inbox test account (alias of x.redington@gmail.com).',
+   'a0000000-0000-4000-8000-000000000001', 'e0000000-0000-4000-8000-000000000002', 'member', 'invited'),
+  ('a0000000-0000-4000-8000-000000000105', 'Test CIO', 'x.redington+cio@gmail.com', 'Test Retail Group', 'CIO',
+   'retail', 'India', 'Real-inbox test account (alias of x.redington@gmail.com).',
+   'a0000000-0000-4000-8000-000000000009', 'e0000000-0000-4000-8000-000000000003', 'member', 'invited'),
+  ('a0000000-0000-4000-8000-000000000106', 'Test Member', 'x.redington+member@gmail.com', 'Test Telecom', 'Head of Digital',
+   'telecom', 'Kenya', 'Real-inbox test account (alias of x.redington@gmail.com).',
+   null, 'e0000000-0000-4000-8000-000000000004', 'member', 'invited');
