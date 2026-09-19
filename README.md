@@ -60,6 +60,25 @@ root. To activate it:
 
 Full details in `.claude/skills/website-creation/references/magic-mcp.md`.
 
+## `pptx-revamp` skill
+
+Located at `.claude/skills/pptx-revamp/`. It rebuilds PowerPoint slides that
+are really just pasted screenshots into **native, fully editable** slides, and
+re-templates weak slides onto a clean branded layout (timeline, cards, KPI row,
+matrix, process chain, table, and more) using the CloudQuarks palette.
+
+```bash
+bash .claude/skills/pptx-revamp/scripts/setup.sh          # deps (needs LibreOffice Impress)
+S=.claude/skills/pptx-revamp/scripts
+python3 $S/audit.py  deck.pptx --json audit.json          # which slides are images?
+python3 $S/render.py deck.pptx --out png/ --slides 4,9,26 # rasterise so Claude can read them
+python3 $S/rebuild.py deck.pptx spec.json --out out.pptx  # emit native shapes
+```
+
+Claude reads the rendered slides with vision, transcribes them, and writes the
+spec — the scripts do the drawing. Spec format and layout catalogue:
+`.claude/skills/pptx-revamp/references/slide-spec.md`.
+
 ## UI/UX Pro Max skills
 
 Imported from
