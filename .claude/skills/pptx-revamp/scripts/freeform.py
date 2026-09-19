@@ -127,6 +127,12 @@ class Frame:
         e = self.autofit(e)
         tb = self.s.shapes.add_textbox(*self.box(e["box"]))
         self._fill_text(tb.text_frame, e)
+        if e.get("vert"):
+            # stand the text on its side, as a narrow column label does
+            from pptx.oxml.ns import qn
+            tb.text_frame._txBody.bodyPr.set("vert", e["vert"])
+        elif e.get("rot"):
+            tb.rotation = e["rot"]
         return tb
 
     def _fill_text(self, tf, e, pad=0.0):
