@@ -344,7 +344,7 @@ def lay_kpi(c, spec):
     lsize = t["size_body"] - 2
 
     # the headline number must sit on one line, so shrink it until it does
-    vsize = min(TH.fit_one_line(k.get("value", ""), iw, t["size_kpi"], 16)
+    vsize = min(TH.fit_one_line(k.get("value", ""), iw * 0.9, t["size_kpi"], 16)
                 for k in kpis)
     vh = TH.text_h("0", iw, vsize, line=1.05, bold=True)
     lh = max(TH.text_h(k.get("label", ""), iw, lsize, line=1.15)
@@ -642,13 +642,27 @@ def move_slide(prs, slide, new_pos):
     lst.insert(new_pos, target)
 
 
+RID = ("{http://schemas.openxmlformats.org/officeDocument/2006/"
+       "relationships}id")
+
+
 def drop_slides(prs, indices):
-    """Delete slides by 1-based original index."""
+    """Delete slides by 1-based original index.
+
+    Removing the sldId alone leaves the slide part behind, still holding a
+    relationship to every image on it — so the file keeps the weight and the
+    package ends up with parts nothing points at. Drop the relationship too.
+    """
     lst = prs.slides._sldIdLst
     ids = list(lst)
     for i in sorted(indices, reverse=True):
         if 1 <= i <= len(ids):
-            lst.remove(ids[i - 1])
+            el = ids[i - 1]
+            lst.remove(el)
+            try:
+                prs.part.drop_rel(el.get(RID))
+            except (KeyError, AttributeError):
+                pass
 
 
 def clear_slide(slide, media_dir=None, idx=0):
