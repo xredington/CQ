@@ -211,6 +211,19 @@ class Frame:
         if not os.path.exists(src):
             print(f"!! image missing: {src}")
             return None
+        if e.get("crop") == "fit":
+            # letterbox: keep the aspect and centre it, rather than stretching
+            # the artwork to whatever box it was given
+            x, y, w, h = e["box"]
+            try:
+                from PIL import Image
+                iw, ih = Image.open(src).size
+                ar = iw / ih
+            except Exception:
+                ar = w / h
+            dw, dh = (w, w / ar) if w / ar <= h else (h * ar, h)
+            return self.s.shapes.add_picture(
+                src, *self.box([x + (w - dw) / 2, y + (h - dh) / 2, dw, dh]))
         pic = self.s.shapes.add_picture(src, *self.box(e["box"]))
         if e.get("crop", "fill") == "fill":
             try:
