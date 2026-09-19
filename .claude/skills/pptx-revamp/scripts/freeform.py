@@ -65,6 +65,8 @@ class Frame:
         if e.get("fill"):
             shp.fill.solid()
             shp.fill.fore_color.rgb = _rgb(e["fill"])
+            if e.get("alpha") is not None:
+                _set_alpha(shp, e["alpha"])
         else:
             shp.fill.background()
         if e.get("line"):
@@ -160,15 +162,20 @@ class Frame:
         dot_x = e.get("dot_x", x)
         text_x = e.get("text_x", x + 22)
         line = e.get("line", 1.1)
-        tw = self.w_in([0, 0, x + w - text_x, 0])
+        # 0.9 is headroom: at small sizes the renderer wraps a word earlier
+        # than a character-width estimate predicts, and a row that spills
+        # lands on top of the next bullet
+        tw = self.w_in([0, 0, x + w - text_x, 0]) * 0.9
         px_per_in = IN / self.sy
 
         def rows(sz):
             return [max(gap, TH.text_h(str(it), tw, sz, line=line, pad=0)
                         * px_per_in + 3) for it in e["items"]]
 
-        while size > 7 and sum(rows(size)) > h:
+        while size > 6 and sum(rows(size)) > h:
             size -= 0.5
+        if sum(rows(size)) > h:      # still tight: close the leading as well
+            line = 1.02
         heights = rows(size)
 
         iy = y
@@ -214,6 +221,23 @@ class Frame:
             except Exception:
                 pass
         return pic
+
+
+def _set_alpha(shape, alpha):
+    """Make a solid fill translucent. alpha 1.0 = opaque, 0.0 = invisible.
+
+    Lets a panel sit over a photograph as a scrim, which is how a caption
+    stays legible over artwork without covering it with a flat block.
+    """
+    from pptx.oxml.ns import qn
+    clr = shape.fill.fore_color._xFill.find(qn("a:srgbClr"))
+    if clr is None:
+        return
+    for old in clr.findall(qn("a:alpha")):
+        clr.remove(old)
+    node = clr.makeelement(qn("a:alpha"), {})
+    node.set("val", str(int(max(0.0, min(1.0, alpha)) * 100000)))
+    clr.append(node)
 
 
 def _no_shadow(shape):

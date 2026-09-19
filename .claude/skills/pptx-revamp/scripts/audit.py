@@ -87,8 +87,11 @@ def analyse(path, dump_media=None):
         else:
             verdict = "NATIVE"
 
-        notes = slide.notes_slide.notes_text_frame.text.strip() \
-            if slide.has_notes_slide else ""
+        notes = ""
+        if slide.has_notes_slide:
+            # a slide built from a layout with no notes placeholder has none
+            tf = slide.notes_slide.notes_text_frame
+            notes = tf.text.strip() if tf is not None else ""
         out["slides"].append({
             "index": idx,
             "verdict": verdict,
