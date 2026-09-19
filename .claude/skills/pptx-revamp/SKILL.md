@@ -23,6 +23,24 @@ Installs `python-pptx`, `Pillow`, `pymupdf`. Rendering also needs
 LibreOffice **with Impress** (`soffice`); `libreoffice-core` alone cannot open
 a .pptx. On macOS: `brew install --cask libreoffice`.
 
+## Getting the deck (remote sessions)
+
+A Claude Code session in the cloud cannot see the user's Desktop, and chat
+attachments are capped around 30 MB — which image-heavy decks routinely exceed.
+Pull the file over the network instead:
+
+```bash
+python3 $S/fetch_drive.py "<Drive share link>" -o work.pptx
+```
+
+The user shares the file in Drive ("Anyone with the link" -> Viewer) and pastes
+the link. This streams to disk — tested at 90 MB — and handles Drive's
+virus-scan interstitial, which every file over ~25 MB hits. Any other direct
+HTTPS link (SharePoint/OneDrive download URL, S3, WeTransfer) works with
+`curl -L -o work.pptx "<url>"`.
+
+Never ask the user to email the file or paste its contents.
+
 ## Workflow
 
 Let `S=.claude/skills/pptx-revamp/scripts`.

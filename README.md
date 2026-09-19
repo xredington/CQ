@@ -70,6 +70,7 @@ matrix, process chain, table, and more) using the CloudQuarks palette.
 ```bash
 bash .claude/skills/pptx-revamp/scripts/setup.sh          # deps (needs LibreOffice Impress)
 S=.claude/skills/pptx-revamp/scripts
+python3 $S/fetch_drive.py "<drive link>" -o deck.pptx     # for decks too big to attach
 python3 $S/audit.py  deck.pptx --json audit.json          # which slides are images?
 python3 $S/render.py deck.pptx --out png/ --slides 4,9,26 # rasterise so Claude can read them
 python3 $S/rebuild.py deck.pptx spec.json --out out.pptx  # emit native shapes
