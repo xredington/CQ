@@ -12,6 +12,7 @@ from copy import deepcopy
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import theme as TH
+import freeform as FF
 from pptx import Presentation
 from pptx.util import Emu, Pt
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
@@ -24,7 +25,7 @@ class Canvas:
     """Slide-sized drawing surface with the deck's own margins."""
 
     def __init__(self, slide, prs, t):
-        self.s, self.t = slide, t
+        self.s, self.t, self.prs = slide, t, prs
         self.W, self.H = prs.slide_width / IN, prs.slide_height / IN
         self.mx, self.mt, self.mb = t["margin_x"], t["margin_top"], t["margin_bot"]
         self.cw = self.W - 2 * self.mx          # content width
@@ -602,7 +603,13 @@ def lay_quote(c, spec):
                color="primary_dk", bold=True)
 
 
+def lay_freeform(c, spec):
+    """Rebuild a slide's own design rather than re-templating it."""
+    FF.render(c.s, c.prs, spec)
+
+
 LAYOUTS = {
+    "freeform": lay_freeform,
     "bullets": lay_bullets, "title-bullets": lay_bullets,
     "two-column": lay_two_column, "columns": lay_two_column,
     "cards": lay_cards, "kpi": lay_kpi, "kpis": lay_kpi,
