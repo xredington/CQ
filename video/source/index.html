@@ -114,6 +114,14 @@ h2{font:700 76px/1.05 'Space Grotesk';letter-spacing:-.02em}
 .ochips{display:flex;gap:18px;justify-content:center;margin-top:50px}
 .ochip{font:600 28px Inter;padding:16px 30px;border-radius:999px;border:1px solid rgba(200,150,255,.6);background:rgba(160,100,255,.14);box-shadow:0 0 30px rgba(160,100,255,.25)}
 
+.r1x{position:relative;text-align:center;font:700 220px/1 'Space Grotesk';letter-spacing:-.04em;white-space:nowrap}
+.r1x .lt{display:inline-block;color:#fff;will-change:transform,filter}
+.r1x .sp{display:inline-block;width:.22em}
+.oneword{display:inline-block;will-change:transform}
+.oneword .lt1{display:inline-block}
+.newb{position:relative;align-self:center;font:700 20px 'JetBrains Mono';letter-spacing:.25em;color:#fff;padding:10px 22px;border-radius:999px;background:linear-gradient(90deg,rgba(255,107,94,.25),rgba(192,107,255,.25));border:1px solid rgba(220,170,255,.7);box-shadow:0 0 30px rgba(192,107,255,.45);display:flex;align-items:center;gap:12px}
+.newb i{width:9px;height:9px;border-radius:50%;background:#ff6b5e;box-shadow:0 0 12px #ff6b5e}
+#black{position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 46.3%,#fff 0,#f1e4ff 3px,rgba(190,120,255,.7) 8px,rgba(120,60,255,0) 34px),#000}
 /* finale orbit */
 .orb{position:absolute;left:0;top:0;padding:18px 32px;border-radius:999px;font:700 30px 'Space Grotesk';white-space:nowrap;border:1px solid color-mix(in srgb,var(--c) 70%,transparent);background:color-mix(in srgb,var(--c) 18%,#0a0e1c);box-shadow:0 0 30px color-mix(in srgb,var(--c) 40%,transparent);will-change:transform}
 .core{position:absolute;left:0;right:0;top:395px;text-align:center;z-index:2}
@@ -172,15 +180,16 @@ h2{font:700 76px/1.05 'Space Grotesk';letter-spacing:-.02em}
   <div class="sv" style="--c:#60a5fa;width:280px"><div class="n">Q Intelligence</div></div>
 </section>
 
-<!-- REDINGTON ONE EMERGES 46-53 -->
-<section class="scene" data-s="50" data-e="57" style="display:flex;flex-direction:column;justify-content:center;padding-top:40px">
+<!-- REDINGTON ONE REVEAL 50-57 -->
+<section class="scene" data-s="50" data-e="57" id="reveal" style="display:flex;flex-direction:column;justify-content:center;padding-top:40px">
   <div class="rays" id="rays"></div>
-  <div class="kicker" style="text-align:center;color:#d2b4ff;position:relative" data-in="50.5">Introducing</div>
-  <div class="r1" style="margin-top:24px;position:relative" data-in="50.1" data-fx="zoom">Redington <span>One</span></div>
+  <div class="newb" data-in="52.1" data-fx="scale"><i></i>NEW · THE ONE PLATFORM</div>
+  <div class="kicker" id="intro" style="text-align:center;color:#d2b4ff;position:relative;margin-top:22px" data-in="50.15">Introducing</div>
+  <div class="r1x" id="r1x" style="margin-top:20px"><span class="lt" data-i="0">R</span><span class="lt" data-i="1">e</span><span class="lt" data-i="2">d</span><span class="lt" data-i="3">i</span><span class="lt" data-i="4">n</span><span class="lt" data-i="5">g</span><span class="lt" data-i="6">t</span><span class="lt" data-i="7">o</span><span class="lt" data-i="8">n</span><span class="sp"> </span><span class="oneword" id="oneword"><span class="lt1" style="color:#ff6b5e">O</span><span class="lt1" style="color:#e06bb0">n</span><span class="lt1" style="color:#c06bff">e</span></span></div>
   <div class="ochips" style="position:relative">
-    <div class="ochip" data-in="51.6" data-fx="scale">One login</div><div class="ochip" data-in="52" data-fx="scale">One profile</div><div class="ochip" data-in="52.4" data-fx="scale">One wallet</div><div class="ochip" data-in="52.8" data-fx="scale">One feed</div>
+    <div class="ochip" data-in="53.4" data-fx="scale">One login</div><div class="ochip" data-in="53.75" data-fx="scale">One profile</div><div class="ochip" data-in="54.1" data-fx="scale">One wallet</div><div class="ochip" data-in="54.45" data-fx="scale">One feed</div>
   </div>
-  <p class="sub" style="text-align:center;margin-top:44px;color:#e4dcf5;position:relative" data-in="53.6">Every platform. One front door.</p>
+  <p class="sub" style="text-align:center;margin-top:40px;color:#e4dcf5;position:relative" data-in="55.0">The new front door to every Redington platform.</p>
 </section>
 
 <!-- STACK 53-64 -->
@@ -229,6 +238,7 @@ h2{font:700 76px/1.05 'Space Grotesk';letter-spacing:-.02em}
   <div class="vcap" style="top:800px;font:700 64px 'Space Grotesk';letter-spacing:-.02em" data-in="80.2">Many platforms. <span style="color:var(--red)">One Redington.</span></div>
 </section>
 
+<div id="black"></div>
 <div id="flash"></div>
 <div id="brand">REDINGTON · PLATFORM ENGINEERING</div>
 <div id="bar"></div>
@@ -368,6 +378,41 @@ function drawFinale(t){
     el.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) scale(${0.72+0.38*d})`;
   });
 }
+
+const LT=[...document.querySelectorAll('#r1x .lt')],ONEW=document.getElementById('oneword'),ONEL=[...document.querySelectorAll('#oneword .lt1')],INTRO=document.getElementById('intro'),REV=document.getElementById('reveal'),BLACK=document.getElementById('black');
+function drawReveal(t){
+  // letters of "Redington" rise out of light, one by one
+  LT.forEach((el,i)=>{const p=ease((t-(50.3+i*0.075))/0.55);
+    const sweep=Math.exp(-Math.pow(((t-52.5)*9-i),2)/2.5);   // light sweep across letters
+    el.style.opacity=p;el.style.transform=`translateY(${(1-p)*70}px) scale(${1.25-0.25*p})`;
+    el.style.filter=`blur(${(1-p)*14}px) brightness(${1+sweep*0.9})`;
+    el.style.textShadow=`0 0 ${30+60*sweep}px rgba(200,140,255,${0.55+0.45*sweep}), 0 0 ${8+20*(1-p)}px rgba(255,255,255,${0.8*(1-p)+0.3*sweep})`;});
+  // "One" slams in on the second hit
+  const q=clamp((t-51.55)/0.28), qe=1-Math.pow(1-q,4);
+  const pulse=Math.exp(-Math.max(0,t-51.83)*2.2)*(t>=51.83?1:0);
+  ONEW.style.opacity=q>0?Math.min(1,q*2.5):0;
+  ONEW.style.transform=`scale(${2.6-1.6*qe+0.06*pulse})`;
+  ONEW.style.filter=`blur(${(1-qe)*10}px) drop-shadow(0 0 ${30+70*pulse}px rgba(220,120,255,${0.6+0.4*pulse}))`;
+  const sw2=Math.exp(-Math.pow(((t-52.5)*9-11),2)/2.5);
+  ONEL.forEach((el,i)=>{const sw=Math.exp(-Math.pow(((t-52.5)*9-(10+i)),2)/2.5);el.style.filter=`brightness(${1+sw*0.8})`;});
+  // kicker letter-spacing expands
+  INTRO.style.letterSpacing=(0.1+0.5*ease((t-50.15)/2.2))+'em';
+  // impact shakes
+  const k1=Math.exp(-Math.max(0,t-50)*7)*(t>=50?1:0),k2=Math.exp(-Math.max(0,t-51.83)*8)*(t>=51.83?1:0);
+  const A=14*k1+9*k2;REV.style.translate=`${Math.sin(t*91)*A}px ${Math.cos(t*73)*A}px`;
+}
+function drawFlare(t){
+  [[50,1.0,1.6],[51.83,0.7,1.2]].forEach(([t0,amp,dur])=>{const d=t-t0;if(d<0||d>dur)return;
+    const a=amp*Math.pow(1-d/dur,2);cx.globalCompositeOperation='lighter';
+    const y=t0===50?500:520,w=1920*(0.4+0.6*ease(d/0.4));
+    const g=cx.createLinearGradient(960-w/2,0,960+w/2,0);
+    g.addColorStop(0,'rgba(120,80,255,0)');g.addColorStop(0.5,`rgba(255,255,255,${a})`);g.addColorStop(1,'rgba(120,80,255,0)');
+    cx.fillStyle=g;cx.fillRect(960-w/2,y-3,w,6);
+    const g2=cx.createLinearGradient(960-w/2,0,960+w/2,0);
+    g2.addColorStop(0,'rgba(140,90,255,0)');g2.addColorStop(0.5,`rgba(200,150,255,${a*0.35})`);g2.addColorStop(1,'rgba(140,90,255,0)');
+    cx.fillStyle=g2;cx.fillRect(960-w/2,y-26,w,52);
+    cx.globalCompositeOperation='source-over';});
+}
 function render(t){
   scenes.forEach(s=>{const a=+s.dataset.s,b=+s.dataset.e;let o=0;
     if(t>=a&&t<b){o=Math.min(1,(t-a)/0.45,(b-t)/0.45);if(a===0)o=Math.min(1,t/0.8+1e-4,(b-t)/0.45)}
@@ -384,10 +429,13 @@ function render(t){
   counts.forEach(el=>{const p=ease((t-(+el.dataset.t))/1.4),v=+el.dataset.count*p,d=+(el.dataset.dec||0);
     el.textContent=(el.dataset.pre||'')+v.toFixed(d)+(el.dataset.suf||'');});
   drawCanvas(t);
+  drawFlare(t);
+  if(t>=49.9&&t<57.2)drawReveal(t);
   if(t>=37&&t<50.3)drawVortexCards(t);
   if(t>=78)drawFinale(t);
   // flash: rise 45.55->46.0, decay to 46.9
-  const fl=t<50?smooth((t-49.55)/0.45):1-smooth((t-50)/0.9);
+  const fl=t<50?0:1-smooth((t-50)/1.1);
+  BLACK.style.opacity=(t>=49.55&&t<50)?smooth((t-49.55)/0.2):0;
   flash.style.opacity=fl;
   rays.style.transform=`rotate(${(t-50)*6}deg) scale(${0.6+0.4*ease((t-50)/1.5)})`;
   document.getElementById('bar').style.width=(t/DUR*100)+'%';
