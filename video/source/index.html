@@ -84,210 +84,318 @@ h2{font:700 76px/1.05 'Space Grotesk';letter-spacing:-.02em}
 .box .l{font:500 24px Inter;color:var(--mute);margin-top:10px}
 .hero{font:700 230px/1 'Space Grotesk';text-align:center;background:linear-gradient(90deg,#ff6b5e,#b46bff);-webkit-background-clip:text;color:transparent}
 .herol{text-align:center;font:600 26px 'JetBrains Mono';letter-spacing:.3em;color:#d7c9ff}
+
+/* quick platform scenes */
+.qp .pname{font-size:110px}
+.qp .stat .v{font-size:72px}
+.qp .stat .l{font-size:26px}
+.qnum{position:absolute;right:130px;top:96px;font:700 26px 'JetBrains Mono';color:var(--c);letter-spacing:.2em}
+.qdots{position:absolute;right:130px;top:140px;display:flex;gap:10px}
+.qdots i{width:44px;height:6px;border-radius:3px;background:rgba(255,255,255,.15)}
+.qdots i.on{background:var(--c);box-shadow:0 0 12px var(--c)}
+
+/* vortex */
+#vx{position:absolute;inset:0;z-index:1;pointer-events:none}
+.scene{z-index:2}
+#flash{position:absolute;inset:0;z-index:6;background:radial-gradient(circle at 50% 50%,#fff 0%,#f3e8ff 30%,rgba(200,140,255,.6) 60%,rgba(120,60,255,0) 100%);opacity:0;pointer-events:none}
+.sv{position:absolute;left:0;top:0;width:300px;border-radius:20px;border:1px solid color-mix(in srgb,var(--c) 65%,transparent);padding:28px;text-align:center;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 18%,#0a0e1c),#0a0e1c);box-shadow:0 0 40px color-mix(in srgb,var(--c) 35%,transparent);will-change:transform}
+.sv .n{font:700 32px 'Space Grotesk'}
+.sv .k{margin-top:16px;font:500 19px 'JetBrains Mono';color:var(--mute)}
+.sv .k b{color:var(--c)}
+.th{position:absolute;left:0;top:0;width:380px;height:238px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.25);box-shadow:0 20px 60px rgba(0,0,0,.6);will-change:transform}
+.th img{width:100%;display:block}
+.vcap{position:absolute;left:0;right:0;text-align:center}
+
+/* emerge */
+.rays{position:absolute;left:50%;top:46%;width:2400px;height:2400px;margin:-1200px 0 0 -1200px;border-radius:50%;
+ background:repeating-conic-gradient(from 0deg,rgba(190,120,255,.16) 0deg 4deg,transparent 4deg 15deg);mask-image:radial-gradient(circle,#000 0%,transparent 55%)}
+.r1{font:700 210px/1 'Space Grotesk';letter-spacing:-.04em;text-align:center;background:linear-gradient(180deg,#fff 30%,#d2b4ff);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(180,110,255,.7))}
+.r1 span{background:linear-gradient(90deg,#ff6b5e,#c06bff);-webkit-background-clip:text;color:transparent}
+.ochips{display:flex;gap:18px;justify-content:center;margin-top:50px}
+.ochip{font:600 28px Inter;padding:16px 30px;border-radius:999px;border:1px solid rgba(200,150,255,.6);background:rgba(160,100,255,.14);box-shadow:0 0 30px rgba(160,100,255,.25)}
+
+/* finale orbit */
+.orb{position:absolute;left:0;top:0;padding:18px 32px;border-radius:999px;font:700 30px 'Space Grotesk';white-space:nowrap;border:1px solid color-mix(in srgb,var(--c) 70%,transparent);background:color-mix(in srgb,var(--c) 18%,#0a0e1c);box-shadow:0 0 30px color-mix(in srgb,var(--c) 40%,transparent);will-change:transform}
+.core{position:absolute;left:0;right:0;top:395px;text-align:center;z-index:2}
+.core .r1{font-size:150px}
 </style></head>
 <body><div id="stage"><div id="grid"></div>
+<canvas id="vx" width="1920" height="1080"></canvas>
 
-<!-- S1 TITLE 0-7 -->
-<section class="scene" data-s="0" data-e="7" style="display:flex;flex-direction:column;justify-content:center">
+<!-- TITLE 0-6 -->
+<section class="scene" data-s="0" data-e="6" style="display:flex;flex-direction:column;justify-content:center">
   <div class="kicker" data-in="0.3">Redington · Platform Architecture</div>
   <h1 style="margin-top:34px" data-in="0.6">From many platforms<br>to <span class="accent">one Redington.</span></h1>
   <p class="sub" style="margin-top:36px" data-in="1.4">Vision, architecture and MVP in-house · production by empaneled vendors · one platform experience</p>
   <div class="steps">
-    <div class="step" data-in="2.4">PLAN</div><div class="step" data-in="2.7">BUILD</div><div class="step" data-in="3.0">TEST</div><div class="step" data-in="3.3">SECURE</div><div class="step" data-in="3.6">PUBLISH</div>
+    <div class="step" data-in="2.2">PLAN</div><div class="step" data-in="2.45">BUILD</div><div class="step" data-in="2.7">TEST</div><div class="step" data-in="2.95">SECURE</div><div class="step" data-in="3.2">PUBLISH</div>
   </div>
 </section>
 
-<!-- S2 ECOSYSTEM 7-15 -->
-<section class="scene" data-s="7" data-e="15">
-  <div class="kicker" data-in="7.2">Services as a Platform · SAAP</div>
-  <h2 style="margin-top:24px" data-in="7.4">The ecosystem we build &amp; run</h2>
+<!-- ECOSYSTEM 6-13 -->
+<section class="scene" data-s="6" data-e="13">
+  <div class="kicker" data-in="6.2">Services as a Platform · SAAP</div>
+  <h2 style="margin-top:24px" data-in="6.4">Seven platforms. One purpose.</h2>
   <div class="eco">
-    <div class="ecard" style="--c:#2dd4a7" data-in="8.0"><i class="dot"></i><div class="n">Tech Citadel</div><div class="r">Deal registration</div><div class="d">OEMs &amp; partners on one pipeline</div></div>
-    <div class="ecard" style="--c:#a66bff" data-in="8.3"><i class="dot"></i><div class="n">CloudQuarks</div><div class="r">ISV onboarding &amp; marketplace</div><div class="d">6 months cut to ~6 days</div></div>
-    <div class="ecard" style="--c:#22d3ee" data-in="8.6"><i class="dot"></i><div class="n">RACE</div><div class="r">AI Centre of Excellence</div><div class="d">Virtual + physical AI enablement</div></div>
-    <div class="ecard" style="--c:#f5a524" data-in="8.9"><i class="dot"></i><div class="n">Velocity</div><div class="r">Loyalty &amp; incentives</div><div class="d">Multi-brand points &amp; rewards</div></div>
-    <div class="ecard" style="--c:#ff4d4d" data-in="9.2"><i class="dot"></i><div class="n">MAAS</div><div class="r">Marketing as a Service</div><div class="d">Ten curated services, Discover → Optimize</div></div>
+    <div class="ecard" style="--c:#2dd4a7" data-in="7.0"><i class="dot"></i><div class="n">Tech Citadel</div><div class="r">Deal registration</div><div class="d">OEMs &amp; partners on one pipeline</div></div>
+    <div class="ecard" style="--c:#a66bff" data-in="7.25"><i class="dot"></i><div class="n">CloudQuarks</div><div class="r">ISV onboarding &amp; marketplace</div><div class="d">6 months cut to ~6 days</div></div>
+    <div class="ecard" style="--c:#22d3ee" data-in="7.5"><i class="dot"></i><div class="n">RACE</div><div class="r">AI Centre of Excellence</div><div class="d">Virtual + physical AI enablement</div></div>
+    <div class="ecard" style="--c:#f5a524" data-in="7.75"><i class="dot"></i><div class="n">Velocity</div><div class="r">Loyalty &amp; incentives</div><div class="d">Multi-brand points &amp; rewards</div></div>
+    <div class="ecard" style="--c:#ff4d4d" data-in="8.0"><i class="dot"></i><div class="n">MAAS</div><div class="r">Marketing as a Service</div><div class="d">Ten curated services, Discover → Optimize</div></div>
   </div>
-  <p class="more" data-in="10.2">Plus <b>Hive</b> (AI leaders community) and <b>Q Intelligence</b> (market intelligence), with more in the pipeline.</p>
+  <p class="more" data-in="8.8">Plus <b>Hive</b> (AI leaders community) and <b>Q Intelligence</b> (market intelligence), with more in the pipeline.</p>
 </section>
 
-<!-- PLATFORM SCENES 15-55, 8s each -->
-<section class="scene" data-s="15" data-e="23" style="--c:#2dd4a7">
- <div class="pl">
-  <div class="browser" data-in="15.1" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">deals.redingtontechcitadel.com</div></div>
-   <div class="view"><img src="img/techcitadel.jpg" data-pan="15.6 22.6 0 -1000"></div></div>
-  <div>
-   <div class="kicker accent" data-in="15.3">01 · Platform</div>
-   <div class="pname" style="margin-top:18px" data-in="15.4">Tech Citadel</div>
-   <div class="prole" data-in="15.6">Deal registration &amp; vendor incentives</div>
-   <div class="stats">
-    <div class="stat" data-in="16.3"><span class="v" data-count="115" data-pre="$" data-suf="M" data-t="16.3"></span><span class="l">pipeline under management</span></div>
-    <div class="stat" data-in="16.9"><span class="v" data-count="700" data-suf="+" data-t="16.9"></span><span class="l">partners on one pipeline</span></div>
-    <div class="stat" data-in="17.5"><span class="v" data-count="2.3" data-dec="1" data-pre="+$" data-suf="M/yr" data-t="17.5"></span><span class="l">closed-GMV uplift</span></div>
-   </div>
-   <span class="tag" data-in="18.2">OWNER · DUBAI  ·  LIVE</span>
-  </div>
- </div>
+<!-- QUICK PLATFORM RUN-THROUGH 13-33, 4s each -->
+<div id="qp"></div>
+
+<!-- SILOS -> TORNADO 33-46 -->
+<section class="scene" data-s="33" data-e="46.2" id="vscene" style="padding:0">
+  <div class="vcap kicker" style="top:110px" data-in="33.2" data-out="37.6">The challenge</div>
+  <div class="vcap big" style="top:160px" data-in="33.4" data-out="37.6">Built separately.</div>
+  <div class="vcap sub" style="top:720px" data-in="34.4" data-out="37.6">Its own login. Its own profile. Its own data.</div>
+  <div class="vcap kicker" style="top:96px;color:#d2b4ff;font-size:26px" data-in="38.8" data-out="44.6">Bringing it all together</div>
+  <div class="sv" style="--c:#2dd4a7"><div class="n">Tech Citadel</div><div class="k">login · <b>profile</b> · data</div></div>
+  <div class="sv" style="--c:#a66bff"><div class="n">CloudQuarks</div><div class="k">login · <b>profile</b> · data</div></div>
+  <div class="sv" style="--c:#22d3ee"><div class="n">RACE</div><div class="k">login · <b>profile</b> · data</div></div>
+  <div class="sv" style="--c:#f5a524"><div class="n">Velocity</div><div class="k">login · <b>profile</b> · data</div></div>
+  <div class="sv" style="--c:#ff4d4d"><div class="n">MAAS</div><div class="k">login · <b>profile</b> · data</div></div>
+  <div class="th"><img src="img/techcitadel.jpg"></div>
+  <div class="th"><img src="img/cloudquarks.jpg"></div>
+  <div class="th"><img src="img/race.jpg"></div>
+  <div class="th"><img src="img/velocity.jpg"></div>
+  <div class="th"><img src="img/maas.jpg"></div>
+  <div class="sv" style="--c:#f472b6;width:240px"><div class="n">Hive</div></div>
+  <div class="sv" style="--c:#60a5fa;width:280px"><div class="n">Q Intelligence</div></div>
 </section>
 
-<section class="scene" data-s="23" data-e="31" style="--c:#a66bff">
- <div class="pl">
-  <div class="browser" data-in="23.1" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">cloudquarks.com</div></div>
-   <div class="view"><img src="img/cloudquarks.jpg" data-pan="23.6 30.6 0 -1100"></div></div>
-  <div>
-   <div class="kicker accent" data-in="23.3">02 · Platform</div>
-   <div class="pname" style="margin-top:18px" data-in="23.4">CloudQuarks</div>
-   <div class="prole" data-in="23.6">ISV onboarding &amp; marketplace</div>
-   <div class="stats">
-    <div class="stat" data-in="24.3"><span class="v">6 mo → 6 days</span><span class="l">onboarding cycle</span></div>
-    <div class="stat" data-in="24.9"><span class="v" data-count="4.75" data-dec="2" data-pre="+$" data-suf="M/yr" data-t="24.9"></span><span class="l">GMV pulled forward</span></div>
-    <div class="stat" data-in="25.5"><span class="v" data-count="40" data-suf="+/yr" data-t="25.5"></span><span class="l">ISVs live on the marketplace</span></div>
-   </div>
-   <span class="tag" data-in="26.2">OWNER · INDIA  ·  LIVE</span>
+<!-- REDINGTON ONE EMERGES 46-53 -->
+<section class="scene" data-s="46" data-e="53" style="display:flex;flex-direction:column;justify-content:center;padding-top:40px">
+  <div class="rays" id="rays"></div>
+  <div class="kicker" style="text-align:center;color:#d2b4ff;position:relative" data-in="46.5">Introducing</div>
+  <div class="r1" style="margin-top:24px;position:relative" data-in="46.1" data-fx="zoom">Redington <span>One</span></div>
+  <div class="ochips" style="position:relative">
+    <div class="ochip" data-in="47.6" data-fx="scale">One login</div><div class="ochip" data-in="48.0" data-fx="scale">One profile</div><div class="ochip" data-in="48.4" data-fx="scale">One wallet</div><div class="ochip" data-in="48.8" data-fx="scale">One feed</div>
   </div>
- </div>
+  <p class="sub" style="text-align:center;margin-top:44px;color:#e4dcf5;position:relative" data-in="49.6">Every platform. One front door.</p>
 </section>
 
-<section class="scene" data-s="31" data-e="39" style="--c:#22d3ee">
- <div class="pl">
-  <div class="browser" data-in="31.1" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">redington-ace.com</div></div>
-   <div class="view"><img src="img/race.jpg" data-pan="31.6 38.6 0 -330"></div></div>
-  <div>
-   <div class="kicker accent" data-in="31.3">03 · Platform</div>
-   <div class="pname" style="margin-top:18px" data-in="31.4">RACE</div>
-   <div class="prole" data-in="31.6">AI Centre of Excellence</div>
-   <div class="stats">
-    <div class="stat" data-in="32.3"><span class="v" data-count="3.0" data-dec="1" data-pre="+$" data-suf="M/yr" data-t="32.3"></span><span class="l">GMV via new AI practices</span></div>
-    <div class="stat" data-in="32.9"><span class="v" data-count="200" data-pre="$" data-suf="K/yr" data-t="32.9"></span><span class="l">vendor MDF captured</span></div>
-    <div class="stat" data-in="33.5"><span class="v">Months → weeks</span><span class="l">POE labs speed up customer proofs</span></div>
-   </div>
-   <span class="tag" data-in="34.2">OWNER · INDIA  ·  LIVE</span>
-  </div>
- </div>
-</section>
-
-<section class="scene" data-s="39" data-e="47" style="--c:#f5a524">
- <div class="pl">
-  <div class="browser" data-in="39.1" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">redingtonvelocity.com</div></div>
-   <div class="view"><img src="img/velocity.jpg" data-pan="39.6 46.6 0 -420"></div></div>
-  <div>
-   <div class="kicker accent" data-in="39.3">04 · Platform</div>
-   <div class="pname" style="margin-top:18px" data-in="39.4">Velocity</div>
-   <div class="prole" data-in="39.6">Loyalty &amp; incentives</div>
-   <div class="stats">
-    <div class="stat" data-in="40.3"><span class="v" data-count="4.5" data-dec="1" data-pre="+$" data-suf="M/yr" data-t="40.3"></span><span class="l">billing shifted to Redington</span></div>
-    <div class="stat" data-in="40.9"><span class="v" data-count="3" data-suf="%" data-t="40.9"></span><span class="l">rebate on platform billing</span></div>
-    <div class="stat" data-in="41.5"><span class="v" data-count="500" data-suf=" hrs/yr" data-t="41.5"></span><span class="l">program admin consolidated</span></div>
-   </div>
-   <span class="tag" data-in="42.2">OWNER · DUBAI  ·  LIVE</span>
-  </div>
- </div>
-</section>
-
-<section class="scene" data-s="47" data-e="55" style="--c:#ff4d4d">
- <div class="pl">
-  <div class="browser" data-in="47.1" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">redington.events</div></div>
-   <div class="view"><img src="img/maas.jpg" data-pan="47.6 54.6 0 -750"></div></div>
-  <div>
-   <div class="kicker accent" data-in="47.3">05 · Platform</div>
-   <div class="pname" style="margin-top:18px" data-in="47.4">MAAS</div>
-   <div class="prole" data-in="47.6">Marketing as a Service</div>
-   <div class="stats">
-    <div class="stat" data-in="48.3"><span class="v" data-count="1.6" data-dec="1" data-pre="$" data-suf="M" data-t="48.3"></span><span class="l">pipeline influence today</span></div>
-    <div class="stat" data-in="48.9"><span class="v" data-count="2.5" data-dec="1" data-pre="$" data-suf="M/yr" data-t="48.9"></span><span class="l">with platformized intake</span></div>
-    <div class="stat" data-in="49.5"><span class="v" data-count="10" data-t="49.5"></span><span class="l">curated services, GITEX to re:Invent</span></div>
-   </div>
-   <span class="tag" data-in="50.2">OWNER · DUBAI  ·  LIVE</span>
-  </div>
- </div>
-</section>
-
-<!-- S8 SILOS 55-61 -->
-<section class="scene" data-s="55" data-e="61">
-  <div class="kicker" data-in="55.2" style="text-align:center">The challenge</div>
-  <div class="big" style="margin-top:30px" data-in="55.4">Built separately.</div>
-  <div class="silos">
-    <div class="silo" style="--c:#2dd4a7" data-in="56.0"><div class="n">Tech Citadel</div><div class="k">login · <b>profile</b> · data</div></div>
-    <div class="silo" style="--c:#a66bff" data-in="56.2"><div class="n">CloudQuarks</div><div class="k">login · <b>profile</b> · data</div></div>
-    <div class="silo" style="--c:#22d3ee" data-in="56.4"><div class="n">RACE</div><div class="k">login · <b>profile</b> · data</div></div>
-    <div class="silo" style="--c:#f5a524" data-in="56.6"><div class="n">Velocity</div><div class="k">login · <b>profile</b> · data</div></div>
-    <div class="silo" style="--c:#ff4d4d" data-in="56.8"><div class="n">MAAS</div><div class="k">login · <b>profile</b> · data</div></div>
-  </div>
-  <p class="sub" style="text-align:center;margin-top:70px" data-in="57.6">Every platform has its own login, its own profile and its own data.<br><span style="color:#fff">The next step is to make them one.</span></p>
-</section>
-
-<!-- S9 ONE PLATFORM 61-73 -->
-<section class="scene" data-s="61" data-e="73">
-  <div class="kicker" data-in="61.2" style="color:#b46bff">The vision</div>
-  <h2 style="margin-top:20px" data-in="61.4">Redington <span style="color:#b46bff">One</span></h2>
+<!-- STACK 53-64 -->
+<section class="scene" data-s="53" data-e="64">
+  <div class="kicker" data-in="53.2" style="color:#b46bff">The architecture</div>
+  <h2 style="margin-top:20px" data-in="53.4">Three layers, <span style="color:#b46bff">one platform</span></h2>
   <div class="stack">
-    <div class="layer" style="--c:#c06bff" data-in="62.2"><div class="h"><span class="t">Redington One</span><span class="s">FRONT DOOR</span></div>
+    <div class="layer" style="--c:#c06bff" data-in="54.0"><div class="h"><span class="t">Redington One</span><span class="s">FRONT DOOR</span></div>
       <div class="chips"><span class="chip">One login</span><span class="chip">One profile</span><span class="chip">One wallet</span><span class="chip">One feed</span></div></div>
-    <div class="layer" style="--c:#f5a524" data-in="63.2"><div class="h"><span class="t">Platforms</span><span class="s">MODULES</span></div>
+    <div class="layer" style="--c:#f5a524" data-in="54.8"><div class="h"><span class="t">Platforms</span><span class="s">MODULES</span></div>
       <div class="chips"><span class="chip">Tech Citadel</span><span class="chip">ISV Onboarding</span><span class="chip">CQ Marketplace</span><span class="chip">AI COE</span><span class="chip">Velocity</span><span class="chip">MAAS</span><span class="chip">Hive</span><span class="chip">Q Intelligence</span></div></div>
-    <div class="layer" style="--c:#22d3ee" data-in="64.2"><div class="h"><span class="t">Shared services</span><span class="s">ONE RECORD</span></div>
+    <div class="layer" style="--c:#22d3ee" data-in="55.6"><div class="h"><span class="t">Shared services</span><span class="s">ONE RECORD</span></div>
       <div class="chips"><span class="chip">Identity &amp; SSO</span><span class="chip">Master partner &amp; ISV record</span><span class="chip">Points wallet</span><span class="chip">Data APIs</span></div></div>
   </div>
   <div class="phases">
-    <div class="phase" style="--c:#34d399" data-in="66.0" data-fx="left"><div class="p">Phase 1</div><div class="x">Single sign-on across the platforms</div></div>
-    <div class="phase" style="--c:#f5a524" data-in="67.0" data-fx="left"><div class="p">Phase 2</div><div class="x">Unified profile, wallet &amp; auto-registration</div></div>
-    <div class="phase" style="--c:#60a5fa" data-in="68.0" data-fx="left"><div class="p">Phase 3</div><div class="x">One front door for all platforms</div></div>
+    <div class="phase" style="--c:#34d399" data-in="57.6" data-fx="left"><div class="p">Phase 1</div><div class="x">Single sign-on across the platforms</div></div>
+    <div class="phase" style="--c:#f5a524" data-in="58.6" data-fx="left"><div class="p">Phase 2</div><div class="x">Unified profile, wallet &amp; auto-registration</div></div>
+    <div class="phase" style="--c:#60a5fa" data-in="59.6" data-fx="left"><div class="p">Phase 3</div><div class="x">One front door for all platforms</div></div>
   </div>
-  <p class="sub" style="position:absolute;left:130px;bottom:110px;font-size:28px;color:#d7dbe6" data-in="69.2">Enter details once. They're captured centrally and registered on every platform.</p>
+  <p class="sub" style="position:absolute;left:130px;bottom:110px;font-size:28px;color:#d7dbe6" data-in="60.6">Enter details once. They're captured centrally and registered on every platform.</p>
 </section>
 
-<!-- S10 INTEGRATION 73-81 -->
-<section class="scene" data-s="73" data-e="81">
-  <div class="kicker" data-in="73.2" style="color:#60a5fa">Platform integration</div>
-  <h2 style="margin-top:20px" data-in="73.4">How every platform connects</h2>
+<!-- INTEGRATION 64-73 -->
+<section class="scene" data-s="64" data-e="73">
+  <div class="kicker" data-in="64.2" style="color:#60a5fa">Platform integration</div>
+  <h2 style="margin-top:20px" data-in="64.4">How every platform connects</h2>
   <div class="flow">
-    <div class="fcard" style="--c:#34d399" data-in="74.0"><div class="num">1</div><div class="t">One login</div><div class="d">"Sign in with Redington One" replaces every separate login.</div></div>
-    <div class="fcard" style="--c:#f5c524" data-in="74.6"><div class="num">2</div><div class="t">One record</div><div class="d">One master partner &amp; ISV record, keyed on one Redington ID.</div></div>
-    <div class="fcard" style="--c:#38bdf8" data-in="75.2"><div class="num">3</div><div class="t">One wallet &amp; events</div><div class="d">A deal registered or a service ordered earns Velocity points.</div></div>
-    <div class="fcard" style="--c:#e879f9" data-in="75.8"><div class="num">4</div><div class="t">One front door</div><div class="d">Sign in once and the session carries into every platform.</div></div>
+    <div class="fcard" style="--c:#34d399" data-in="65.0"><div class="num">1</div><div class="t">One login</div><div class="d">"Sign in with Redington One" replaces every separate login.</div></div>
+    <div class="fcard" style="--c:#f5c524" data-in="65.8"><div class="num">2</div><div class="t">One record</div><div class="d">One master partner &amp; ISV record, keyed on one Redington ID.</div></div>
+    <div class="fcard" style="--c:#38bdf8" data-in="66.6"><div class="num">3</div><div class="t">One wallet &amp; events</div><div class="d">A deal registered or a service ordered earns Velocity points.</div></div>
+    <div class="fcard" style="--c:#e879f9" data-in="67.4"><div class="num">4</div><div class="t">One front door</div><div class="d">Sign in once and the session carries into every platform.</div></div>
   </div>
 </section>
 
-<!-- S11 BUSINESS CASE 81-87 -->
-<section class="scene" data-s="81" data-e="87.2">
-  <div class="kicker" data-in="81.2" style="text-align:center;color:#b46bff">Business case</div>
+<!-- BUSINESS CASE 73-81 -->
+<section class="scene" data-s="73" data-e="81">
+  <div class="kicker" data-in="73.2" style="text-align:center;color:#b46bff">Business case</div>
   <div class="roi">
-    <div class="box" data-in="82.0"><div class="v" style="color:#34d399" data-count="1.62" data-dec="2" data-pre="$" data-suf="M" data-t="82.0"></div><div class="l">total annual value</div></div>
-    <div data-in="81.6" data-fx="scale"><div class="hero"><span data-count="2.9" data-dec="1" data-suf="×" data-t="81.6"></span></div><div class="herol">ANNUAL RETURN</div></div>
-    <div class="box" data-in="82.4"><div class="v" style="color:#f5a524" data-count="0.55" data-dec="2" data-pre="$" data-suf="M" data-t="82.4"></div><div class="l">total annual cost</div></div>
+    <div class="box" data-in="74.0"><div class="v" style="color:#34d399" data-count="1.62" data-dec="2" data-pre="$" data-suf="M" data-t="74.0"></div><div class="l">total annual value</div></div>
+    <div data-in="73.6" data-fx="scale"><div class="hero"><span data-count="2.9" data-dec="1" data-suf="×" data-t="73.6"></span></div><div class="herol">ANNUAL RETURN</div></div>
+    <div class="box" data-in="74.4"><div class="v" style="color:#f5a524" data-count="0.55" data-dec="2" data-pre="$" data-suf="M" data-t="74.4"></div><div class="l">total annual cost</div></div>
   </div>
-  <p class="sub" style="text-align:center;margin-top:70px" data-in="83.4"><span style="color:#fff">Payback in 4 months</span> · range 2.2× to 3.7×</p>
+  <p class="sub" style="text-align:center;margin-top:70px" data-in="75.4"><span style="color:#fff">Payback in 4 months</span> · range 2.2× to 3.7×</p>
 </section>
 
-<!-- S12 END 87-90 -->
-<section class="scene" data-s="87" data-e="91" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-  <div class="kicker" data-in="87.3">Redington · Platform Architecture</div>
-  <h1 style="margin-top:34px" data-in="87.5">Many platforms.<br><span class="accent">One Redington.</span></h1>
+<!-- FINALE ORBIT 81-90 -->
+<section class="scene" data-s="81" data-e="91" id="fin" style="padding:0">
+  <div class="core" data-in="81.2" data-fx="zoom"><div class="r1">Redington <span>One</span></div></div>
+  <div class="orb" style="--c:#2dd4a7">Tech Citadel</div>
+  <div class="orb" style="--c:#a66bff">CloudQuarks</div>
+  <div class="orb" style="--c:#22d3ee">RACE</div>
+  <div class="orb" style="--c:#f5a524">Velocity</div>
+  <div class="orb" style="--c:#ff4d4d">MAAS</div>
+  <div class="orb" style="--c:#f472b6">Hive</div>
+  <div class="orb" style="--c:#60a5fa">Q Intelligence</div>
+  <div class="vcap" style="top:800px;font:700 64px 'Space Grotesk';letter-spacing:-.02em" data-in="83.2">Many platforms. <span style="color:var(--red)">One Redington.</span></div>
 </section>
 
+<div id="flash"></div>
 <div id="brand">REDINGTON · PLATFORM ENGINEERING</div>
 <div id="bar"></div>
 </div>
 <script>
+// ---------- quick platform scenes (generated) ----------
+const QP=[
+ {n:'Tech Citadel',r:'Deal registration &amp; incentives',c:'#2dd4a7',u:'deals.redingtontechcitadel.com',img:'techcitadel',pan:-700,v:'$115M',l:'pipeline under management',v2:'700+',l2:'partners on one pipeline'},
+ {n:'CloudQuarks',r:'ISV onboarding &amp; marketplace',c:'#a66bff',u:'cloudquarks.com',img:'cloudquarks',pan:-800,v:'6 mo → 6 days',l:'ISV onboarding cycle',v2:'+$4.75M/yr',l2:'GMV pulled forward'},
+ {n:'RACE',r:'AI Centre of Excellence',c:'#22d3ee',u:'redington-ace.com',img:'race',pan:-330,v:'+$3.0M/yr',l:'GMV via new AI practices',v2:'$200K/yr',l2:'vendor MDF captured'},
+ {n:'Velocity',r:'Loyalty &amp; incentives',c:'#f5a524',u:'www.redingtonvelocity.com',img:'velocity',pan:-850,v:'+$4.5M/yr',l:'billing shifted to Redington',v2:'3%',l2:'rebate on platform billing'},
+ {n:'MAAS',r:'Marketing as a Service',c:'#ff4d4d',u:'redington.events',img:'maas',pan:-650,v:'$1.6M',l:'pipeline influence today',v2:'10',l2:'curated marketing services'}];
+document.getElementById('qp').outerHTML=QP.map((p,i)=>{const s=13+i*4,e=s+4;
+ const dots=QP.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join('');
+ return `<section class="scene qp" data-s="${s}" data-e="${e}" style="--c:${p.c}">
+ <div class="qnum">0${i+1} / 05</div><div class="qdots">${dots}</div>
+ <div class="pl">
+  <div class="browser" data-in="${s+0.05}" data-fx="left"><div class="chrome"><i></i><i></i><i></i><div class="url">${p.u}</div></div>
+   <div class="view"><img src="img/${p.img}.jpg" data-pan="${s+0.2} ${e} 0 ${p.pan}"></div></div>
+  <div>
+   <div class="pname" data-in="${s+0.15}">${p.n}</div>
+   <div class="prole" data-in="${s+0.3}">${p.r}</div>
+   <div class="stats">
+    <div class="stat" data-in="${s+0.6}"><span class="v">${p.v}</span><span class="l">${p.l}</span></div>
+    <div class="stat" data-in="${s+1.0}"><span class="v">${p.v2}</span><span class="l">${p.l2}</span></div>
+   </div>
+  </div></div></section>`}).join('');
+
 const DUR=90;
-const ease=x=>1-Math.pow(1-Math.min(Math.max(x,0),1),3);
+const clamp=(x,a=0,b=1)=>Math.min(Math.max(x,a),b);
+const ease=x=>1-Math.pow(1-clamp(x),3);
+const easeIn=x=>{x=clamp(x);return x*x*x};
+const smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
+const lerp=(a,b,p)=>a+(b-a)*p;
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
 const scenes=[...document.querySelectorAll('.scene')];
 const ins=[...document.querySelectorAll('[data-in]')];
 const pans=[...document.querySelectorAll('[data-pan]')];
 const counts=[...document.querySelectorAll('[data-count]')];
+const cv=document.getElementById('vx'),cx=cv.getContext('2d');
+const svs=[...document.querySelectorAll('#vscene .sv, #vscene .th')];
+const orbs=[...document.querySelectorAll('#fin .orb')];
+const flash=document.getElementById('flash'),rays=document.getElementById('rays'),vscene=document.getElementById('vscene');
+
+// tornado geometry
+const CX=960,Y0=110,Y1=900,T0=38; // tornado starts at t=38, flash at 46
+const R=h=>34+600*Math.pow(1-h,1.5);
+const axis=(h,t)=>Math.sin(h*3.2+t*1.3)*55*h;
+// rest layout for 5 silo cards (row), Hive/Q and thumbnails start off-screen
+const REST=[[330,520],[645,520],[960,520],[1275,520],[1590,520],
+ [-300,180],[2220,220],[-320,900],[2240,860],[960,-260],[-260,560],[2180,560]];
+const START=[0.5,0.9,1.3,1.7,2.1, 1.1,1.5,1.9,2.3,2.7, 3.1,3.5];
+const DURS=3.0;
+
+function tornadoPoint(h,ang,t,collapse){
+  const k=1-collapse*0.97;
+  let x=CX+axis(h,t)+R(h)*k*Math.cos(ang), y=Y0+h*(Y1-Y0)+R(h)*k*0.17*Math.sin(ang);
+  x=lerp(x,CX,collapse); y=lerp(y,500,collapse);
+  return [x,y];
+}
+function drawCanvas(t){
+  cx.clearRect(0,0,1920,1080);
+  const u=t-T0;
+  if(u>-0.5&&u<8.3){
+    const I=smooth((u+0.3)/1.4)*(u<8?1:0);
+    const col=smooth((u-6.6)/1.3); // collapse
+    cx.globalCompositeOperation='lighter';
+    const N=1400;
+    for(let i=0;i<N;i++){
+      const h=rnd(i), a0=rnd(i+9e3)*6.283, w=(1.6+4.2*h)*(1+col*3);
+      // integrated spin: ramps up with I
+      const tt=Math.max(0,u+0.3); const spin=tt<1.4?tt*tt/2.8:tt-0.7; const ang=a0+w*spin+col*col*6;
+      const [x1,y1]=tornadoPoint(h,ang,t,col), [x0,y0]=tornadoPoint(h,ang-0.22-0.15*h,t,col);
+      const front=(Math.sin(ang)+1)/2;
+      const r=Math.round(lerp(255,190,h)), g=Math.round(lerp(90,110,h)), b=Math.round(lerp(70,255,h));
+      cx.strokeStyle=`rgba(${r},${g},${b},${I*(0.08+0.42*front)*(0.6+0.4*rnd(i+5))})`;
+      cx.lineWidth=0.8+2.2*front;
+      cx.beginPath();cx.moveTo(x0,y0);cx.lineTo(x1,y1);cx.stroke();
+    }
+    // glowing core during collapse
+    if(col>0){const g=cx.createRadialGradient(CX,500,0,CX,500,420*col+40);
+      g.addColorStop(0,`rgba(255,255,255,${0.9*col})`);g.addColorStop(0.3,`rgba(200,140,255,${0.6*col})`);g.addColorStop(1,'rgba(120,60,255,0)');
+      cx.fillStyle=g;cx.fillRect(0,0,1920,1080);}
+    cx.globalCompositeOperation='source-over';
+  }
+  // burst after flash
+  const b=t-46;
+  if(b>=0&&b<3.5){
+    cx.globalCompositeOperation='lighter';
+    for(let i=0;i<420;i++){const a=rnd(i+2e4)*6.283,sp=250+1300*rnd(i+3e4);
+      const d=sp*(1-Math.exp(-2.4*b))/2.4,x=CX+Math.cos(a)*d,y=500+Math.sin(a)*d*0.8;
+      const al=Math.exp(-1.3*b)*(0.4+0.6*rnd(i+4e4));const L=14*Math.exp(-1.5*b)+2;
+      cx.strokeStyle=`rgba(${rnd(i)>0.5?'255,140,120':'200,150,255'},${al})`;cx.lineWidth=2;
+      cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-Math.cos(a)*L*3,y-Math.sin(a)*L*2.4);cx.stroke();}
+    for(let k=0;k<3;k++){const p=(b-k*0.22)/1.6;if(p<=0||p>=1)continue;
+      cx.strokeStyle=`rgba(210,170,255,${(1-p)*0.8})`;cx.lineWidth=6*(1-p)+1;
+      cx.beginPath();cx.ellipse(CX,500,60+1500*ease(p),(60+1500*ease(p))*0.62,0,0,6.283);cx.stroke();}
+    cx.globalCompositeOperation='source-over';
+  }
+}
+function drawVortexCards(t){
+  const u=t-T0, col=smooth((u-6.6)/1.3);
+  // shake
+  const sh=smooth((u-2)/3)*(1-smooth((u-7.4)/0.5));
+  vscene.style.translate=`${Math.sin(t*37)*5*sh}px ${Math.cos(t*29)*4*sh}px`;
+  svs.forEach((el,k)=>{
+    const [rx,ry]=REST[k]; const isSilo=k<5;
+    let x=rx,y=ry,sc=1,rot=0,op=1,z=3;
+    if(isSilo){const e=ease((t-(33.8+0.15*k))/0.7);op=e;y=ry+(1-e)*40;}
+    const p=clamp((u-START[k])/DURS);
+    if(p>0){
+      const h=0.08+0.92*easeIn(p*0.95+0.05*p);
+      const ang=k*0.9+1.2+p*p*11+p*3;
+      const [hx,hy]=tornadoPoint(h,ang,t,col);
+      const w=ease(p*3.2);
+      x=lerp(rx,hx,w);y=lerp(ry,hy,w);
+      sc=lerp(1,0.08,easeIn(p));rot=Math.sin(ang)*28*w+p*200;
+      op*= 1-smooth((p-0.8)/0.2);
+      z=Math.sin(ang)>0?4:2;
+    } else if(!isSilo){op=0}
+    if(u>-0.3 && !isSilo && p===0) op=0;
+    el.style.opacity=op;el.style.zIndex=z;
+    el.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) rotate(${rot}deg) scale(${sc})`;
+  });
+}
+function drawFinale(t){
+  const f=t-81;
+  orbs.forEach((el,k)=>{
+    const g=ease((f-0.4-k*0.08)/1.6);
+    const ang=k*6.283/7+f*0.55-1.2;
+    const rx=720*g, ry=210*g;
+    const x=960+Math.cos(ang)*rx, y=470+Math.sin(ang)*ry;
+    const d=(Math.sin(ang)+1)/2;
+    el.style.zIndex=(Math.sin(ang)>0&&g>0.95)?3:1;
+    el.style.opacity=clamp(g*1.5)*(0.55+0.45*d);
+    el.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) scale(${0.72+0.38*d})`;
+  });
+}
 function render(t){
   scenes.forEach(s=>{const a=+s.dataset.s,b=+s.dataset.e;let o=0;
-    if(t>=a&&t<b){o=Math.min(1,(t-a)/0.5,(b-t)/0.5);if(a===0)o=Math.min(1,t/0.8+0.0001, (b-t)/0.5)}
-    if(b>=91)o=Math.min(1,(t-a)/0.5);
+    if(t>=a&&t<b){o=Math.min(1,(t-a)/0.45,(b-t)/0.45);if(a===0)o=Math.min(1,t/0.8+1e-4,(b-t)/0.45)}
+    if(b>=91)o=clamp((t-a)/0.45);
     s.style.opacity=o;s.style.visibility=o>0?'visible':'hidden';
-    const z=1+0.025*Math.max(0,Math.min(1,(t-a)/(b-a)));s.style.transform=`scale(${z})`;});
+    if(s.id!=='vscene'){const z=1+0.025*clamp((t-a)/(b-a));s.style.transform=`scale(${z})`;}});
   ins.forEach(el=>{const p=ease((t-(+el.dataset.in))/0.7),fx=el.dataset.fx||'up';
-    el.style.opacity=p;
-    el.style.transform=fx==='left'?`translateX(${(1-p)*-60}px)`:fx==='scale'?`scale(${0.8+0.2*p})`:`translateY(${(1-p)*40}px)`;});
-  pans.forEach(el=>{const [a,b,y0,y1]=el.dataset.pan.split(' ').map(Number);const p=Math.min(Math.max((t-a)/(b-a),0),1);
+    let o=p; if(el.dataset.out) o*=1-smooth((t-(+el.dataset.out))/0.6);
+    el.style.opacity=o;
+    el.style.transform=fx==='left'?`translateX(${(1-p)*-60}px)`:fx==='scale'?`scale(${0.8+0.2*p})`:fx==='zoom'?`scale(${1.6-0.6*p})`:`translateY(${(1-p)*40}px)`;
+    if(fx==='zoom')el.style.filter=`blur(${(1-p)*18}px)`;});
+  pans.forEach(el=>{const [a,b,y0,y1]=el.dataset.pan.split(' ').map(Number);const p=clamp((t-a)/(b-a));
     const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;el.style.transform=`translateY(${y0+(y1-y0)*e}px)`;});
   counts.forEach(el=>{const p=ease((t-(+el.dataset.t))/1.4),v=+el.dataset.count*p,d=+(el.dataset.dec||0);
     el.textContent=(el.dataset.pre||'')+v.toFixed(d)+(el.dataset.suf||'');});
+  drawCanvas(t);
+  if(t>=33&&t<46.3)drawVortexCards(t);
+  if(t>=81)drawFinale(t);
+  // flash: rise 45.55->46.0, decay to 46.9
+  const fl=t<46?smooth((t-45.55)/0.45):1-smooth((t-46)/0.9);
+  flash.style.opacity=fl;
+  rays.style.transform=`rotate(${(t-46)*6}deg) scale(${0.6+0.4*ease((t-46)/1.5)})`;
   document.getElementById('bar').style.width=(t/DUR*100)+'%';
 }
 window.render=render;render(0);
