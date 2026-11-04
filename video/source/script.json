@@ -3,7 +3,7 @@
   "start": 0.6,
   "end": 6,
   "text": "Redington has built a family of digital platforms.",
-  "rate": "+5%"
+  "rate": "+0%"
  },
  {
   "start": 6.4,
@@ -14,19 +14,19 @@
  {
   "start": 13.2,
   "end": 17,
-  "text": "Tech Citadel, for deal registration.",
-  "rate": "+5%"
+  "text": "Tech. Citadel, for deal registration.",
+  "rate": "+0%"
  },
  {
   "start": 17.1,
   "end": 21,
-  "text": "DNT Onboarding: live in six to ten days.",
+  "text": "D N T Onboarding: live in six to ten days.",
   "rate": "+5%"
  },
  {
   "start": 21.2,
   "end": 25,
-  "text": "CloudQuarks, our cloud and AI marketplace.",
+  "text": "CloudQuarks, the cloud and AI marketplace.",
   "rate": "+5%"
  },
  {
@@ -44,47 +44,53 @@
  {
   "start": 33.2,
   "end": 37,
-  "text": "And MAAS, marketing as a service.",
+  "text": "And Mass, marketing as a service.",
   "rate": "+5%"
  },
  {
-  "start": 37.4,
-  "end": 42,
+  "start": 37.2,
+  "end": 41,
+  "text": "And Hive, the private community for AI leaders.",
+  "rate": "+5%"
+ },
+ {
+  "start": 41.4,
+  "end": 46,
   "text": "But each one was built separately. Its own login, its own data.",
   "rate": "+5%"
  },
  {
-  "start": 42.6,
-  "end": 46,
+  "start": 46.6,
+  "end": 50,
   "text": "So we're bringing them all together.",
   "rate": "+5%"
  },
  {
-  "start": 50.75,
-  "end": 51.7,
+  "start": 54.75,
+  "end": 55.7,
   "text": "Introducing.",
   "rate": "-5%"
  },
  {
-  "start": 51.95,
-  "end": 53.3,
+  "start": 55.95,
+  "end": 57.3,
   "text": "Redington One.",
-  "rate": "-8%"
+  "rate": "+0%"
  },
  {
-  "start": 53.45,
-  "end": 57.0,
+  "start": 57.45,
+  "end": 61,
   "text": "One login, one profile, one wallet, one feed.",
   "rate": "+5%"
  },
  {
-  "start": 57.4,
-  "end": 68,
-  "text": "Every platform becomes a module, built on shared services and one master record, rolled out in three phases, from single sign-on to one front door.",
+  "start": 61.4,
+  "end": 70,
+  "text": "Every platform becomes a module, on shared services and one master record, rolled out in three phases, to one front door.",
   "rate": "+5%"
  },
  {
-  "start": 68.4,
+  "start": 70.4,
   "end": 78,
   "text": "Every platform connects the same way: one login, one record, one wallet and events, and one front door.",
   "rate": "+5%"
@@ -93,6 +99,6 @@
   "start": 79.0,
   "end": 90,
   "text": "One identity. One record. One experience. Many platforms. One Redington.",
-  "rate": "+5%"
+  "rate": "+0%"
  }
 ]
