@@ -4,7 +4,7 @@ const mode=process.argv[2];
 await p.goto('file://'+path.join(__dirname,'index.html'),{waitUntil:'networkidle'});
 await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(1000);
 if(mode==='preview'){for(const t of (process.argv[3]||'5,10,15,35,39,41,43,45,45.8,46.3,47.5,50,60,70,78,82,85,89.5').split(',').map(Number)){await p.evaluate(t=>render(t),t);await p.screenshot({path:`prev/p${t}.jpg`,type:'jpeg',quality:70});}}
-else{const fps=+(process.env.FPS||60),N=90*fps;const ff=spawn('ffmpeg',['-y','-f','image2pipe','-framerate',''+fps,'-c:v','mjpeg','-i','-','-c:v','libx264','-pix_fmt','yuv420p','-crf','18','-preset','slow','-movflags','+faststart','out.mp4'],{stdio:['pipe','ignore','inherit']});
-for(let i=0;i<N;i++){await p.evaluate(t=>render(t),i/fps);const buf=await p.screenshot({type:'jpeg',quality:92});if(!ff.stdin.write(buf))await new Promise(r=>ff.stdin.once('drain',r));if(i%600===0)console.log('frame',i);}
+else{const fps=+(process.env.FPS||60),N=90*fps,F0=+(process.env.F0||0),F1=+(process.env.F1||N);const ff=spawn('ffmpeg',['-y','-f','image2pipe','-framerate',''+fps,'-c:v','mjpeg','-i','-','-c:v','libx264','-pix_fmt','yuv420p','-crf','18','-preset','slow','-movflags','+faststart',process.env.OUT||'out.mp4'],{stdio:['pipe','ignore','inherit']});
+for(let i=F0;i<F1;i++){await p.evaluate(t=>render(t),i/fps);const buf=await p.screenshot({type:'jpeg',quality:92});if(!ff.stdin.write(buf))await new Promise(r=>ff.stdin.once('drain',r));if(i%600===0)console.log('frame',i);}
 ff.stdin.end();await new Promise(r=>ff.on('close',r));}
 await b.close();})();
