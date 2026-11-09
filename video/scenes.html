@@ -97,8 +97,8 @@ function scene(id, html) {
   el.className = 'scene'; el.id = 's-' + id; el.innerHTML = html;
   $('#scenes').appendChild(el);
   const s = S[id];
-  master.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, ease: 'power1.out', immediateRender: false }, Math.max(0, s.start - .45));
-  if (id !== 'finale') master.to(el, { autoAlpha: 0, duration: .55, ease: 'power1.in' }, s.end - .35);
+  master.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: .9, ease: 'sine.inOut', immediateRender: false }, Math.max(0, s.start - .6));
+  if (id !== 'finale') master.to(el, { autoAlpha: 0, duration: .8, ease: 'sine.inOut' }, s.end - .45);
   return el;
 }
 // entrance helpers (all fromTo with immediateRender:false so seeking is deterministic)
@@ -152,7 +152,7 @@ function animateMark(svg) { // electrons orbit, driven by global time
 }
 
 // ---------------------------------------------------------------- persistent chrome
-const CH = { hook: '', core: '01 · The Core', cqc: '02 · CQC Commerce', mkt: '03 · CQM Marketplace', paths: '03 · CQM · Two ways in', catalog: '03 · CQM · Master catalogue', aix: '03 · CQM · AI Exchange', moves: '03 · CQM · To market', cqa: '04 · CQA Analytics', finale: '' };
+const CH = { hook: '', core: '01 · The Core', cqc: '02 · Commerce', mkt: '03 · Marketplace', paths: '03 · Marketplace · Two ways in', catalog: '03 · Marketplace · Master catalogue', aix: '03 · Marketplace · AI Exchange', moves: '03 · Marketplace · To market', cqa: '04 · Analytics', finale: '' };
 fade(S.core.start + 2.2, '#chrome', .6);
 out(S.finale.start - .2, '#chrome', .4);
 
@@ -223,7 +223,7 @@ out(S.finale.start - .2, '#chrome', .4);
       </svg>
       <img src="assets/logo-icon.png" style="position:absolute;height:176px;left:-51px;top:-88px">
     </div>
-    <div class="abs h" id="co-k" style="left:0;right:0;top:318px;text-align:center"><span class="kicker" style="color:var(--green)">CQ · the core</span></div>
+    <div class="abs h" id="co-k" style="left:0;right:0;top:318px;text-align:center"><span class="kicker" style="color:var(--green)">The core</span></div>
     ${ones.map((o, i) => `<div class="abs card h co-o" id="co-o${i}" style="left:${[170, 1300, 735][i]}px;top:${[515, 515, 800][i]}px;width:450px;display:flex;align-items:center;gap:18px;padding:20px 30px;border-color:#5cc06288">${ic(o[0], '#5cc062', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
   `);
   const t0 = S[id].start;
@@ -254,7 +254,7 @@ out(S.finale.start - .2, '#chrome', .4);
   const X = i => 70 + i * 228;
   scene(id, `
     <div class="abs" style="left:110px;top:170px;display:flex;align-items:center;gap:28px">
-      <div class="badge h" id="cc-b" style="width:190px;height:110px;font-size:58px;background:var(--green)">CQC</div>
+      <div class="badge h" id="cc-b" style="width:116px;height:116px;background:#07121c;border:2px solid #5cc062;box-shadow:0 0 40px #5cc06255"><img src="assets/logo-icon.png" style="height:80px"></div>
       <div><div class="sg h" id="cc-t" style="font-size:64px;font-weight:700;line-height:1.05">CloudQuarks Commerce</div>
       <div class="h" id="cc-s" style="font-size:30px;color:var(--mut);margin-top:6px">the engine that <span style="color:var(--green);font-weight:700">fulfils</span> · order → billed, governed service</div></div>
     </div>
@@ -270,7 +270,7 @@ out(S.finale.start - .2, '#chrome', .4);
   `);
   const t0 = S[id].start;
   pop(t0, '#cc-b', { scale: .3, y: 0 }, { duration: .5 }); pop(t0 + .2, '#cc-t', { x: -40, y: 0 }, { duration: .5 }); fade(t0 + .6, '#cc-s', .4);
-  pop(at(id, 'CQC') + 1.7, '#cc-live', { scale: .4, y: 0 }, { duration: .5 });
+  pop(at(id, 'live today') + 1.4, '#cc-live', { scale: .4, y: 0 }, { duration: .5 });
   master.fromTo('#cc-dot', { opacity: 1 }, { opacity: .2, duration: .4, repeat: 12, yoyo: true, immediateRender: false }, t0 + 1.7);
   pop(t0 + .5, '.cc-st', { y: 40 }, { stagger: .05, duration: .45 });
   fade(t0 + 1.2, ['#cc-track', '#cc-tok'], .3);
@@ -296,7 +296,7 @@ out(S.finale.start - .2, '#chrome', .4);
     <div class="abs h" id="mk-beam" style="left:460px;top:-200px;width:1000px;height:1100px;background:radial-gradient(ellipse at 50% 0%,#4c8dff55,transparent 65%);filter:blur(10px)"></div>
     <div class="abs h" id="mk-k" style="left:0;right:0;top:170px;text-align:center"><span class="pill" style="font-size:22px;letter-spacing:.24em;color:#cfe0ff;border-color:#4c8dff88;padding:12px 26px">THE SUBJECT WE'RE ALL HERE TO DISCUSS</span></div>
     <div class="abs" style="left:0;right:0;top:290px;display:flex;justify-content:center;align-items:center;gap:34px">
-      <div class="badge h" id="mk-b" style="width:210px;height:150px;font-size:80px;background:var(--blue);color:#fff;box-shadow:0 0 90px #4c8dff99">CQM</div>
+      <div class="badge h" id="mk-b" style="width:150px;height:150px;background:#07121c;border:2px solid #4c8dff;box-shadow:0 0 40px #4c8dff55"><img src="assets/logo-icon.png" style="height:104px"></div>
       <div class="h" id="mk-t"><div class="sg" style="font-size:118px;font-weight:700;line-height:1;letter-spacing:-.02em">The Marketplace</div>
       <div style="font-size:32px;color:var(--mut);margin-top:10px">CloudQuarks Marketplace · the surface that <b style="color:var(--blue)">sells</b></div></div>
     </div>
@@ -309,8 +309,8 @@ out(S.finale.start - .2, '#chrome', .4);
   const t0 = S[id].start;
   fade(t0, '#mk-beam', 1.2);
   pop(atWord(id, 'subject'), '#mk-k', { y: -20 }, { duration: .6 });
-  pop(atWord(id, 'CQM'), '#mk-b', { scale: .3, y: 0 }, { duration: .6 });
-  pop(atWord(id, 'CQM', .3), '#mk-t', { x: 60, y: 0 }, { duration: .7 });
+  pop(atWord(id, 'CloudQuarks Marketplace'), '#mk-b', { scale: .3, y: 0 }, { duration: .6 });
+  pop(atWord(id, 'CloudQuarks Marketplace', .3), '#mk-t', { x: 60, y: 0 }, { duration: .7 });
   fade(atWord(id, 'This is what'), '#mk-does', .4);
   rights.forEach((r, i) => pop(atWord(id, 'right ' + r[2]), `#mk-r${i}`, { y: 50 }, { duration: .55 }));
 })();
@@ -321,7 +321,7 @@ out(S.finale.start - .2, '#chrome', .4);
   const isv = [['CRM platform', 94], ['Sales analytics', 88], ['Data integration', 81]];
   scene(id, `
     <div class="abs" style="left:0;right:0;top:130px;display:flex;justify-content:center;align-items:center;gap:26px">
-      <div class="badge h" id="pa-b" style="width:150px;height:104px;font-size:56px;background:var(--blue);color:#fff">CQM</div>
+      <div class="badge h" id="pa-b" style="width:104px;height:104px;background:#07121c;border:2px solid #4c8dff;box-shadow:0 0 40px #4c8dff55"><img src="assets/logo-icon.png" style="height:72px"></div>
       <div class="h" id="pa-t"><div class="sg" style="font-size:60px;font-weight:700;line-height:1.05">Two ways in</div><div style="font-size:28px;color:var(--mut)">every buyer starts in one of two places</div></div>
     </div>
     <div class="abs card h" id="pa-l" style="left:110px;top:350px;width:820px;height:400px;padding:38px;border-color:#4c8dff66">
@@ -497,8 +497,8 @@ out(S.finale.start - .2, '#chrome', .4);
   ];
   const flows = ['Quote', 'Order', 'Invoice', 'Renewal'];
   scene(id, `
-    <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#5cc06214;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--green)">CQC</span><span style="font-size:24px;color:var(--mut)">Commerce</span></div>
-    <div class="abs h" id="qa-m" style="left:1020px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--blue);background:#4c8dff14;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--blue)">CQM</span><span style="font-size:24px;color:var(--mut)">Marketplace</span></div>
+    <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#5cc06214;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:36px;font-weight:700;color:var(--green)">Commerce</span></div>
+    <div class="abs h" id="qa-m" style="left:1020px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--blue);background:#4c8dff14;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:36px;font-weight:700;color:var(--blue)">Marketplace</span></div>
     <div class="abs" id="qa-flow" style="left:0;top:0">${Array.from({ length: 16 }, (_, i) => `<div class="abs pill h qa-f" style="left:${(i % 2 ? 1290 : 630) + ((i * 37) % 120) - 60}px;top:230px;font-size:18px;padding:6px 14px;color:#bff4fb;border-color:#38d3e855;transform:translateX(-50%)">${flows[i % 4]}</div>`).join('')}</div>
     <div class="abs h" id="qa-bd" style="left:0;right:0;top:268px;text-align:center;font-size:40px;font-weight:700;text-shadow:0 0 24px #040a15,0 0 12px #040a15" class="sg"><span id="qa-bd1" class="h">Better data.</span> <span id="qa-bd2" class="h" style="color:var(--cyan)">Better decisions.</span></div>
     <svg class="abs" id="qa-mesh" style="left:0;top:0" width="1920" height="1080">
@@ -510,7 +510,7 @@ out(S.finale.start - .2, '#chrome', .4);
         return l + [...A, ...B].filter(p => Math.abs(p[0] - 960) > 60).map(p => `<circle class="qa-n" data-d="${Math.abs(p[0] - 960)}" cx="${p[0]}" cy="${p[1]}" r="8" fill="#38d3e8"/>`).join(''); })()}
       <circle id="qa-glow" cx="960" cy="420" r="150" fill="url(#qg)"/>
       <circle cx="960" cy="420" r="72" fill="#061826" stroke="#38d3e8" stroke-width="4" id="qa-hub"/>
-      <text x="960" y="436" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="44" fill="#bff4fb" id="qa-hubt">CQA</text>
+      <text x="960" y="428" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#bff4fb" id="qa-hubt">ANALYTICS</text>
     </svg>
     <div class="abs h" id="qa-lab" style="left:0;right:0;top:500px;text-align:center;font-size:24px;color:var(--mut)"><b style="color:var(--ink)">CloudQuarks Analytics</b> · the layer that learns, under both engines</div>
     ${tiles.map((t, i) => `<div class="abs card h qa-t" id="qa-t${i}" style="left:${90 + i * 292}px;top:560px;width:272px;height:300px;padding:20px">
@@ -523,13 +523,13 @@ out(S.finale.start - .2, '#chrome', .4);
   pop(t0, ['#qa-c', '#qa-m'], { y: -30 }, { stagger: .15 });
   $$('.qa-cv').forEach(p => draw(t0 + .2, p, .8));
   master.set('#qa-mesh', { autoAlpha: 1 }, 0);
-  master.fromTo(['#qa-hub', '#qa-hubt', '#qa-glow'], { autoAlpha: 0, scale: .2, svgOrigin: '960 420' }, { autoAlpha: 1, scale: 1, duration: .8, ease: 'back.out(2)', immediateRender: false }, atWord(id, 'CQA'));
+  master.fromTo(['#qa-hub', '#qa-hubt', '#qa-glow'], { autoAlpha: 0, scale: .2, svgOrigin: '960 420' }, { autoAlpha: 1, scale: 1, duration: .8, ease: 'back.out(2)', immediateRender: false }, atWord(id, 'Analytics'));
   master.set(['#qa-hub', '#qa-hubt', '#qa-glow'], { autoAlpha: 0 }, 0);
   master.set(['.qa-n', '.qa-ln'], { autoAlpha: 0 }, 0);
-  $$('.qa-n').forEach(n => master.fromTo(n, { autoAlpha: 0, attr: { r: 0 } }, { autoAlpha: 1, attr: { r: 8 }, duration: .4, ease: 'back.out(3)', immediateRender: false }, atWord(id, 'CQA') + .3 + +n.dataset.d / 1600));
-  master.fromTo('.qa-ln', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'CQA') + .6);
+  $$('.qa-n').forEach(n => master.fromTo(n, { autoAlpha: 0, attr: { r: 0 } }, { autoAlpha: 1, attr: { r: 8 }, duration: .4, ease: 'back.out(3)', immediateRender: false }, atWord(id, 'Analytics') + .3 + +n.dataset.d / 1600));
+  master.fromTo('.qa-ln', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'Analytics') + .6);
   fade(atWord(id, 'Analytics'), '#qa-lab', .5);
-  master.fromTo('#qa-glow', { scale: .9 }, { scale: 1.15, svgOrigin: '960 420', duration: .9, repeat: 9, yoyo: true, ease: 'sine.inOut', immediateRender: false }, atWord(id, 'CQA') + .8);
+  master.fromTo('#qa-glow', { scale: .9 }, { scale: 1.15, svgOrigin: '960 420', duration: .9, repeat: 9, yoyo: true, ease: 'sine.inOut', immediateRender: false }, atWord(id, 'Analytics') + .8);
   const tF = t0 + .5;
   $$('.qa-f').forEach((f, i) => {
     master.fromTo(f, { autoAlpha: 0, y: 0 }, { keyframes: [{ autoAlpha: 1, y: 40, duration: .4 }, { y: 150, duration: .9, ease: 'power1.in' }, { autoAlpha: 0, duration: .2 }], immediateRender: false }, tF + i * .05);
@@ -555,22 +555,22 @@ out(S.finale.start - .2, '#chrome', .4);
   const P = 480;
   const plane = (pid, w, h, x, y, bg, bd, inner) => `<div class="fx-pl" id="${pid}" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:26px;background:${bg};border:3px solid ${bd};box-shadow:0 0 60px ${bd}88, inset 0 0 60px ${bd}44;display:flex;align-items:center;justify-content:center;overflow:hidden">${inner}</div>`;
   const grid = c => `<div style="position:absolute;inset:0;background-image:linear-gradient(${c}33 1px,transparent 1px),linear-gradient(90deg,${c}33 1px,transparent 1px);background-size:40px 40px"></div>`;
-  const big = (t, c) => `<span class="sg" style="position:relative;font-size:150px;font-weight:700;color:${c};letter-spacing:-.02em">${t}</span>`;
+  const big = (t, c) => `<span class="sg" style="position:relative;font-size:84px;font-weight:700;color:${c};letter-spacing:-.01em">${t}</span>`;
   const label = (lid, y, c, k, t, d) => `<div class="abs h fx-lab" id="${lid}" style="left:140px;top:${y}px;width:560px">
       <div style="display:flex;align-items:center;gap:16px"><span style="width:16px;height:16px;border-radius:50%;background:${c};box-shadow:0 0 20px ${c}"></span><span class="kicker" style="color:${c}">${k}</span></div>
       <div class="sg" style="font-size:58px;font-weight:700;line-height:1.05;margin-top:6px">${t}</div><div style="font-size:24px;color:var(--mut);margin-top:6px">${d}</div></div>`;
   scene(id, `
     <div class="abs" id="fx-wrap" style="left:1200px;top:540px;perspective:2400px;width:0;height:0">
       <div id="fx-stack" style="position:absolute;left:0;top:0;transform-style:preserve-3d">
-        ${plane('fx-cqa', P, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0d2350ee,#173a7aee)', '#38d3e8', grid('#38d3e8') + big('CQA', '#bff4fb'))}
-        ${plane('fx-cqc', P / 2 - 12, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0f3d22ee,#006837ee)', '#5cc062', grid('#5cc062') + `<span class="sg" style="position:relative;font-size:84px;font-weight:700;color:#d6f5d8">CQC</span>`)}
-        ${plane('fx-cqm', P / 2 - 12, P, 12, -P / 2, 'linear-gradient(135deg,#0d2a5cee,#1d5fbfee)', '#4c8dff', grid('#4c8dff') + `<span class="sg" style="position:relative;font-size:84px;font-weight:700;color:#dbe7ff">CQM</span>`)}
+        ${plane('fx-cqa', P, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0d2350ee,#173a7aee)', '#38d3e8', grid('#38d3e8') + big('Analytics', '#bff4fb'))}
+        ${plane('fx-cqc', P / 2 - 12, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0f3d22ee,#006837ee)', '#5cc062', grid('#5cc062') + `<span class="sg" style="position:relative;font-size:40px;font-weight:700;color:#d6f5d8">Commerce</span>`)}
+        ${plane('fx-cqm', P / 2 - 12, P, 12, -P / 2, 'linear-gradient(135deg,#0d2a5cee,#1d5fbfee)', '#4c8dff', grid('#4c8dff') + `<span class="sg" style="position:relative;font-size:40px;font-weight:700;color:#dbe7ff">Marketplace</span>`)}
         ${plane('fx-cq', P, P, -P / 2, -P / 2, 'linear-gradient(135deg,#00924aee,#006837ee)', '#5cc062', grid('#ffffff') + `<img src="assets/logo-icon.png" style="position:relative;height:300px;filter:brightness(1.5) saturate(.6)">`)}
       </div>
     </div>
-    ${label('fx-l0', 230, '#5cc062', 'CQ', 'One core.', 'one platform · one identity · one data model')}
-    ${label('fx-l1', 440, '#4c8dff', 'CQC + CQM', 'Two branches.', 'Commerce fulfils · the Marketplace sells')}
-    ${label('fx-l2', 650, '#38d3e8', 'CQA', 'One intelligence layer.', 'Analytics that learns, under both')}
+    ${label('fx-l0', 230, '#5cc062', 'The core', 'One core.', 'one platform · one identity · one data model')}
+    ${label('fx-l1', 440, '#4c8dff', 'Commerce + Marketplace', 'Two branches.', 'Commerce fulfils · the Marketplace sells')}
+    ${label('fx-l2', 650, '#38d3e8', 'Analytics', 'One intelligence layer.', 'Analytics that learns, under both')}
     <div class="abs" id="fx-end" style="left:0;right:0;top:300px;text-align:center;visibility:hidden">
       <img id="fx-logo" src="assets/logo-white.png" style="width:1100px">
       <div style="font-size:36px;color:var(--mut);margin-top:46px">One core · Two branches · One intelligence layer</div>
