@@ -12,8 +12,8 @@ if os.path.exists(_CA):
     certifi.where = lambda: _CA
 import edge_tts  # noqa: E402
 
-VOICE = os.environ.get("CQ_VOICE", "en-US-AndrewMultilingualNeural")
-RATE = os.environ.get("CQ_RATE", "+12%")
+VOICE = os.environ.get("CQ_VOICE", "en-US-BrianMultilingualNeural")
+RATE = os.environ.get("CQ_RATE", "+11%")
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "build")
 os.makedirs(os.path.join(OUT, "audio"), exist_ok=True)
@@ -23,7 +23,7 @@ def display(text: str) -> str:
     """Turn phonetic spellings ("C Q C", "A I") back into display text."""
     text = re.sub(r"\b(?:[A-Z0-9] ){1,5}[A-Z0-9]\b", lambda m: m.group(0).replace(" ", ""), text)
     return text.replace("API first", "API-first").replace("entity led", "entity-led") \
-               .replace("mini shop", "mini-shop").replace("AI ready", "AI-ready").replace("White label", "White-label")
+               .replace("mini shop", "mini-shop").replace("AI ready", "AI-ready").replace("Cloud Quarks", "CloudQuarks").replace("White label", "White-label")
 
 
 def duration(path: str) -> float:
@@ -53,7 +53,7 @@ def chunk(sentence: str, start: float, end: float, max_words: int = 10):
 async def scene(item):
     path = os.path.join(OUT, "audio", f"{item['id']}.mp3")
     meta = path[:-4] + ".json"
-    key = {"text": item["text"], "voice": VOICE, "rate": RATE}
+    key = {"text": item["text"], "voice": VOICE, "rate": item.get("rate", RATE)}
     if os.path.exists(meta):
         m = json.load(open(meta))
         if m["key"] == key:
@@ -70,7 +70,7 @@ async def scene(item):
 
 
 async def synth(item, path):
-    comm = edge_tts.Communicate(item["text"], VOICE, rate=RATE, boundary="SentenceBoundary")
+    comm = edge_tts.Communicate(item["text"], VOICE, rate=item.get("rate", RATE), boundary="SentenceBoundary")
     sentences = []
     with open(path, "wb") as f:
         async for c in comm.stream():

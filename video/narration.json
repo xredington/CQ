@@ -7,12 +7,13 @@
  {
   "id": "core",
   "pad": 0.3,
-  "text": "CloudQuarks, by Redington, orchestrates it all, from one core. One platform. One identity. One data model."
+  "text": "Enter Cloud Quarks, by Redington. It orchestrates it all, from one core. One platform. One identity. One data model.",
+  "rate": "+4%"
  },
  {
   "id": "cqc",
   "pad": 0.3,
-  "text": "C Q C, Commerce, is live today. Quote. Provision. Bill. Reconcile. Govern. Every order becomes a running, billed service."
+  "text": "C Q C, Commerce, is live today. It quotes, provisions, bills, reconciles and governs every order, as a running service."
  },
  {
   "id": "paths",
@@ -27,11 +28,12 @@
  {
   "id": "cqa",
   "pad": 0.3,
-  "text": "Underneath, C Q A, Analytics, learns. Forecasting. Renewal risk. Partner performance. Margin integrity."
+  "text": "Underneath, C Q A, Analytics, learns. Forecasting, renewal risk, partner performance, and margin integrity."
  },
  {
   "id": "finale",
   "pad": 2.8,
-  "text": "One core. Two branches. One intelligence layer. That's CloudQuarks."
+  "text": "One core. Two branches. One intelligence layer. That's Cloud Quarks.",
+  "rate": "+4%"
  }
 ]

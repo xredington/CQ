@@ -83,6 +83,13 @@ function at(id, phrase, off = 0) {
   if (!c) { console.warn('phrase not found', id, phrase); return s.start + off; }
   return c[1] + off;
 }
+function atWord(id, word, off = 0) {
+  const s = S[id];
+  const c = s.captions.find(c => c[0].toLowerCase().includes(word.toLowerCase()));
+  if (!c) { console.warn('word not found', id, word); return s.start + off; }
+  const i = c[0].toLowerCase().indexOf(word.toLowerCase());
+  return c[1] + (c[2] - c[1]) * i / c[0].length + off;
+}
 let seed = 7;
 const rnd = () => (seed = (seed * 16807) % 2147483647, (seed - 1) / 2147483646);
 function scene(id, html) {
@@ -200,14 +207,24 @@ out(S.finale.start - .2, '#chrome', .4);
       <div style="display:flex;justify-content:center;align-items:center"><img id="tt-ic" src="assets/logo-icon.png" style="height:280px"><img id="tt-wm" src="assets/logo-wordmark.png" style="height:280px"></div>
       <div id="tt-sub" class="h" style="font-size:38px;color:var(--mut);margin-top:20px;font-weight:500">the architecture of <span style="color:var(--ink)">orchestration</span></div>
     </div>
-    <div class="abs h" id="co-bar" style="left:260px;top:520px;width:1400px;height:120px;border-radius:22px;background:linear-gradient(90deg,#00924a,#006837);display:flex;align-items:center;padding:0 36px;gap:26px;box-shadow:0 0 90px #5cc06255">
-      <span class="badge" style="width:120px;height:80px;font-size:46px;background:#eaf1fb;color:#00924a">CQ</span>
-      <div><div class="sg" style="font-size:44px;font-weight:700;letter-spacing:.06em">THE CORE</div><div style="font-size:24px;opacity:.9">the neural layer · everything else is a branch of it</div></div>
+    <svg class="abs" style="left:0;top:0" width="1920" height="1080">
+      <path class="co-sp" id="co-sp0" d="M620 560 L760 560" stroke="#5cc062" stroke-width="3" fill="none"/>
+      <path class="co-sp" id="co-sp1" d="M1300 560 L1160 560" stroke="#5cc062" stroke-width="3" fill="none"/>
+      <path class="co-sp" id="co-sp2" d="M960 760 L960 800" stroke="#5cc062" stroke-width="3" fill="none"/>
+    </svg>
+    <div class="abs h" id="co-core" style="left:960px;top:560px;width:0;height:0">
+      <svg width="520" height="520" viewBox="-260 -260 520 520" style="position:absolute;left:-260px;top:-260px;overflow:visible">
+        <defs><radialGradient id="cg2"><stop offset="0" stop-color="#5cc062" stop-opacity=".5"/><stop offset=".6" stop-color="#00924a" stop-opacity=".12"/><stop offset="1" stop-color="#00924a" stop-opacity="0"/></radialGradient></defs>
+        <circle id="co-glow" r="250" fill="url(#cg2)"/>
+        <circle id="co-ring1" r="200" fill="none" stroke="#5cc062" stroke-width="2.5" stroke-dasharray="3 11"/>
+        <circle id="co-ring2" r="168" fill="none" stroke="#4c8dff" stroke-opacity=".6" stroke-width="3" stroke-dasharray="60 24"/>
+        ${Array.from({ length: 6 }, (_, i) => { const a = i / 6 * Math.PI * 2; return `<circle class="co-dot" cx="${Math.cos(a) * 200}" cy="${Math.sin(a) * 200}" r="7" fill="#5cc062"/>`; }).join('')}
+        <circle r="132" fill="#06140c" stroke="#5cc062" stroke-width="4"/>
+      </svg>
+      <img src="assets/logo-icon.png" style="position:absolute;height:176px;left:-51px;top:-88px">
     </div>
-    <div class="abs" style="left:0;right:0;top:690px;display:flex;justify-content:center;gap:30px">
-      ${ones.map((o, i) => `<div class="card h co-o" id="co-o${i}" style="display:flex;align-items:center;gap:18px;padding:22px 34px;border-color:#5cc06266">${ic(o[0], '#5cc062', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
-    </div>
-    <div class="abs h" id="co-tags" style="left:0;right:0;top:830px;text-align:center;font-size:22px;letter-spacing:.3em;color:var(--cyan);font-weight:700">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
+    <div class="abs h" id="co-k" style="left:0;right:0;top:318px;text-align:center"><span class="kicker" style="color:var(--green)">CQ · the core</span></div>
+    ${ones.map((o, i) => `<div class="abs card h co-o" id="co-o${i}" style="left:${[170, 1300, 735][i]}px;top:${[515, 515, 800][i]}px;width:450px;display:flex;align-items:center;gap:18px;padding:20px 30px;border-color:#5cc06288">${ic(o[0], '#5cc062', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
   `);
   const t0 = S[id].start;
   fade(t0, '#tt-logo', .01);
@@ -217,9 +234,16 @@ out(S.finale.start - .2, '#chrome', .4);
   const tC = at(id, 'CloudQuarks') + 2.6;
   master.to('#tt-logo', { y: -160, scale: .58, duration: .7, ease: 'power3.inOut' }, tC - .3);
   out(tC - .3, '#tt-sub', .3);
-  pop(tC + .2, '#co-bar', { scaleX: .3, y: 0 }, { duration: .7, ease: 'expo.out' });
-  ones.forEach((o, i) => pop(at(id, o[1]), `#co-o${i}`, { y: 40 }, { duration: .5 }));
-  fade(at(id, 'data model') + .5, '#co-tags', .5);
+  pop(tC + .1, '#co-core', { scale: .2, y: 0 }, { duration: 1, ease: 'expo.out' });
+  fade(tC + .5, '#co-k', .5);
+  master.to('#co-ring1', { rotation: 360, svgOrigin: '0 0', duration: 30, ease: 'none' }, tC);
+  master.to('#co-ring2', { rotation: -360, svgOrigin: '0 0', duration: 22, ease: 'none' }, tC);
+  master.fromTo('#co-glow', { scale: .92, svgOrigin: '0 0' }, { scale: 1.08, duration: 1.2, repeat: 7, yoyo: true, ease: 'sine.inOut', immediateRender: false }, tC);
+  ones.forEach((o, i) => {
+    const t = at(id, o[1]);
+    draw(t - .2, $(`#co-sp${i}`), .4);
+    pop(t, `#co-o${i}`, { y: 30 }, { duration: .5 });
+  });
 })();
 
 // ================================================================ 3. CQC
@@ -254,14 +278,14 @@ out(S.finale.start - .2, '#chrome', .4);
   updaters.push(() => { $('#cc-state').textContent = sp.i >= 0 ? '· ' + st[sp.i][2] : ''; });
   master.set('#cc-tok', { x: X(0) + 103 }, 0);
   st.forEach((s, i) => {
-    const t = [at(id, 'Quote.'), at(id, 'Provision'), at(id, 'Bill.'), at(id, 'Reconcile'), at(id, 'Reconcile') + .5, at(id, 'Govern'), at(id, 'Every order'), at(id, 'Every order') + .6][i];
+    const t = [atWord(id, 'quotes'), atWord(id, 'provisions'), atWord(id, 'bills'), atWord(id, 'reconciles'), atWord(id, 'reconciles', .45), atWord(id, 'governs'), atWord(id, 'running'), atWord(id, 'running', .5)][i];
     master.to('#cc-tok', { x: X(i) + 103, duration: .35, ease: 'power2.inOut' }, t - .2);
     master.to('#cc-fill', { scaleX: (X(i) + 103 - 90) / 1740, duration: .35, ease: 'power2.inOut' }, t - .2);
     lit(t, `#cc-st${i}`, '#5cc062', .3);
     master.set(sp, { i }, t);
     fade(t + .1, `#cc-st${i} .cc-ok`, .25);
   });
-  pop(at(id, 'Every order') + 1.4, '#cc-eight', { y: 20 }, { duration: .5 });
+  pop(atWord(id, 'service', .5), '#cc-eight', { y: 20 }, { duration: .5 });
 })();
 
 // ================================================================ 4. CQM + two paths
@@ -370,11 +394,19 @@ out(S.finale.start - .2, '#chrome', .4);
     <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#5cc06214;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--green)">CQC</span><span style="font-size:24px;color:var(--mut)">Commerce</span></div>
     <div class="abs h" id="qa-m" style="left:1020px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--blue);background:#4c8dff14;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--blue)">CQM</span><span style="font-size:24px;color:var(--mut)">Marketplace</span></div>
     <div class="abs" id="qa-flow" style="left:0;top:0">${Array.from({ length: 16 }, (_, i) => `<div class="abs pill h qa-f" style="left:${(i % 2 ? 1290 : 630) + ((i * 37) % 120) - 60}px;top:230px;font-size:18px;padding:6px 14px;color:#bff4fb;border-color:#38d3e855;transform:translateX(-50%)">${flows[i % 4]}</div>`).join('')}</div>
-    <div class="abs h" id="qa-bd" style="left:0;right:0;top:300px;text-align:center;font-size:40px;font-weight:700" class="sg"><span id="qa-bd1" class="h">Better data.</span> <span id="qa-bd2" class="h" style="color:var(--cyan)">Better decisions.</span></div>
-    <div class="abs h" id="qa-a" style="left:200px;top:400px;width:1520px;height:110px;border-radius:20px;background:linear-gradient(90deg,#0d2350,#173a7a);border:2px solid #38d3e8;display:flex;align-items:center;padding:0 40px;gap:24px;box-shadow:0 0 80px #38d3e844">
-      <span class="sg" style="font-size:56px;font-weight:700;color:var(--cyan)">CQA</span><div><div class="sg" style="font-size:32px;font-weight:700">CloudQuarks Analytics</div><div style="font-size:22px;color:var(--mut)">the layer that learns, under both engines</div></div>
-      ${ic('brain', '#38d3e8', 56).replace('class="ico"', 'class="ico" style="margin-left:auto"')}
-    </div>
+    <div class="abs h" id="qa-bd" style="left:0;right:0;top:268px;text-align:center;font-size:40px;font-weight:700;text-shadow:0 0 24px #040a15,0 0 12px #040a15" class="sg"><span id="qa-bd1" class="h">Better data.</span> <span id="qa-bd2" class="h" style="color:var(--cyan)">Better decisions.</span></div>
+    <svg class="abs" id="qa-mesh" style="left:0;top:0" width="1920" height="1080">
+      <defs><radialGradient id="qg"><stop offset="0" stop-color="#38d3e8" stop-opacity=".45"/><stop offset="1" stop-color="#38d3e8" stop-opacity="0"/></radialGradient></defs>
+      <path class="qa-cv" d="M630 222 C 630 330, 860 300, 905 380" stroke="#5cc062" stroke-width="3" fill="none"/>
+      <path class="qa-cv" d="M1290 222 C 1290 330, 1060 300, 1015 380" stroke="#4c8dff" stroke-width="3" fill="none"/>
+      ${(() => { const A = Array.from({ length: 11 }, (_, i) => [160 + i * 160, 380]), B = Array.from({ length: 10 }, (_, i) => [240 + i * 160, 460]);
+        let l = ''; A.forEach((p, i) => [B[i - 1], B[i]].forEach(q => { if (q && Math.abs(p[0] - 960) > 60) l += `<line class="qa-ln" x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="#38d3e8" stroke-opacity=".35" stroke-width="2"/>`; }));
+        return l + [...A, ...B].filter(p => Math.abs(p[0] - 960) > 60).map(p => `<circle class="qa-n" data-d="${Math.abs(p[0] - 960)}" cx="${p[0]}" cy="${p[1]}" r="8" fill="#38d3e8"/>`).join(''); })()}
+      <circle id="qa-glow" cx="960" cy="420" r="150" fill="url(#qg)"/>
+      <circle cx="960" cy="420" r="72" fill="#061826" stroke="#38d3e8" stroke-width="4" id="qa-hub"/>
+      <text x="960" y="436" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="44" fill="#bff4fb" id="qa-hubt">CQA</text>
+    </svg>
+    <div class="abs h" id="qa-lab" style="left:0;right:0;top:500px;text-align:center;font-size:24px;color:var(--mut)"><b style="color:var(--ink)">CloudQuarks Analytics</b> · the layer that learns, under both engines</div>
     ${tiles.map((t, i) => `<div class="abs card h qa-t" id="qa-t${i}" style="left:${90 + i * 292}px;top:560px;width:272px;height:300px;padding:20px">
       <div style="display:flex;align-items:center;gap:10px">${ic(t[0], '#38d3e8', 26)}<span style="font-size:20px;font-weight:700;line-height:1.15">${t[1]}</span></div>
       <svg viewBox="-5 -15 240 135" width="232" height="140" style="margin-top:16px;overflow:visible">${t[2]}</svg>
@@ -383,23 +415,31 @@ out(S.finale.start - .2, '#chrome', .4);
   `);
   const t0 = S[id].start;
   pop(t0, ['#qa-c', '#qa-m'], { y: -30 }, { stagger: .15 });
-  pop(t0 + .3, '#qa-a', { y: 40, scale: .9 }, { duration: .6 });
+  $$('.qa-cv').forEach(p => draw(t0 + .2, p, .8));
+  master.set('#qa-mesh', { autoAlpha: 1 }, 0);
+  master.fromTo(['#qa-hub', '#qa-hubt', '#qa-glow'], { autoAlpha: 0, scale: .2, svgOrigin: '960 420' }, { autoAlpha: 1, scale: 1, duration: .8, ease: 'back.out(2)', immediateRender: false }, atWord(id, 'CQA'));
+  master.set(['#qa-hub', '#qa-hubt', '#qa-glow'], { autoAlpha: 0 }, 0);
+  master.set(['.qa-n', '.qa-ln'], { autoAlpha: 0 }, 0);
+  $$('.qa-n').forEach(n => master.fromTo(n, { autoAlpha: 0, attr: { r: 0 } }, { autoAlpha: 1, attr: { r: 8 }, duration: .4, ease: 'back.out(3)', immediateRender: false }, atWord(id, 'CQA') + .3 + +n.dataset.d / 1600));
+  master.fromTo('.qa-ln', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'CQA') + .6);
+  fade(atWord(id, 'Analytics'), '#qa-lab', .5);
+  master.fromTo('#qa-glow', { scale: .9 }, { scale: 1.15, svgOrigin: '960 420', duration: .9, repeat: 9, yoyo: true, ease: 'sine.inOut', immediateRender: false }, atWord(id, 'CQA') + .8);
   const tF = t0 + .5;
   $$('.qa-f').forEach((f, i) => {
     master.fromTo(f, { autoAlpha: 0, y: 0 }, { keyframes: [{ autoAlpha: 1, y: 40, duration: .4 }, { y: 150, duration: .9, ease: 'power1.in' }, { autoAlpha: 0, duration: .2 }], immediateRender: false }, tF + i * .05);
   });
   fade(t0 + 2.8, '#qa-bd', .01); pop(t0 + 2.8, '#qa-bd1', { y: 20 }); pop(t0 + 3.2, '#qa-bd2', { y: 20 });
   tiles.forEach((t, i) => {
-    const ti = [at(id, 'Forecasting'), at(id, 'Renewal'), at(id, 'Renewal') + .6, at(id, 'Partner'), at(id, 'Partner') + .6, at(id, 'Margin')][i] - .1; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
+    const ti = [atWord(id, 'Forecasting'), atWord(id, 'renewal'), atWord(id, 'renewal', .5), atWord(id, 'partner'), atWord(id, 'partner', .5), atWord(id, 'margin')][i] - .1; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
     $$(`#qa-t${i} .cq-l`).forEach(p => draw(ti + .3, p, 1.2));
     master.fromTo(`#qa-t${i} .cq-b`, { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: .8, stagger: .1, ease: 'power2.out', immediateRender: false }, ti + .3);
     master.fromTo(`#qa-t${i} .cq-c`, { scaleY: 0, transformOrigin: 'center bottom' }, { scaleY: 1, duration: .6, stagger: .05, ease: 'power2.out', immediateRender: false }, ti + .3);
   });
   const dot = $('#qa-t2 .cq-dot'); const mx = 58, mn = 20; dot.setAttribute('cy', (110 - (58 - mn) / (mx - mn) * 110));
-  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, at(id, 'Renewal') + 1.4);
-  const g = $('#qa-t5 .cq-g'); draw(at(id, 'Margin') + .3, g, 1.2, 'power2.out');
-  master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, at(id, 'Margin') + 1.5);
-  counter(at(id, 'Margin') + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
+  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, atWord(id, 'renewal', 1.4));
+  const g = $('#qa-t5 .cq-g'); draw(atWord(id, 'margin') + .3, g, 1.2, 'power2.out');
+  master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, atWord(id, 'margin') + 1.5);
+  counter(atWord(id, 'margin') + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
   fade(t0 + 1, '#qa-note');
 })();
 
