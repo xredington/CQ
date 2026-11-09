@@ -23,7 +23,7 @@ def display(text: str) -> str:
     """Turn phonetic spellings ("C Q C", "A I") back into display text."""
     text = re.sub(r"\b(?:[A-Z0-9] ){1,5}[A-Z0-9]\b", lambda m: m.group(0).replace(" ", ""), text)
     return text.replace("API first", "API-first").replace("entity led", "entity-led") \
-               .replace("mini shop", "mini-shop").replace("AI ready", "AI-ready").replace("Cloud Quarks", "CloudQuarks").replace("White label", "White-label")
+               .replace("mini shop", "mini-shop").replace("AI ready", "AI-ready").replace("Cloud Quarks", "CloudQuarks").replace("Track My Cloud", "TrackMyCloud").replace("Fin Ops", "FinOps").replace("Ree onix", "Reonix").replace("White label", "White-label")
 
 
 def duration(path: str) -> float:

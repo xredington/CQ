@@ -362,7 +362,7 @@ out(S.finale.start - .2, '#chrome', .4);
   const cols = [
     ['cloud', 'Hyperscalers + SaaS vendors', '#4c8dff', ['AWS', 'Microsoft Azure', 'Microsoft 365', 'Google Cloud', 'Autodesk', 'Adobe'], 'Hyperscalers'],
     ['link', 'Connected marketplaces', '#38d3e8', ['AWS · Azure · GCP', 'Huawei & Alibaba Cloud', 'Anthropic · OpenAI', 'AI Exchange'], 'Connected'],
-    ['blocks', 'Third-party offerings', '#ffb547', ['DNT solutions', 'ISV solutions', 'Tier 2 + 3 vendor offers'], 'DNT'],
+    ['blocks', 'Third-party offerings', '#ffb547', ['DNT solutions', 'Tier 2 + 3 vendor offers'], 'DNT'],
     ['briefcase', 'Services', '#5cc062', ['Managed services', 'Professional services', 'Partner services'], 'managed'],
   ];
   scene(id, `
@@ -438,7 +438,7 @@ out(S.finale.start - .2, '#chrome', .4);
 // ================================================================ 5. FOUR MOVES
 (() => {
   const id = 'moves';
-  const cat = ['Hyperscalers & SaaS vendors', 'Connected marketplaces', 'DNT & ISV solutions', 'Managed & professional services'];
+  const cat = ['Hyperscalers & SaaS vendors', 'Connected marketplaces', 'DNT solutions', 'Managed & professional services'];
   const tax = [['UAE', 'VAT', 5], ['KSA', 'VAT', 15], ['Kenya', 'VAT', 16], ['India', 'GST', 18]];
   const stores = [['Africa', 'regional portfolio', '#5cc062'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
   const models = [['handshake', 'Direct'], ['network', 'Indirect'], ['store', 'Reseller mini-shop'], ['palette', 'White-label B2B2C'], ['blocks', 'Platform-as-a-Service']];
@@ -489,10 +489,10 @@ out(S.finale.start - .2, '#chrome', .4);
   const usage = [20, 22, 21, 23, 22, 24, 23, 58, 25, 24, 23, 25];
   const tiles = [
     ['trending-up', 'Forecasting', `<path d="${actPath}" stroke="#38d3e8" stroke-width="4" fill="none" class="cq-l"/><path d="${fcPath}" stroke="#38d3e8" stroke-width="4" fill="none" stroke-dasharray="8 7" class="cq-l"/>`, 'Next quarter +12%', 'Forecasting'],
-    ['refresh-cw', 'Churn & renewal risk', [['Acct · Retail', 82, '#ff5d6c'], ['Acct · Health', 64, '#ffb547'], ['Acct · Edu', 35, '#5cc062'], ['Acct · Logistics', 22, '#5cc062']].map((r, i) => `<text x="0" y="${16 + i * 28}" font-size="14" fill="#8fa3bf">${r[0]}</text><rect class="cq-b" x="110" y="${4 + i * 28}" width="${r[1] * 1.2}" height="16" rx="4" fill="${r[2]}"/>`).join(''), '3 renewals need action', 'Churn'],
+    ['refresh-cw', 'Churn & renewal risk', [['Acct · Retail', 82, '#ff5d6c'], ['Acct · Health', 64, '#ffb547'], ['Acct · Edu', 35, '#5cc062'], ['Acct · Logistics', 22, '#5cc062']].map((r, i) => `<text x="0" y="${16 + i * 28}" font-size="14" fill="#8fa3bf">${r[0]}</text><rect class="cq-b" x="110" y="${4 + i * 28}" width="${r[1] * 1.2}" height="16" rx="4" fill="${r[2]}"/>`).join(''), '3 renewals need action · Reonix', 'Churn'],
     ['activity', 'Usage anomalies', `<path d="${sp(usage)}" stroke="#a78bfa" stroke-width="4" fill="none" class="cq-l"/><circle class="cq-dot" cx="${7 / 11 * 230}" cy="0" r="10" fill="none" stroke="#ff5d6c" stroke-width="4"/>`, 'Spike detected · day 8', 'Usage anomalies'],
     ['users', 'Partner performance', [92, 78, 66, 51, 40].map((v, i) => `<rect class="cq-b" x="0" y="${i * 22}" width="${v * 2.3}" height="15" rx="4" fill="${i ? '#4c8dff' : '#5cc062'}"/>`).join(''), 'Top tier +18% QoQ', 'Partner performance'],
-    ['wallet', 'FinOps & spend', [[40, 20], [44, 22], [38, 30], [50, 26], [46, 34], [52, 30]].map((v, i) => `<rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[0] - v[1]}" width="26" height="${v[0]}" fill="#4c8dff"/><rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[1]}" width="26" height="${v[1]}" fill="#38d3e8"/>`).join(''), 'Idle spend flagged', 'FinOps'],
+    ['wallet', 'FinOps & spend', [[40, 20], [44, 22], [38, 30], [50, 26], [46, 34], [52, 30]].map((v, i) => `<rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[0] - v[1]}" width="26" height="${v[0]}" fill="#4c8dff"/><rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[1]}" width="26" height="${v[1]}" fill="#38d3e8"/>`).join(''), 'Idle spend flagged · TrackMyCloud', 'FinOps'],
     ['gauge', 'Margin integrity', `<path d="M25 105 A90 90 0 0 1 205 105" stroke="rgba(255,255,255,.1)" stroke-width="16" fill="none"/><path class="cq-g" d="M25 105 A90 90 0 0 1 205 105" stroke="#5cc062" stroke-width="16" fill="none"/><text x="115" y="100" text-anchor="middle" font-size="30" font-weight="700" fill="#eaf1fb" class="cq-gv">0%</text>`, 'Leakage caught early', 'margin integrity'],
   ];
   const flows = ['Quote', 'Order', 'Invoice', 'Renewal'];
@@ -512,12 +512,13 @@ out(S.finale.start - .2, '#chrome', .4);
       <circle cx="960" cy="420" r="72" fill="#061826" stroke="#38d3e8" stroke-width="4" id="qa-hub"/>
       <text x="960" y="428" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#bff4fb" id="qa-hubt">ANALYTICS</text>
     </svg>
-    <div class="abs h" id="qa-lab" style="left:0;right:0;top:500px;text-align:center;font-size:24px;color:var(--mut)"><b style="color:var(--ink)">CloudQuarks Analytics</b> · the layer that learns, under both engines</div>
-    ${tiles.map((t, i) => `<div class="abs card h qa-t" id="qa-t${i}" style="left:${90 + i * 292}px;top:560px;width:272px;height:300px;padding:20px">
+    ${[['gauge', 'TrackMyCloud', 'multi-cloud governance & FinOps', '#38d3e8', 290], ['refresh-cw', 'Reonix', 'renewals, at scale', '#a78bfa', 970]].map((p, i) => `<div class="abs card h qa-p" id="qa-p${i}" style="left:${p[4]}px;top:540px;width:660px;height:78px;display:flex;align-items:center;gap:16px;padding:0 22px;border-color:${p[3]}99;background:${p[3]}14">${ic(p[0], p[3], 34)}<span class="sg" style="font-size:30px;font-weight:700">${p[1]}</span><span style="font-size:21px;color:var(--mut)">${p[2]}</span></div>`).join('')}
+    <div class="abs h" id="qa-lab" style="left:0;right:0;top:488px;text-align:center;font-size:24px;color:var(--mut)"><b style="color:var(--ink)">CloudQuarks Analytics</b> · the layer that learns, under both engines</div>
+    ${tiles.map((t, i) => `<div class="abs card h qa-t" id="qa-t${i}" style="left:${90 + i * 292}px;top:640px;width:272px;height:262px;padding:18px">
       <div style="display:flex;align-items:center;gap:10px">${ic(t[0], '#38d3e8', 26)}<span style="font-size:20px;font-weight:700;line-height:1.15">${t[1]}</span></div>
-      <svg viewBox="-5 -15 240 135" width="232" height="140" style="margin-top:16px;overflow:visible">${t[2]}</svg>
+      <svg viewBox="-5 -15 240 135" width="232" height="128" style="margin-top:10px;overflow:visible">${t[2]}</svg>
       <div style="font-size:17px;color:var(--mut);margin-top:8px;font-weight:600">${t[3]}</div></div>`).join('')}
-    <div class="abs h" id="qa-note" style="right:90px;top:872px;font-size:16px;color:var(--dim)">Illustrative data</div>
+    <div class="abs h" id="qa-note" style="right:90px;top:908px;font-size:16px;color:var(--dim)">Illustrative data</div>
   `);
   const t0 = S[id].start;
   pop(t0, ['#qa-c', '#qa-m'], { y: -30 }, { stagger: .15 });
@@ -529,6 +530,10 @@ out(S.finale.start - .2, '#chrome', .4);
   $$('.qa-n').forEach(n => master.fromTo(n, { autoAlpha: 0, attr: { r: 0 } }, { autoAlpha: 1, attr: { r: 8 }, duration: .4, ease: 'back.out(3)', immediateRender: false }, atWord(id, 'Analytics') + .3 + +n.dataset.d / 1600));
   master.fromTo('.qa-ln', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'Analytics') + .6);
   fade(atWord(id, 'Analytics'), '#qa-lab', .5);
+  pop(atWord(id, 'TrackMyCloud') - .1, '#qa-p0', { x: -40, y: 0 }, { duration: .5 });
+  pop(atWord(id, 'Reonix') - .1, '#qa-p1', { x: 40, y: 0 }, { duration: .5 });
+  lit(atWord(id, 'TrackMyCloud'), '#qa-p0', '#38d3e8', .4);
+  lit(atWord(id, 'Reonix'), '#qa-p1', '#a78bfa', .4);
   master.fromTo('#qa-glow', { scale: .9 }, { scale: 1.15, svgOrigin: '960 420', duration: .9, repeat: 9, yoyo: true, ease: 'sine.inOut', immediateRender: false }, atWord(id, 'Analytics') + .8);
   const tF = t0 + .5;
   $$('.qa-f').forEach((f, i) => {
@@ -536,13 +541,13 @@ out(S.finale.start - .2, '#chrome', .4);
   });
   fade(t0 + 2.8, '#qa-bd', .01); pop(t0 + 2.8, '#qa-bd1', { y: 20 }); pop(t0 + 3.2, '#qa-bd2', { y: 20 });
   tiles.forEach((t, i) => {
-    const ti = [atWord(id, 'Forecasting'), atWord(id, 'renewal'), atWord(id, 'renewal', .5), atWord(id, 'partner'), atWord(id, 'partner', .5), atWord(id, 'margin')][i] - .1; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
+    const ti = [atWord(id, 'Forecasting'), atWord(id, 'renewal risk'), atWord(id, 'renewal risk', .5), atWord(id, 'partner'), atWord(id, 'partner', .5), atWord(id, 'margin')][i] - .1; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
     $$(`#qa-t${i} .cq-l`).forEach(p => draw(ti + .3, p, 1.2));
     master.fromTo(`#qa-t${i} .cq-b`, { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: .8, stagger: .1, ease: 'power2.out', immediateRender: false }, ti + .3);
     master.fromTo(`#qa-t${i} .cq-c`, { scaleY: 0, transformOrigin: 'center bottom' }, { scaleY: 1, duration: .6, stagger: .05, ease: 'power2.out', immediateRender: false }, ti + .3);
   });
   const dot = $('#qa-t2 .cq-dot'); const mx = 58, mn = 20; dot.setAttribute('cy', (110 - (58 - mn) / (mx - mn) * 110));
-  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, atWord(id, 'renewal', 1.4));
+  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, atWord(id, 'renewal risk', 1.4));
   const g = $('#qa-t5 .cq-g'); draw(atWord(id, 'margin') + .3, g, 1.2, 'power2.out');
   master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, atWord(id, 'margin') + 1.5);
   counter(atWord(id, 'margin') + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
