@@ -13,7 +13,7 @@ if os.path.exists(_CA):
 import edge_tts  # noqa: E402
 
 VOICE = os.environ.get("CQ_VOICE", "en-US-AndrewMultilingualNeural")
-RATE = os.environ.get("CQ_RATE", "+10%")
+RATE = os.environ.get("CQ_RATE", "+12%")
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "build")
 os.makedirs(os.path.join(OUT, "audio"), exist_ok=True)

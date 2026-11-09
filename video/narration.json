@@ -1,37 +1,37 @@
 [
  {
   "id": "hook",
-  "pad": 0.2,
-  "text": "Every buyer needs technology. But the market is fragmented."
+  "pad": 0.3,
+  "text": "Every buyer needs technology. A CIO in Riyadh. A retailer in Nairobi. A founder in Bengaluru. But the market is fragmented."
  },
  {
   "id": "core",
-  "pad": 0.2,
-  "text": "CloudQuarks orchestrates it all, from one core. One platform. One identity. One data model."
+  "pad": 0.3,
+  "text": "CloudQuarks, by Redington, orchestrates it all, from one core. One platform. One identity. One data model."
  },
  {
   "id": "cqc",
-  "pad": 0.2,
-  "text": "C Q C, Commerce, is live today, billing and governing every order."
+  "pad": 0.3,
+  "text": "C Q C, Commerce, is live today. Quote. Provision. Bill. Reconcile. Govern. Every order becomes a running, billed service."
  },
  {
   "id": "paths",
-  "pad": 0.2,
-  "text": "C Q M, the Marketplace, sells. Know what you want? Go to the catalogue. Not sure? Start at RACE."
+  "pad": 0.3,
+  "text": "C Q M, the Marketplace, sells. Know what you want? Go to the catalogue. Not sure? Start at RACE, Redington's A I Centre of Excellence."
  },
  {
   "id": "moves",
-  "pad": 0.2,
-  "text": "Then, four moves. An A I ready catalogue. Rules by geography. A store for every market. And every model, from direct to white label."
+  "pad": 0.3,
+  "text": "Then, four moves. A catalogue that powers A I search. Rules for tax and pricing, by geography. A store for every market, spun up, not rebuilt. And every model, from direct to white label."
  },
  {
   "id": "cqa",
-  "pad": 0.2,
-  "text": "Underneath, C Q A, Analytics, learns from it all."
+  "pad": 0.3,
+  "text": "Underneath, C Q A, Analytics, learns. Forecasting. Renewal risk. Partner performance. Margin integrity."
  },
  {
   "id": "finale",
-  "pad": 3.0,
+  "pad": 2.8,
   "text": "One core. Two branches. One intelligence layer. That's CloudQuarks."
  }
 ]

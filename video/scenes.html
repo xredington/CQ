@@ -14,7 +14,7 @@
 <style>
 :root{
   --bg:#040a15; --ink:#eaf1fb; --mut:#8fa3bf; --dim:#566a86;
-  --green:#3ddc84; --green2:#16a34a; --blue:#4c8dff; --blue2:#1d5fbf; --cyan:#38d3e8;
+  --green:#5cc062; --green2:#00924a; --blue:#4c8dff; --blue2:#1d5fbf; --cyan:#38d3e8;
   --amber:#ffb547; --violet:#a78bfa; --red:#ff5d6c; --navy:#0d2350;
   --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.11);
 }
@@ -55,13 +55,13 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:
 <div id="stage">
   <div id="bg">
     <div class="glow" id="g1" style="width:900px;height:900px;left:-200px;top:-300px;background:#1d5fbf"></div>
-    <div class="glow" id="g2" style="width:800px;height:800px;right:-200px;bottom:-300px;background:#16a34a"></div>
+    <div class="glow" id="g2" style="width:800px;height:800px;right:-200px;bottom:-300px;background:#00924a"></div>
     <div class="grid" id="grid"></div>
     <canvas id="pc" width="1920" height="1080" style="position:absolute;inset:0"></canvas>
   </div>
   <div id="scenes"></div>
   <div class="vign"></div>
-  <div id="chrome" class="h"><svg class="mk" viewBox="-50 -50 100 100" id="miniMark"></svg><span class="nm">CloudQuarks</span><span id="chap"></span></div>
+  <div id="chrome" class="h"><img src="assets/logo-white.png" style="height:46px"><span id="chap"></span></div>
   
   <div id="cap"><span></span></div>
   <div id="prog"></div>
@@ -127,9 +127,9 @@ function lit(t, el, color, dur = .5) { // light up a card
 }
 function markSVG(size = 1) { // CloudQuarks mark: a core with three orbits
   return `<circle r="11" fill="url(#cg)"/>
-  <defs><radialGradient id="cg"><stop offset="0" stop-color="#d9ffe9"/><stop offset=".55" stop-color="#3ddc84"/><stop offset="1" stop-color="#16a34a"/></radialGradient></defs>
+  <defs><radialGradient id="cg"><stop offset="0" stop-color="#d9ffe9"/><stop offset=".55" stop-color="#5cc062"/><stop offset="1" stop-color="#00924a"/></radialGradient></defs>
   <g fill="none" stroke-width="3.2" stroke-linecap="round">
-   <ellipse class="orb" rx="42" ry="15" stroke="#3ddc84" transform="rotate(0)"/>
+   <ellipse class="orb" rx="42" ry="15" stroke="#5cc062" transform="rotate(0)"/>
    <ellipse class="orb" rx="42" ry="15" stroke="#4c8dff" transform="rotate(60)"/>
    <ellipse class="orb" rx="42" ry="15" stroke="#38d3e8" transform="rotate(120)"/>
   </g>
@@ -145,7 +145,6 @@ function animateMark(svg) { // electrons orbit, driven by global time
 }
 
 // ---------------------------------------------------------------- persistent chrome
-$('#miniMark').innerHTML = markSVG(); animateMark($('#miniMark'));
 const CH = { hook: '', core: '01 · The Core', cqc: '02 · CQC Commerce', paths: '03 · CQM Marketplace', moves: '03 · CQM · Four moves', cqa: '04 · CQA Analytics', finale: '' };
 fade(S.core.start + 2.2, '#chrome', .6);
 out(S.finale.start - .2, '#chrome', .4);
@@ -153,13 +152,13 @@ out(S.finale.start - .2, '#chrome', .4);
 // ================================================================ 1. HOOK
 (() => {
   const id = 'hook';
-  const people = [['building-2', 'Riyadh', '#4c8dff'], ['store', 'Nairobi', '#3ddc84'], ['rocket', 'Bengaluru', '#ffb547'], ['briefcase', 'Lagos', '#38d3e8'], ['users', 'Dubai', '#a78bfa']];
+  const people = [['building-2', 'Riyadh', '#4c8dff'], ['store', 'Nairobi', '#5cc062'], ['rocket', 'Bengaluru', '#ffb547'], ['briefcase', 'Lagos', '#38d3e8'], ['users', 'Dubai', '#a78bfa']];
   const chips = [];
   const prod = ['CRM', 'ERP', 'EDR', 'Backup', 'Email', 'BI', 'IaaS', 'DevOps', 'HRMS', 'SIEM', 'Low-code', 'POS', 'IAM', 'Copilot'];
   const cur = ['AED', 'SAR', 'KES', 'INR', 'USD', 'NGN', 'EGP', 'ZAR'];
   const tax = ['VAT 5%', 'VAT 15%', 'VAT 16%', 'GST 18%', 'WHT', 'Reverse charge'];
   const mod = ['Monthly', 'Annual', 'Pay-as-you-go', 'Reseller', 'Direct', 'CSP'];
-  [[prod, '#cfe0ff'], [cur, '#3ddc84'], [tax, '#ffb547'], [mod, '#a78bfa']].forEach(([arr, col]) => arr.forEach(x => chips.push({ x, col })));
+  [[prod, '#cfe0ff'], [cur, '#5cc062'], [tax, '#ffb547'], [mod, '#a78bfa']].forEach(([arr, col]) => arr.forEach(x => chips.push({ x, col })));
   const el = scene(id, `
     <div class="abs center sg h" id="hk-q" style="top:330px;font-size:100px;font-weight:700;letter-spacing:-.02em">Every buyer needs <span style="color:var(--green)">technology.</span></div>
     <div class="abs" style="left:0;right:0;top:530px;display:flex;justify-content:center;gap:26px">
@@ -169,11 +168,11 @@ out(S.finale.start - .2, '#chrome', .4);
       ${chips.map(c => `<div class="abs pill h hk-c" style="font-size:24px;color:${c.col};border-color:${c.col}55">${c.x}</div>`).join('')}
     </div>
     <div class="abs center sg h" id="hk-big" style="top:455px;font-size:110px;font-weight:700;letter-spacing:-.02em;text-shadow:0 10px 60px #000,0 0 30px #000">Fragmented.</div>
-    <div class="abs" id="hk-orb" style="left:960px;top:540px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:radial-gradient(#fff,#3ddc84 40%,#16a34a 70%,transparent 72%);box-shadow:0 0 120px 40px #3ddc8466;visibility:hidden"></div>
+    <div class="abs" id="hk-orb" style="left:960px;top:540px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:radial-gradient(#fff,#5cc062 40%,#00924a 70%,transparent 72%);box-shadow:0 0 120px 40px #5cc06266;visibility:hidden"></div>
   `);
   const t0 = S[id].start;
   pop(t0, '#hk-q', { y: 40 }, { duration: .6 });
-  pop(t0 + .5, '.hk-p', { y: 40 }, { stagger: .12, duration: .5 });
+  $$('.hk-p').forEach((e, i) => pop(i < 3 ? at(id, people[i][1]) : at(id, 'Bengaluru') + .5 + (i - 3) * .25, e, { y: 40 }, { duration: .5 }));
   const tF = at(id, 'fragmented');
   master.to('#hk-q', { autoAlpha: 0, y: -60, duration: .35 }, tF - .2);
   master.to('.hk-p', { autoAlpha: 0, scale: .6, filter: 'blur(8px)', duration: .4, stagger: .04 }, tF - .2);
@@ -198,24 +197,24 @@ out(S.finale.start - .2, '#chrome', .4);
   const ones = [['layers', 'One platform'], ['fingerprint', 'One identity'], ['database', 'One data model']];
   scene(id, `
     <div class="abs" id="tt-logo" style="left:0;right:0;top:250px;text-align:center">
-      <svg id="tt-mark" viewBox="-60 -60 120 120" width="220" height="220">${markSVG()}</svg>
-      <div class="sg" style="font-size:150px;font-weight:700;letter-spacing:-.03em;line-height:1;margin-top:10px">Cloud<span style="color:var(--green)">Quarks</span></div>
+      <div style="display:flex;justify-content:center;align-items:center"><img id="tt-ic" src="assets/logo-icon.png" style="height:280px"><img id="tt-wm" src="assets/logo-wordmark.png" style="height:280px"></div>
       <div id="tt-sub" class="h" style="font-size:38px;color:var(--mut);margin-top:20px;font-weight:500">the architecture of <span style="color:var(--ink)">orchestration</span></div>
     </div>
-    <div class="abs h" id="co-bar" style="left:260px;top:520px;width:1400px;height:120px;border-radius:22px;background:linear-gradient(90deg,#16a34a,#1f8a4c);display:flex;align-items:center;padding:0 36px;gap:26px;box-shadow:0 0 90px #3ddc8455">
-      <span class="badge" style="width:120px;height:80px;font-size:46px;background:#eaf1fb;color:#16a34a">CQ</span>
+    <div class="abs h" id="co-bar" style="left:260px;top:520px;width:1400px;height:120px;border-radius:22px;background:linear-gradient(90deg,#00924a,#006837);display:flex;align-items:center;padding:0 36px;gap:26px;box-shadow:0 0 90px #5cc06255">
+      <span class="badge" style="width:120px;height:80px;font-size:46px;background:#eaf1fb;color:#00924a">CQ</span>
       <div><div class="sg" style="font-size:44px;font-weight:700;letter-spacing:.06em">THE CORE</div><div style="font-size:24px;opacity:.9">the neural layer · everything else is a branch of it</div></div>
     </div>
     <div class="abs" style="left:0;right:0;top:690px;display:flex;justify-content:center;gap:30px">
-      ${ones.map((o, i) => `<div class="card h co-o" id="co-o${i}" style="display:flex;align-items:center;gap:18px;padding:22px 34px;border-color:#3ddc8466">${ic(o[0], '#3ddc84', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
+      ${ones.map((o, i) => `<div class="card h co-o" id="co-o${i}" style="display:flex;align-items:center;gap:18px;padding:22px 34px;border-color:#5cc06266">${ic(o[0], '#5cc062', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
     </div>
     <div class="abs h" id="co-tags" style="left:0;right:0;top:830px;text-align:center;font-size:22px;letter-spacing:.3em;color:var(--cyan);font-weight:700">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
   `);
-  animateMark($('#tt-mark'));
   const t0 = S[id].start;
-  pop(t0, '#tt-logo', { scale: .6, y: 0 }, { duration: .9, ease: 'expo.out' });
-  fade(t0 + .8, '#tt-sub', .5);
-  const tC = at(id, 'CloudQuarks orchestrates') + 1.9;
+  fade(t0, '#tt-logo', .01);
+  master.fromTo('#tt-ic', { autoAlpha: 0, scale: .2, rotation: -90 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 1, ease: 'expo.out', immediateRender: false }, t0);
+  master.fromTo('#tt-wm', { autoAlpha: 0, x: -80, clipPath: 'inset(0 100% 0 0)' }, { autoAlpha: 1, x: 0, clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'power3.out', immediateRender: false }, t0 + .4);
+  fade(t0 + 1.2, '#tt-sub', .5);
+  const tC = at(id, 'CloudQuarks') + 2.6;
   master.to('#tt-logo', { y: -160, scale: .58, duration: .7, ease: 'power3.inOut' }, tC - .3);
   out(tC - .3, '#tt-sub', .3);
   pop(tC + .2, '#co-bar', { scaleX: .3, y: 0 }, { duration: .7, ease: 'expo.out' });
@@ -237,12 +236,12 @@ out(S.finale.start - .2, '#chrome', .4);
     </div>
     <div class="abs h" id="cc-live" style="right:110px;top:200px;display:flex;align-items:center;gap:14px;font-weight:800;font-size:28px;letter-spacing:.16em;color:#04121f;background:var(--green);padding:14px 26px;border-radius:14px"><span id="cc-dot" style="width:16px;height:16px;border-radius:50%;background:#04121f"></span>LIVE TODAY</div>
     ${st.map((s, i) => `<div class="abs card h cc-st" id="cc-st${i}" style="left:${X(i)}px;top:400px;width:206px;height:200px;padding:22px 18px">
-      <div style="width:56px;height:56px;border-radius:14px;background:#3ddc8418;display:flex;align-items:center;justify-content:center">${ic(s[0], '#3ddc84', 32)}</div>
+      <div style="width:56px;height:56px;border-radius:14px;background:#5cc06218;display:flex;align-items:center;justify-content:center">${ic(s[0], '#5cc062', 32)}</div>
       <div style="font-size:25px;font-weight:700;margin-top:18px;line-height:1.15">${s[1]}</div>
-      <div class="cc-ok h" style="position:absolute;left:18px;bottom:16px;font-size:18px;font-weight:700;color:var(--green);display:flex;gap:6px;align-items:center">${ic('check', '#3ddc84', 18)}done</div>
+      <div class="cc-ok h" style="position:absolute;left:18px;bottom:16px;font-size:18px;font-weight:700;color:var(--green);display:flex;gap:6px;align-items:center">${ic('check', '#5cc062', 18)}done</div>
     </div>`).join('')}
-    <div class="abs h" id="cc-track" style="left:90px;top:656px;width:1740px;height:6px;border-radius:3px;background:rgba(255,255,255,.08)"><div id="cc-fill" style="height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#16a34a,#3ddc84);transform-origin:left;transform:scaleX(0)"></div></div>
-    <div class="abs h" id="cc-tok" style="left:0;top:630px;transform:translateX(-50%)"><div style="display:flex;align-items:center;gap:10px;background:#0b1f14;border:2px solid var(--green);padding:10px 18px;border-radius:999px;font-weight:700;font-size:22px;white-space:nowrap;box-shadow:0 0 40px #3ddc8466">${ic('package', '#3ddc84', 24)}<span>ORDER</span><span id="cc-state" style="color:var(--green)"></span></div></div>
+    <div class="abs h" id="cc-track" style="left:90px;top:656px;width:1740px;height:6px;border-radius:3px;background:rgba(255,255,255,.08)"><div id="cc-fill" style="height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#00924a,#5cc062);transform-origin:left;transform:scaleX(0)"></div></div>
+    <div class="abs h" id="cc-tok" style="left:0;top:630px;transform:translateX(-50%)"><div style="display:flex;align-items:center;gap:10px;background:#0b1f14;border:2px solid var(--green);padding:10px 18px;border-radius:999px;font-weight:700;font-size:22px;white-space:nowrap;box-shadow:0 0 40px #5cc06266">${ic('package', '#5cc062', 24)}<span>ORDER</span><span id="cc-state" style="color:var(--green)"></span></div></div>
     <div class="abs h" id="cc-eight" style="left:0;right:0;top:730px;text-align:center"><span class="sg" style="font-size:54px;font-weight:700"><span style="color:var(--green)">8</span> capabilities · one <span style="color:var(--green)">transaction layer</span></span></div>
   `);
   const t0 = S[id].start;
@@ -255,14 +254,14 @@ out(S.finale.start - .2, '#chrome', .4);
   updaters.push(() => { $('#cc-state').textContent = sp.i >= 0 ? '· ' + st[sp.i][2] : ''; });
   master.set('#cc-tok', { x: X(0) + 103 }, 0);
   st.forEach((s, i) => {
-    const t = t0 + 1.4 + i * .42;
+    const t = [at(id, 'Quote.'), at(id, 'Provision'), at(id, 'Bill.'), at(id, 'Reconcile'), at(id, 'Reconcile') + .5, at(id, 'Govern'), at(id, 'Every order'), at(id, 'Every order') + .6][i];
     master.to('#cc-tok', { x: X(i) + 103, duration: .35, ease: 'power2.inOut' }, t - .2);
     master.to('#cc-fill', { scaleX: (X(i) + 103 - 90) / 1740, duration: .35, ease: 'power2.inOut' }, t - .2);
-    lit(t, `#cc-st${i}`, '#3ddc84', .3);
+    lit(t, `#cc-st${i}`, '#5cc062', .3);
     master.set(sp, { i }, t);
     fade(t + .1, `#cc-st${i} .cc-ok`, .25);
   });
-  pop(t0 + 1.4 + 8 * .42, '#cc-eight', { y: 20 }, { duration: .5 });
+  pop(at(id, 'Every order') + 1.4, '#cc-eight', { y: 20 }, { duration: .5 });
 })();
 
 // ================================================================ 4. CQM + two paths
@@ -280,14 +279,14 @@ out(S.finale.start - .2, '#chrome', .4);
       <div style="margin-top:28px;display:flex;align-items:center;gap:16px;background:#0a1630;border:2px solid #4c8dff88;border-radius:16px;padding:18px 22px">${ic('search', '#4c8dff', 32)}<span id="pa-q" style="font-size:28px;font-weight:500"></span></div>
       <div class="h" id="pa-r0" style="margin-top:20px;display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:14px;border:2px solid #4c8dff;background:rgba(76,141,255,.1)">${ic('shield-check', '#4c8dff', 34)}<div><div style="font-size:25px;font-weight:600">Endpoint protection suite</div><div style="font-size:19px;color:var(--mut)">per device · monthly</div></div><div class="h" id="pa-buy" style="margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--blue);padding:12px 20px;border-radius:10px;font-weight:700;font-size:22px">${ic('shopping-cart', '#fff', 24)}Buy</div></div>
     </div>
-    <div class="abs card h" id="pa-r" style="left:990px;top:350px;width:820px;height:400px;padding:38px;border-color:#3ddc8466">
+    <div class="abs card h" id="pa-r" style="left:990px;top:350px;width:820px;height:400px;padding:38px;border-color:#5cc06266">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div><div class="kicker" style="color:var(--green)">Path 2</div><div class="sg" style="font-size:44px;font-weight:700;margin-top:6px">Not sure? Start at RACE</div></div>
       </div>
       <div class="h" id="pa-race" style="margin-top:6px;display:flex;align-items:baseline;gap:14px"><span class="sg" style="font-size:46px;font-weight:700;letter-spacing:.06em;font-style:italic;color:#7fe0ff">RACE</span><span style="font-size:20px;color:var(--mut)">Redington's AI Centre of Excellence</span></div>
       <div class="h" id="pa-u" style="margin-top:16px;margin-left:110px;background:#1b2a44;border-radius:18px 18px 4px 18px;padding:14px 20px;font-size:23px">"We lose track of leads across three countries."</div>
-      <div class="h" id="pa-a" style="margin-top:14px;background:#0f2a1c;border:1px solid #3ddc8455;border-radius:18px 18px 18px 4px;padding:14px 20px">
-        <div style="display:flex;gap:10px;align-items:center;font-size:20px;color:var(--green);font-weight:700">${ic('sparkles', '#3ddc84', 22)}Right technology + right ISV</div>
+      <div class="h" id="pa-a" style="margin-top:14px;background:#0f2a1c;border:1px solid #5cc06255;border-radius:18px 18px 18px 4px;padding:14px 20px">
+        <div style="display:flex;gap:10px;align-items:center;font-size:20px;color:var(--green);font-weight:700">${ic('sparkles', '#5cc062', 22)}Right technology + right ISV</div>
         <div style="margin-top:10px;display:flex;gap:10px">${isv.map(x => `<div style="flex:1;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:rgba(255,255,255,.04)"><div style="font-size:18px;font-weight:700">${x[0]}</div><div style="font-size:18px;color:var(--green);font-weight:700">${x[1]}% match</div></div>`).join('')}</div>
       </div>
     </div>
@@ -311,7 +310,7 @@ out(S.finale.start - .2, '#chrome', .4);
   const id = 'moves';
   const cat = ['Marketplace portfolio', 'Software portfolio', 'SaaS', 'ISV solutions', 'Professional services', 'Listing services', 'AI portfolio'];
   const tax = [['UAE', 'VAT', 5], ['KSA', 'VAT', 15], ['Kenya', 'VAT', 16], ['India', 'GST', 18]];
-  const stores = [['Africa', 'regional portfolio', '#3ddc84'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
+  const stores = [['Africa', 'regional portfolio', '#5cc062'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
   const models = [['handshake', 'Direct'], ['network', 'Indirect'], ['store', 'Reseller mini-shop'], ['palette', 'White-label B2B2C'], ['blocks', 'Platform-as-a-Service']];
   const card = (i, title, sub, body, c) => `<div class="abs card h mv-c" id="mv-c${i}" style="left:${90 + i * 440}px;top:250px;width:420px;height:610px;padding:28px;border-color:${c}66">
     <div class="sg" style="font-size:22px;font-weight:700;color:${c}">0${i + 1}</div>
@@ -327,25 +326,25 @@ out(S.finale.start - .2, '#chrome', .4);
       tax.map(t => `<div class="mv-i" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:21px;font-weight:600"><span>${t[0]} · ${t[1]} ${t[2]}%</span><b class="mv-v" data-to="${100 + t[2]}">0</b></div><div style="height:12px;border-radius:6px;background:rgba(255,255,255,.07);margin-top:6px;overflow:hidden"><div class="mv-bar" style="height:100%;width:${(100 + t[2]) / 118 * 100}%;background:linear-gradient(90deg,#4c8dff,#ffb547);transform-origin:left"></div></div></div>`).join('') +
       `<div class="mv-i" style="font-size:22px;font-weight:700;color:var(--green);margin-top:6px">Set once. Applied everywhere.</div>`, '#ffb547')}
     ${card(2, 'Storefronts', 'one store per market',
-      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">` + stores.map(s => `<div class="mv-i" style="border:1px solid ${s[2]}88;border-radius:14px;padding:14px;height:150px;background:${s[2]}12"><div style="display:flex;gap:5px;margin-bottom:10px">${['#ff5d6c', '#ffb547', '#3ddc84'].map(c => `<span style="width:8px;height:8px;border-radius:50%;background:${c}"></span>`).join('')}</div><div class="sg" style="font-size:28px;font-weight:700;color:${s[2]}">${s[0]}</div><div style="font-size:16px;color:var(--mut)">${s[1]}</div></div>`).join('') +
-      `<div class="mv-i" style="border:2px dashed #38d3e8;border-radius:14px;padding:14px;height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--cyan)">${ic('plus', '#38d3e8', 34)}<div style="font-weight:700;font-size:19px;margin-top:6px">Next market</div><div style="font-size:15px;color:var(--mut)">spin up, don't rebuild</div></div></div>`, '#3ddc84')}
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">` + stores.map(s => `<div class="mv-i" style="border:1px solid ${s[2]}88;border-radius:14px;padding:14px;height:150px;background:${s[2]}12"><div style="display:flex;gap:5px;margin-bottom:10px">${['#ff5d6c', '#ffb547', '#5cc062'].map(c => `<span style="width:8px;height:8px;border-radius:50%;background:${c}"></span>`).join('')}</div><div class="sg" style="font-size:28px;font-weight:700;color:${s[2]}">${s[0]}</div><div style="font-size:16px;color:var(--mut)">${s[1]}</div></div>`).join('') +
+      `<div class="mv-i" style="border:2px dashed #38d3e8;border-radius:14px;padding:14px;height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--cyan)">${ic('plus', '#38d3e8', 34)}<div style="font-weight:700;font-size:19px;margin-top:6px">Next market</div><div style="font-size:15px;color:var(--mut)">spin up, don't rebuild</div></div></div>`, '#5cc062')}
     ${card(3, 'Models', 'how it reaches the market',
       models.map(m => `<div class="mv-i" style="display:flex;align-items:center;gap:14px;padding:14px 14px;margin-bottom:10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03)">${ic(m[0], '#38d3e8', 28)}<span style="font-size:22px;font-weight:600">${m[1]}</span></div>`).join('') +
       `<div class="mv-i" style="font-size:20px;color:var(--mut);margin-top:6px">Explore · transact · build</div>`, '#38d3e8')}
   `);
   const t0 = S[id].start;
   pop(t0, '#mv-h', { x: -40, y: 0 }, { duration: .5 });
-  const ph = ['AI-ready', 'Rules by', 'store for', 'every model'];
+  const ph = ['AI search', 'Rules for', 'store for', 'every model'];
   master.fromTo('.mv-c', { autoAlpha: 0, y: 40 }, { autoAlpha: .35, y: 0, duration: .4, stagger: .1, immediateRender: false }, t0 + .4);
   master.set('.mv-c .mv-i', { autoAlpha: 0 }, 0);
   ph.forEach((p, i) => {
     const t = at(id, p) - .1;
     master.to(`#mv-c${i}`, { autoAlpha: 1, scale: 1.02, duration: .35 }, t);
-    lit(t, `#mv-c${i}`, ['#a78bfa', '#ffb547', '#3ddc84', '#38d3e8'][i], .35);
+    lit(t, `#mv-c${i}`, ['#a78bfa', '#ffb547', '#5cc062', '#38d3e8'][i], .35);
     master.fromTo(`#mv-c${i} .mv-i`, { autoAlpha: 0, x: -14 }, { autoAlpha: 1, x: 0, duration: .3, stagger: .07, immediateRender: false }, t + .1);
     if (i) master.to(`#mv-c${i - 1}`, { scale: 1, boxShadow: 'none', duration: .35 }, t);
   });
-  const tR = at(id, 'Rules by');
+  const tR = at(id, 'Rules for');
   master.fromTo('#mv-c1 .mv-bar', { scaleX: 0 }, { scaleX: 1, duration: .6, stagger: .1, ease: 'power2.out', immediateRender: false }, tR + .2);
   $$('#mv-c1 .mv-v').forEach((e, i) => counter(tR + .2 + i * .1, e, +e.dataset.to, .7, v => 'USD ' + v.toFixed(0)));
 })();
@@ -360,15 +359,15 @@ out(S.finale.start - .2, '#chrome', .4);
   const usage = [20, 22, 21, 23, 22, 24, 23, 58, 25, 24, 23, 25];
   const tiles = [
     ['trending-up', 'Forecasting', `<path d="${actPath}" stroke="#38d3e8" stroke-width="4" fill="none" class="cq-l"/><path d="${fcPath}" stroke="#38d3e8" stroke-width="4" fill="none" stroke-dasharray="8 7" class="cq-l"/>`, 'Next quarter +12%', 'Forecasting'],
-    ['refresh-cw', 'Churn & renewal risk', [['Acct · Retail', 82, '#ff5d6c'], ['Acct · Health', 64, '#ffb547'], ['Acct · Edu', 35, '#3ddc84'], ['Acct · Logistics', 22, '#3ddc84']].map((r, i) => `<text x="0" y="${16 + i * 28}" font-size="14" fill="#8fa3bf">${r[0]}</text><rect class="cq-b" x="110" y="${4 + i * 28}" width="${r[1] * 1.2}" height="16" rx="4" fill="${r[2]}"/>`).join(''), '3 renewals need action', 'Churn'],
+    ['refresh-cw', 'Churn & renewal risk', [['Acct · Retail', 82, '#ff5d6c'], ['Acct · Health', 64, '#ffb547'], ['Acct · Edu', 35, '#5cc062'], ['Acct · Logistics', 22, '#5cc062']].map((r, i) => `<text x="0" y="${16 + i * 28}" font-size="14" fill="#8fa3bf">${r[0]}</text><rect class="cq-b" x="110" y="${4 + i * 28}" width="${r[1] * 1.2}" height="16" rx="4" fill="${r[2]}"/>`).join(''), '3 renewals need action', 'Churn'],
     ['activity', 'Usage anomalies', `<path d="${sp(usage)}" stroke="#a78bfa" stroke-width="4" fill="none" class="cq-l"/><circle class="cq-dot" cx="${7 / 11 * 230}" cy="0" r="10" fill="none" stroke="#ff5d6c" stroke-width="4"/>`, 'Spike detected · day 8', 'Usage anomalies'],
-    ['users', 'Partner performance', [92, 78, 66, 51, 40].map((v, i) => `<rect class="cq-b" x="0" y="${i * 22}" width="${v * 2.3}" height="15" rx="4" fill="${i ? '#4c8dff' : '#3ddc84'}"/>`).join(''), 'Top tier +18% QoQ', 'Partner performance'],
+    ['users', 'Partner performance', [92, 78, 66, 51, 40].map((v, i) => `<rect class="cq-b" x="0" y="${i * 22}" width="${v * 2.3}" height="15" rx="4" fill="${i ? '#4c8dff' : '#5cc062'}"/>`).join(''), 'Top tier +18% QoQ', 'Partner performance'],
     ['wallet', 'FinOps & spend', [[40, 20], [44, 22], [38, 30], [50, 26], [46, 34], [52, 30]].map((v, i) => `<rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[0] - v[1]}" width="26" height="${v[0]}" fill="#4c8dff"/><rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[1]}" width="26" height="${v[1]}" fill="#38d3e8"/>`).join(''), 'Idle spend flagged', 'FinOps'],
-    ['gauge', 'Margin integrity', `<path d="M25 105 A90 90 0 0 1 205 105" stroke="rgba(255,255,255,.1)" stroke-width="16" fill="none"/><path class="cq-g" d="M25 105 A90 90 0 0 1 205 105" stroke="#3ddc84" stroke-width="16" fill="none"/><text x="115" y="100" text-anchor="middle" font-size="30" font-weight="700" fill="#eaf1fb" class="cq-gv">0%</text>`, 'Leakage caught early', 'margin integrity'],
+    ['gauge', 'Margin integrity', `<path d="M25 105 A90 90 0 0 1 205 105" stroke="rgba(255,255,255,.1)" stroke-width="16" fill="none"/><path class="cq-g" d="M25 105 A90 90 0 0 1 205 105" stroke="#5cc062" stroke-width="16" fill="none"/><text x="115" y="100" text-anchor="middle" font-size="30" font-weight="700" fill="#eaf1fb" class="cq-gv">0%</text>`, 'Leakage caught early', 'margin integrity'],
   ];
   const flows = ['Quote', 'Order', 'Invoice', 'Renewal'];
   scene(id, `
-    <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#3ddc8414;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--green)">CQC</span><span style="font-size:24px;color:var(--mut)">Commerce</span></div>
+    <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#5cc06214;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--green)">CQC</span><span style="font-size:24px;color:var(--mut)">Commerce</span></div>
     <div class="abs h" id="qa-m" style="left:1020px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--blue);background:#4c8dff14;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--blue)">CQM</span><span style="font-size:24px;color:var(--mut)">Marketplace</span></div>
     <div class="abs" id="qa-flow" style="left:0;top:0">${Array.from({ length: 16 }, (_, i) => `<div class="abs pill h qa-f" style="left:${(i % 2 ? 1290 : 630) + ((i * 37) % 120) - 60}px;top:230px;font-size:18px;padding:6px 14px;color:#bff4fb;border-color:#38d3e855;transform:translateX(-50%)">${flows[i % 4]}</div>`).join('')}</div>
     <div class="abs h" id="qa-bd" style="left:0;right:0;top:300px;text-align:center;font-size:40px;font-weight:700" class="sg"><span id="qa-bd1" class="h">Better data.</span> <span id="qa-bd2" class="h" style="color:var(--cyan)">Better decisions.</span></div>
@@ -391,72 +390,66 @@ out(S.finale.start - .2, '#chrome', .4);
   });
   fade(t0 + 2.8, '#qa-bd', .01); pop(t0 + 2.8, '#qa-bd1', { y: 20 }); pop(t0 + 3.2, '#qa-bd2', { y: 20 });
   tiles.forEach((t, i) => {
-    const ti = t0 + 1.0 + i * .22; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
+    const ti = [at(id, 'Forecasting'), at(id, 'Renewal'), at(id, 'Renewal') + .6, at(id, 'Partner'), at(id, 'Partner') + .6, at(id, 'Margin')][i] - .1; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
     $$(`#qa-t${i} .cq-l`).forEach(p => draw(ti + .3, p, 1.2));
     master.fromTo(`#qa-t${i} .cq-b`, { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: .8, stagger: .1, ease: 'power2.out', immediateRender: false }, ti + .3);
     master.fromTo(`#qa-t${i} .cq-c`, { scaleY: 0, transformOrigin: 'center bottom' }, { scaleY: 1, duration: .6, stagger: .05, ease: 'power2.out', immediateRender: false }, ti + .3);
   });
   const dot = $('#qa-t2 .cq-dot'); const mx = 58, mn = 20; dot.setAttribute('cy', (110 - (58 - mn) / (mx - mn) * 110));
-  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, t0 + 2.2);
-  const g = $('#qa-t5 .cq-g'); draw((t0 + 2.1) + .3, g, 1.2, 'power2.out');
-  master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, (t0 + 2.1) + 1.5);
-  counter((t0 + 2.1) + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
+  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, at(id, 'Renewal') + 1.4);
+  const g = $('#qa-t5 .cq-g'); draw(at(id, 'Margin') + .3, g, 1.2, 'power2.out');
+  master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, at(id, 'Margin') + 1.5);
+  counter(at(id, 'Margin') + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
   fade(t0 + 1, '#qa-note');
 })();
 
-// ================================================================ 13. FINALE: the full architecture
+// ================================================================ 7. FINALE: the stack in 3D, then the logo
 (() => {
   const id = 'finale';
-  const cqc = [['Cataloguing & quotation', 'quote to order, multi-vendor'], ['Provisioning', 'automated, vendor-native'], ['Billing & invoicing', 'usage, subscription, hybrid'], ['Reconciliation', 'margin integrity, no leakage'], ['Reporting', 'partner, vendor, customer views'], ['Governance & credit', 'limits, approvals, compliance'], ['Subscription lifecycle', 'renew, modify, cancel, upsell'], ['Support & servicing', 'tickets, escalation, SLA']];
-  const cols = [
-    ['01', 'Cataloguing', 'everything that can be sold', ['Marketplace portfolio', 'Software portfolio', 'SaaS portfolio', 'ISV solutions', 'Professional services', 'Listing services', 'AI portfolio', 'AI Exchange']],
-    ['02', 'Rules', 'anchored by geography', ['Tax logic & currency', 'Legal framework', 'Portfolio eligibility', 'Pricing & margin', 'Entitlements', 'Partner tiering']],
-    ['03', 'Storefronts', 'one store per market', ['Africa', 'India', 'GCC', '+ Next market']],
-    ['04', 'Models', 'how it reaches the market', ['Direct', 'Indirect', 'Reseller mini-shop', 'White-label B2B2C', 'Platform-as-a-Service']],
-  ];
-  const cqa = ['Forecasting', 'Churn & renewal risk', 'Usage anomalies', 'Partner performance', 'FinOps & spend', 'Margin integrity'];
+  const P = 480;
+  const plane = (pid, w, h, x, y, bg, bd, inner) => `<div class="fx-pl" id="${pid}" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:26px;background:${bg};border:3px solid ${bd};box-shadow:0 0 60px ${bd}88, inset 0 0 60px ${bd}44;display:flex;align-items:center;justify-content:center;overflow:hidden">${inner}</div>`;
+  const grid = c => `<div style="position:absolute;inset:0;background-image:linear-gradient(${c}33 1px,transparent 1px),linear-gradient(90deg,${c}33 1px,transparent 1px);background-size:40px 40px"></div>`;
+  const big = (t, c) => `<span class="sg" style="position:relative;font-size:150px;font-weight:700;color:${c};letter-spacing:-.02em">${t}</span>`;
+  const label = (lid, y, c, k, t, d) => `<div class="abs h fx-lab" id="${lid}" style="left:140px;top:${y}px;width:560px">
+      <div style="display:flex;align-items:center;gap:16px"><span style="width:16px;height:16px;border-radius:50%;background:${c};box-shadow:0 0 20px ${c}"></span><span class="kicker" style="color:${c}">${k}</span></div>
+      <div class="sg" style="font-size:58px;font-weight:700;line-height:1.05;margin-top:6px">${t}</div><div style="font-size:24px;color:var(--mut);margin-top:6px">${d}</div></div>`;
   scene(id, `
-    <div class="abs" id="fi-d" style="left:0;top:0;width:1920px;height:1080px">
-      <div class="abs h" id="fi-cq" style="left:90px;top:110px;width:1740px;height:86px;border-radius:16px;background:linear-gradient(90deg,#16a34a,#1f8a4c);display:flex;align-items:center;padding:0 28px;gap:22px">
-        <span class="badge" style="width:84px;height:58px;font-size:32px;background:#eaf1fb;color:#16a34a">CQ</span><div><div class="sg" style="font-size:28px;font-weight:700;letter-spacing:.06em">THE CORE</div><div style="font-size:18px;opacity:.85">the neural layer · one platform, one identity, one data model</div></div>
-        <div style="margin-left:auto;font-size:18px;font-weight:600;text-align:right">One catalogue of truth · one billing spine · one identity across every store</div></div>
-      <div class="abs card h" id="fi-cqc" style="left:90px;top:220px;width:400px;height:560px;padding:20px;border-color:#3ddc84">
-        <div style="display:flex;align-items:center;gap:12px"><span class="badge" style="width:74px;height:46px;font-size:24px;background:var(--green)">CQC</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--green)">COMMERCE</div><div style="font-size:15px;color:var(--mut)">the engine that fulfils</div></div></div>
-        ${cqc.map(c => `<div style="margin-top:9px;padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line)"><div style="font-size:17px;font-weight:700">${c[0]}</div><div style="font-size:13px;color:var(--mut)">${c[1]}</div></div>`).join('')}
+    <div class="abs" id="fx-wrap" style="left:1200px;top:540px;perspective:2400px;width:0;height:0">
+      <div id="fx-stack" style="position:absolute;left:0;top:0;transform-style:preserve-3d">
+        ${plane('fx-cqa', P, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0d2350ee,#173a7aee)', '#38d3e8', grid('#38d3e8') + big('CQA', '#bff4fb'))}
+        ${plane('fx-cqc', P / 2 - 12, P, -P / 2, -P / 2, 'linear-gradient(135deg,#0f3d22ee,#006837ee)', '#5cc062', grid('#5cc062') + `<span class="sg" style="position:relative;font-size:84px;font-weight:700;color:#d6f5d8">CQC</span>`)}
+        ${plane('fx-cqm', P / 2 - 12, P, 12, -P / 2, 'linear-gradient(135deg,#0d2a5cee,#1d5fbfee)', '#4c8dff', grid('#4c8dff') + `<span class="sg" style="position:relative;font-size:84px;font-weight:700;color:#dbe7ff">CQM</span>`)}
+        ${plane('fx-cq', P, P, -P / 2, -P / 2, 'linear-gradient(135deg,#00924aee,#006837ee)', '#5cc062', grid('#ffffff') + `<img src="assets/logo-icon.png" style="position:relative;height:300px;filter:brightness(1.5) saturate(.6)">`)}
       </div>
-      <div class="abs card h" id="fi-cqm" style="left:520px;top:220px;width:1310px;height:560px;padding:20px;border-color:#4c8dff">
-        <div style="display:flex;align-items:center;gap:12px"><span class="badge" style="width:74px;height:46px;font-size:24px;background:var(--blue);color:#fff">CQM</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--blue)">MARKETPLACE</div><div style="font-size:15px;color:var(--mut)">the surface that sells · right solution, right market, right model</div></div>
-          <div style="margin-left:auto;display:flex;gap:12px"><span class="pill" style="font-size:16px;border-color:#4c8dff;color:#cfe0ff">PATH 1 · you know what you want</span><span class="pill" style="font-size:16px;border-color:#3ddc84;color:#c8f7dc">PATH 2 · start at RACE</span></div></div>
-        <div style="display:flex;gap:14px;margin-top:16px">${cols.map((c, i) => `<div class="fi-col" id="fi-col${i}" style="flex:1;border-radius:14px;border:1px solid var(--line);padding:14px;height:440px;background:rgba(255,255,255,.03)"><div style="font-size:15px;color:var(--blue);font-weight:700">${c[0]}</div><div class="sg" style="font-size:24px;font-weight:700">${c[1]}</div><div style="font-size:14px;color:var(--mut);margin-bottom:8px">${c[2]}</div>${c[3].map(x => `<div style="font-size:15px;padding:6px 0;border-top:1px solid var(--line);font-weight:600;${x === 'AI Exchange' ? 'color:#a78bfa' : ''}">${x}</div>`).join('')}</div>`).join('')}</div>
-      </div>
-      <div class="abs h" id="fi-cqa" style="left:90px;top:806px;width:1740px;height:86px;border-radius:16px;background:linear-gradient(90deg,#0d2350,#173a7a);border:1px solid #38d3e8;display:flex;align-items:center;padding:0 24px;gap:20px">
-        <span class="badge" style="width:84px;height:58px;font-size:30px;background:var(--cyan)">CQA</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--cyan)">ANALYTICS</div><div style="font-size:15px;color:var(--mut)">the layer that learns</div></div>
-        <div style="margin-left:auto;display:flex;gap:22px">${cqa.map(x => `<span style="font-size:17px;font-weight:600;display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:var(--cyan)"></span>${x}</span>`).join('')}</div></div>
-      <div class="abs h" id="fi-scan" style="left:60px;width:1800px;height:6px;top:100px;background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 40px 10px #3ddc8488"></div>
     </div>
-    
-    <div class="abs" id="fi-end" style="left:0;right:0;top:260px;text-align:center;visibility:hidden">
-      <svg id="fi-mark" viewBox="-60 -60 120 120" width="200" height="200">${markSVG()}</svg>
-      <div class="sg" style="font-size:136px;font-weight:700;letter-spacing:-.03em;line-height:1">Cloud<span style="color:var(--green)">Quarks</span></div>
-      <div style="font-size:36px;color:var(--mut);margin-top:20px">One core · Two branches · One intelligence layer</div>
-      <div style="font-size:22px;letter-spacing:.3em;color:var(--dim);margin-top:30px;font-weight:600">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
+    ${label('fx-l0', 230, '#5cc062', 'CQ', 'One core.', 'one platform · one identity · one data model')}
+    ${label('fx-l1', 440, '#4c8dff', 'CQC + CQM', 'Two branches.', 'Commerce fulfils · the Marketplace sells')}
+    ${label('fx-l2', 650, '#38d3e8', 'CQA', 'One intelligence layer.', 'Analytics that learns, under both')}
+    <div class="abs" id="fx-end" style="left:0;right:0;top:300px;text-align:center;visibility:hidden">
+      <img id="fx-logo" src="assets/logo-white.png" style="width:1100px">
+      <div style="font-size:36px;color:var(--mut);margin-top:46px">One core · Two branches · One intelligence layer</div>
+      <div style="font-size:22px;letter-spacing:.3em;color:var(--dim);margin-top:26px;font-weight:600">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
     </div>
   `);
-  animateMark($('#fi-mark'));
-  pop(at(id, 'One core') - .1, '#fi-cq', { y: -30 }, { duration: .5 });
-  pop(at(id, 'Two branches') - .1, '#fi-cqc', { x: -50, y: 0 }, { duration: .5 });
-  pop(at(id, 'Two branches') + .05, '#fi-cqm', { x: 50, y: 0 }, { duration: .5 });
-  [0, 1, 2, 3].forEach(i => {
-    const t = at(id, 'Two branches') + .45 + i * .15;
-    master.to(`#fi-col${i}`, { borderColor: '#4c8dff', background: 'rgba(76,141,255,.14)', duration: .2 }, t);
-    master.to(`#fi-col${i}`, { borderColor: 'rgba(255,255,255,.11)', background: 'rgba(255,255,255,.03)', duration: .4 }, t + .5);
-  });
-  pop(at(id, 'intelligence') - .1, '#fi-cqa', { y: 30 }, { duration: .5 });
-  const tR = at(id, 'intelligence') + .6;
-  master.fromTo('#fi-scan', { autoAlpha: 0, top: 100 }, { keyframes: [{ autoAlpha: 1, duration: .1 }, { top: 900, duration: .7, ease: 'power1.inOut' }, { autoAlpha: 0, duration: .1 }], immediateRender: false }, tR);
+  const t0 = S[id].start;
+  master.set('#fx-stack', { rotationX: 58, rotationZ: -42 }, 0);
+  master.set('#fx-cq', { z: 200 }, 0); master.set(['#fx-cqc', '#fx-cqm'], { z: 0 }, 0); master.set('#fx-cqa', { z: -200 }, 0);
+  master.to('#fx-stack', { rotationZ: -24, duration: S[id].end - t0, ease: 'none' }, t0 - .3);
+  const t1 = at(id, 'One core'), t2 = at(id, 'Two branches'), t3 = at(id, 'intelligence');
+  master.fromTo('#fx-cq', { autoAlpha: 0, z: 700 }, { autoAlpha: 1, z: 200, duration: .8, ease: 'expo.out', immediateRender: false }, t1 - .3);
+  master.fromTo('#fx-cqc', { autoAlpha: 0, x: -400 }, { autoAlpha: 1, x: 0, duration: .8, ease: 'expo.out', immediateRender: false }, t2 - .2);
+  master.fromTo('#fx-cqm', { autoAlpha: 0, x: 400 }, { autoAlpha: 1, x: 0, duration: .8, ease: 'expo.out', immediateRender: false }, t2 - .1);
+  master.fromTo('#fx-cqa', { autoAlpha: 0, z: -700 }, { autoAlpha: 1, z: -200, duration: .9, ease: 'expo.out', immediateRender: false }, t3 - .3);
+  [t1, t2, t3].forEach((t, i) => pop(t - .1, `#fx-l${i}`, { x: -40, y: 0 }, { duration: .5 }));
+  // layers press together, then resolve into the logo
   const tE = at(id, "That's CloudQuarks");
-  master.to('#fi-d', { opacity: 0, scale: .92, duration: .5 }, tE - .1);
-  pop(tE + .1, '#fi-end', { scale: .85, y: 0 }, { duration: 1, ease: 'expo.out' });
+  master.to('#fx-cq', { z: 40, duration: .5, ease: 'power2.in' }, tE - .5);
+  master.to('#fx-cqa', { z: -40, duration: .5, ease: 'power2.in' }, tE - .5);
+  out(tE - .4, '.fx-lab', .4);
+  master.to('#fx-wrap', { autoAlpha: 0, scale: .4, x: -240, duration: .5, ease: 'power2.in' }, tE);
+  fade(tE + .2, '#fx-end', .01);
+  master.fromTo('#fx-logo', { autoAlpha: 0, scale: .7, filter: 'blur(14px)' }, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 1, ease: 'expo.out', immediateRender: false }, tE + .2);
+  master.fromTo('#fx-end > div', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .6, stagger: .3, immediateRender: false }, tE + .9);
 })();
 
 // ---------------------------------------------------------------- global updaters
@@ -477,7 +470,7 @@ function renderAt(t) {
   pc.clearRect(0, 0, W, H);
   for (const p of P) {
     const x = (p[0] + t * 14 * p[2]) % W, y = (p[1] + Math.sin(t * .4 + p[3]) * 30 - t * 6 * p[2] + H * 4) % H;
-    pc.globalAlpha = .25 + .35 * p[2]; pc.fillStyle = p[2] > .6 ? '#3ddc84' : '#4c8dff';
+    pc.globalAlpha = .25 + .35 * p[2]; pc.fillStyle = p[2] > .6 ? '#5cc062' : '#4c8dff';
     pc.beginPath(); pc.arc(x, y, 1 + p[2] * 1.8, 0, 6.283); pc.fill();
   }
   $('#g1').style.transform = `translate(${Math.sin(t * .07) * 120}px,${Math.cos(t * .05) * 80}px)`;
