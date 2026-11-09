@@ -12,7 +12,7 @@ if os.path.exists(_CA):
     certifi.where = lambda: _CA
 import edge_tts  # noqa: E402
 
-VOICE = os.environ.get("CQ_VOICE", "en-US-BrianMultilingualNeural")
+VOICE = os.environ.get("CQ_VOICE", "en-US-AvaMultilingualNeural")
 RATE = os.environ.get("CQ_RATE", "+11%")
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "build")
@@ -61,6 +61,8 @@ async def scene(item):
     for attempt in range(6):
         try:
             sents = await synth(item, path)
+            if duration(path) < 0.6 * len(item["text"]) / 16:  # truncated stream from the service
+                raise RuntimeError("audio too short")
             json.dump({"key": key, "sentences": sents}, open(meta, "w"))
             return path, sents
         except Exception as e:  # transient service errors

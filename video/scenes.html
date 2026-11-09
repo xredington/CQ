@@ -152,7 +152,7 @@ function animateMark(svg) { // electrons orbit, driven by global time
 }
 
 // ---------------------------------------------------------------- persistent chrome
-const CH = { hook: '', core: '01 · The Core', cqc: '02 · CQC Commerce', paths: '03 · CQM Marketplace', moves: '03 · CQM · Four moves', cqa: '04 · CQA Analytics', finale: '' };
+const CH = { hook: '', core: '01 · The Core', cqc: '02 · CQC Commerce', mkt: '03 · CQM Marketplace', paths: '03 · CQM · Two ways in', catalog: '03 · CQM · Master catalogue', aix: '03 · CQM · AI Exchange', moves: '03 · CQM · To market', cqa: '04 · CQA Analytics', finale: '' };
 fade(S.core.start + 2.2, '#chrome', .6);
 out(S.finale.start - .2, '#chrome', .4);
 
@@ -288,6 +288,33 @@ out(S.finale.start - .2, '#chrome', .4);
   pop(atWord(id, 'service', .5), '#cc-eight', { y: 20 }, { duration: .5 });
 })();
 
+// ================================================================ 4a. MARKETPLACE SPOTLIGHT
+(() => {
+  const id = 'mkt';
+  const rights = [['target', 'Right solution', 'solution'], ['globe', 'Right market', 'market'], ['blocks', 'Right model', 'model']];
+  scene(id, `
+    <div class="abs h" id="mk-beam" style="left:460px;top:-200px;width:1000px;height:1100px;background:radial-gradient(ellipse at 50% 0%,#4c8dff55,transparent 65%);filter:blur(10px)"></div>
+    <div class="abs h" id="mk-k" style="left:0;right:0;top:170px;text-align:center"><span class="pill" style="font-size:22px;letter-spacing:.24em;color:#cfe0ff;border-color:#4c8dff88;padding:12px 26px">THE SUBJECT WE'RE ALL HERE TO DISCUSS</span></div>
+    <div class="abs" style="left:0;right:0;top:290px;display:flex;justify-content:center;align-items:center;gap:34px">
+      <div class="badge h" id="mk-b" style="width:210px;height:150px;font-size:80px;background:var(--blue);color:#fff;box-shadow:0 0 90px #4c8dff99">CQM</div>
+      <div class="h" id="mk-t"><div class="sg" style="font-size:118px;font-weight:700;line-height:1;letter-spacing:-.02em">The Marketplace</div>
+      <div style="font-size:32px;color:var(--mut);margin-top:10px">CloudQuarks Marketplace · the surface that <b style="color:var(--blue)">sells</b></div></div>
+    </div>
+    <div class="abs h" id="mk-does" style="left:0;right:0;top:540px;text-align:center;font-size:30px;color:var(--ink);font-weight:600">What it does</div>
+    <div class="abs" style="left:0;right:0;top:610px;display:flex;justify-content:center;gap:30px">
+      ${rights.map((r, i) => `<div class="card h mk-r" id="mk-r${i}" style="width:510px;padding:30px;display:flex;align-items:center;gap:22px;border-color:#4c8dff66">
+        <div style="width:80px;height:80px;border-radius:50%;background:#4c8dff22;display:flex;align-items:center;justify-content:center">${ic(r[0], '#4c8dff', 44)}</div><span class="sg" style="font-size:42px;font-weight:700">${r[1]}</span></div>`).join('')}
+    </div>
+  `);
+  const t0 = S[id].start;
+  fade(t0, '#mk-beam', 1.2);
+  pop(atWord(id, 'subject'), '#mk-k', { y: -20 }, { duration: .6 });
+  pop(atWord(id, 'CQM'), '#mk-b', { scale: .3, y: 0 }, { duration: .6 });
+  pop(atWord(id, 'CQM', .3), '#mk-t', { x: 60, y: 0 }, { duration: .7 });
+  fade(atWord(id, 'This is what'), '#mk-does', .4);
+  rights.forEach((r, i) => pop(atWord(id, 'right ' + r[2]), `#mk-r${i}`, { y: 50 }, { duration: .55 }));
+})();
+
 // ================================================================ 4. CQM + two paths
 (() => {
   const id = 'paths';
@@ -295,7 +322,7 @@ out(S.finale.start - .2, '#chrome', .4);
   scene(id, `
     <div class="abs" style="left:0;right:0;top:130px;display:flex;justify-content:center;align-items:center;gap:26px">
       <div class="badge h" id="pa-b" style="width:150px;height:104px;font-size:56px;background:var(--blue);color:#fff">CQM</div>
-      <div class="h" id="pa-t"><div class="sg" style="font-size:60px;font-weight:700;line-height:1.05">CloudQuarks Marketplace</div><div style="font-size:28px;color:var(--mut)">the surface that <b style="color:var(--blue)">sells</b> · right solution, right market, right model</div></div>
+      <div class="h" id="pa-t"><div class="sg" style="font-size:60px;font-weight:700;line-height:1.05">Two ways in</div><div style="font-size:28px;color:var(--mut)">every buyer starts in one of two places</div></div>
     </div>
     <div class="abs card h" id="pa-l" style="left:110px;top:350px;width:820px;height:400px;padding:38px;border-color:#4c8dff66">
       <div class="kicker" style="color:var(--blue)">Path 1</div>
@@ -329,10 +356,89 @@ out(S.finale.start - .2, '#chrome', .4);
   pop(t2 + .9, '#pa-a', { y: 20 }, { duration: .4 });
 })();
 
+// ================================================================ 4b. MASTER PRODUCT CATALOGUE
+(() => {
+  const id = 'catalog';
+  const cols = [
+    ['cloud', 'Hyperscalers + SaaS vendors', '#4c8dff', ['AWS', 'Microsoft Azure', 'Microsoft 365', 'Google Cloud', 'Autodesk', 'Adobe'], 'Hyperscalers'],
+    ['link', 'Connected marketplaces', '#38d3e8', ['AWS · Azure · GCP', 'Huawei & Alibaba Cloud', 'Anthropic · OpenAI', 'AI Exchange'], 'Connected'],
+    ['blocks', 'Third-party offerings', '#ffb547', ['DNT solutions', 'ISV solutions', 'Tier 2 + 3 vendor offers'], 'DNT'],
+    ['briefcase', 'Services', '#5cc062', ['Managed services', 'Professional services', 'Partner services'], 'managed'],
+  ];
+  scene(id, `
+    <div class="abs h" id="ct-h" style="left:110px;top:130px"><div class="kicker" style="color:var(--blue)">Move 01 · Cataloguing</div>
+      <div class="sg" style="font-size:62px;font-weight:700;margin-top:4px">One master product catalogue</div>
+      <div style="font-size:26px;color:var(--mut);margin-top:4px">a unified product repository feeding every store</div></div>
+    ${cols.map((c, i) => `<div class="abs card h ct-c" id="ct-c${i}" style="left:${110 + i * 430}px;top:320px;width:400px;height:480px;padding:24px;border-color:${c[2]}66">
+      <div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:52px;border-radius:14px;background:${c[2]}22;display:flex;align-items:center;justify-content:center">${ic(c[0], c[2], 30)}</div>
+      <div class="sg" style="font-size:16px;font-weight:700;color:${c[2]}">0${i + 1}</div></div>
+      <div class="sg" style="font-size:31px;font-weight:700;line-height:1.1;margin:14px 0 16px;min-height:70px">${c[1]}</div>
+      ${c[3].map(x => `<div class="ct-i" style="font-size:21px;font-weight:600;padding:8px 14px;margin-bottom:7px;border-radius:10px;border:1px solid ${x === 'AI Exchange' ? '#a78bfa' : 'var(--line)'};background:${x === 'AI Exchange' ? 'linear-gradient(135deg,#a78bfa33,#4c8dff22)' : 'rgba(255,255,255,.03)'};${x === 'AI Exchange' ? 'color:#e4dcff' : ''}">${x}</div>`).join('')}
+    </div>`).join('')}
+    <div class="abs h" id="ct-src" style="left:110px;top:830px;width:1700px;display:flex;align-items:center;gap:16px;padding:16px 24px;border-radius:16px;border:1px dashed #4c8dff77;background:rgba(76,141,255,.06)">
+      ${ic('network', '#4c8dff', 28)}<span style="font-size:22px;font-weight:700">Marketplace source</span><span style="font-size:20px;color:var(--mut)">onboarded via</span>
+      ${['Marketplace API', 'CQ API', 'Manual'].map(x => `<span class="pill" style="font-size:19px;padding:7px 16px;color:#cfe0ff;border-color:#4c8dff77">${x}</span>`).join('')}
+      <span style="margin-left:auto;font-size:20px;color:var(--mut)">+ private offers · marketplace connectors</span>
+    </div>
+  `);
+  const t0 = S[id].start;
+  pop(t0, '#ct-h', { x: -40, y: 0 }, { duration: .6 });
+  cols.forEach((c, i) => {
+    const t = atWord(id, c[4]) - .15;
+    pop(t, `#ct-c${i}`, { y: 50 }, { duration: .55 });
+    lit(t + .1, `#ct-c${i}`, c[2], .35);
+    master.fromTo(`#ct-c${i} .ct-i`, { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: .3, stagger: .08, immediateRender: false }, t + .2);
+    if (i) master.to(`#ct-c${i - 1}`, { boxShadow: 'none', duration: .4 }, t);
+  });
+  pop(atWord(id, 'partner', .6), '#ct-src', { y: 30 }, { duration: .5 });
+})();
+
+// ================================================================ 4c. AI EXCHANGE
+(() => {
+  const id = 'aix';
+  const agents = [['message-square', 'Customer support agent'], ['trending-up', 'Sales agent'], ['wallet', 'Finance copilot'], ['code-xml', 'Coding assistant'], ['file-text', 'Document AI'], ['shield-check', 'Security analyst']];
+  const R = 300, cx = 1340, cy = 520;
+  scene(id, `
+    <div class="abs h" id="ax-glow" style="left:${cx - 420}px;top:${cy - 420}px;width:840px;height:840px;border-radius:50%;background:radial-gradient(circle,#a78bfa44,transparent 65%)"></div>
+    <div class="abs h" id="ax-h" style="left:110px;top:250px;width:640px">
+      <div class="kicker" style="color:var(--violet)">Inside the catalogue</div>
+      <div class="sg" style="font-size:120px;font-weight:700;line-height:.95;margin-top:14px;letter-spacing:-.02em">AI<span style="color:var(--violet)">EXCHANGE</span></div>
+      <div style="font-size:36px;font-weight:600;margin-top:22px">The <span style="color:var(--violet)">agentic AI</span> catalogue</div>
+      <div style="font-size:24px;color:var(--mut);margin-top:10px;line-height:1.4">AI agents and models, discoverable and purchasable alongside everything else in the marketplace</div>
+    </div>
+    <div class="abs h" id="ax-prov" style="left:110px;top:720px;display:flex;gap:14px;align-items:center">
+      <span style="font-size:20px;color:var(--mut)">Model providers</span>
+      ${['Anthropic', 'OpenAI', '+ more'].map((x, i) => `<span class="pill ax-p" id="ax-p${i}" style="font-size:24px;color:#e4dcff;border-color:#a78bfa88">${x}</span>`).join('')}
+    </div>
+    <svg class="abs" style="left:0;top:0" width="1920" height="1080">
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#a78bfa" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 10" id="ax-orbit"/>
+      ${agents.map((a, i) => { const t = i / 6 * Math.PI * 2 - Math.PI / 2; return `<line class="ax-ln" id="ax-ln${i}" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(t) * R}" y2="${cy + Math.sin(t) * R}" stroke="#a78bfa" stroke-width="2.5" stroke-opacity=".6"/>`; }).join('')}
+    </svg>
+    <div class="abs h" id="ax-hub" style="left:${cx - 105}px;top:${cy - 105}px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,#2a1d55,#140d2c);border:4px solid #a78bfa;box-shadow:0 0 80px #a78bfaaa;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      ${ic('bot', '#e4dcff', 64)}<div class="sg" style="font-size:24px;font-weight:700;margin-top:6px">AI Exchange</div></div>
+    ${agents.map((a, i) => { const t = i / 6 * Math.PI * 2 - Math.PI / 2; return `<div class="abs h ax-a" id="ax-a${i}" style="left:${cx + Math.cos(t) * R - 130}px;top:${cy + Math.sin(t) * R - 38}px;width:260px;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#150f2bee;border:1px solid #a78bfa99">${ic(a[0], '#a78bfa', 28)}<span style="font-size:20px;font-weight:700">${a[1]}</span></div>`; }).join('')}
+    <div class="abs h" id="ax-eg" style="left:${cx - 200}px;top:${cy + R + 70}px;width:400px;text-align:center;font-size:17px;color:var(--dim)">example agent categories</div>
+  `);
+  const t0 = S[id].start;
+  fade(t0, '#ax-glow', 1);
+  pop(atWord(id, 'AI Exchange'), '#ax-h', { x: -50, y: 0 }, { duration: .7 });
+  pop(atWord(id, 'AI Exchange', .2), '#ax-hub', { scale: .2, y: 0 }, { duration: .8 });
+  master.fromTo('#ax-orbit', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'agentic'));
+  master.to('#ax-orbit', { rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 40, ease: 'none' }, t0);
+  $$('.ax-ln').forEach((l, i) => draw(atWord(id, 'agents') + i * .12, l, .4));
+  pop(atWord(id, 'agents', .2), '.ax-a', { scale: .4, y: 0 }, { stagger: .12, duration: .5 });
+  fade(atWord(id, 'agents', 1), '#ax-eg', .4);
+  fade(atWord(id, 'providers'), '#ax-prov', .3);
+  pop(atWord(id, 'Anthropic'), '#ax-p0', { scale: .4, y: 0 }, { duration: .4 });
+  pop(atWord(id, 'Open AI'), '#ax-p1', { scale: .4, y: 0 }, { duration: .4 });
+  pop(atWord(id, 'Open AI', .6), '#ax-p2', { scale: .4, y: 0 }, { duration: .4 });
+  master.fromTo('#ax-hub', { boxShadow: '0 0 40px #a78bfa66' }, { boxShadow: '0 0 120px #a78bfacc', duration: .8, repeat: 9, yoyo: true, immediateRender: false }, atWord(id, 'agentic'));
+})();
+
 // ================================================================ 5. FOUR MOVES
 (() => {
   const id = 'moves';
-  const cat = ['Marketplace portfolio', 'Software portfolio', 'SaaS', 'ISV solutions', 'Professional services', 'Listing services', 'AI portfolio'];
+  const cat = ['Hyperscalers & SaaS vendors', 'Connected marketplaces', 'DNT & ISV solutions', 'Managed & professional services'];
   const tax = [['UAE', 'VAT', 5], ['KSA', 'VAT', 15], ['Kenya', 'VAT', 16], ['India', 'GST', 18]];
   const stores = [['Africa', 'regional portfolio', '#5cc062'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
   const models = [['handshake', 'Direct'], ['network', 'Indirect'], ['store', 'Reseller mini-shop'], ['palette', 'White-label B2B2C'], ['blocks', 'Platform-as-a-Service']];
@@ -341,10 +447,10 @@ out(S.finale.start - .2, '#chrome', .4);
     <div class="sg" style="font-size:42px;font-weight:700;line-height:1.05">${title}</div>
     <div style="font-size:20px;color:var(--mut);margin:6px 0 18px">${sub}</div>${body}</div>`;
   scene(id, `
-    <div class="abs h" id="mv-h" style="left:90px;top:130px"><div class="sg" style="font-size:60px;font-weight:700">Four moves, <span style="color:var(--blue)">in order</span></div></div>
+    <div class="abs h" id="mv-h" style="left:90px;top:130px"><div class="sg" style="font-size:60px;font-weight:700">From catalogue <span style="color:var(--blue)">to market</span></div></div>
     ${card(0, 'Cataloguing', 'everything that can be sold, in one place',
       cat.map(x => `<div class="mv-i" style="font-size:22px;font-weight:600;padding:8px 0;border-top:1px solid var(--line)">${x}</div>`).join('') +
-      `<div class="mv-i" style="margin-top:10px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,#a78bfa33,#4c8dff22);border:1px solid #a78bfa;font-weight:700;font-size:21px;display:flex;gap:8px;align-items:center">${ic('sparkles', '#a78bfa', 24)}AI Exchange · RAG search</div>`, '#a78bfa')}
+      `<div class="mv-i" style="margin-top:10px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,#a78bfa33,#4c8dff22);border:1px solid #a78bfa;font-weight:700;font-size:21px;display:flex;gap:8px;align-items:center">${ic('bot', '#a78bfa', 24)}AI Exchange · agentic catalogue</div><div class="mv-i" style="margin-top:14px;font-size:20px;font-weight:700;color:var(--green);display:flex;gap:8px;align-items:center">${ic('circle-check-big', '#5cc062', 22)}in place</div>`, '#a78bfa')}
     ${card(1, 'Rules', 'anchored by geography · tax, pricing, eligibility',
       `<div style="font-size:18px;color:var(--mut);margin-bottom:8px">USD 100 subscription →</div>` +
       tax.map(t => `<div class="mv-i" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:21px;font-weight:600"><span>${t[0]} · ${t[1]} ${t[2]}%</span><b class="mv-v" data-to="${100 + t[2]}">0</b></div><div style="height:12px;border-radius:6px;background:rgba(255,255,255,.07);margin-top:6px;overflow:hidden"><div class="mv-bar" style="height:100%;width:${(100 + t[2]) / 118 * 100}%;background:linear-gradient(90deg,#4c8dff,#ffb547);transform-origin:left"></div></div></div>`).join('') +
@@ -358,17 +464,17 @@ out(S.finale.start - .2, '#chrome', .4);
   `);
   const t0 = S[id].start;
   pop(t0, '#mv-h', { x: -40, y: 0 }, { duration: .5 });
-  const ph = ['AI search', 'Rules for', 'store for', 'every model'];
+  const ph = [null, 'Rules set', 'Storefronts', 'models take'];
   master.fromTo('.mv-c', { autoAlpha: 0, y: 40 }, { autoAlpha: .35, y: 0, duration: .4, stagger: .1, immediateRender: false }, t0 + .4);
   master.set('.mv-c .mv-i', { autoAlpha: 0 }, 0);
   ph.forEach((p, i) => {
-    const t = at(id, p) - .1;
+    const t = p ? at(id, p) - .1 : t0 + .5;
     master.to(`#mv-c${i}`, { autoAlpha: 1, scale: 1.02, duration: .35 }, t);
     lit(t, `#mv-c${i}`, ['#a78bfa', '#ffb547', '#5cc062', '#38d3e8'][i], .35);
     master.fromTo(`#mv-c${i} .mv-i`, { autoAlpha: 0, x: -14 }, { autoAlpha: 1, x: 0, duration: .3, stagger: .07, immediateRender: false }, t + .1);
     if (i) master.to(`#mv-c${i - 1}`, { scale: 1, boxShadow: 'none', duration: .35 }, t);
   });
-  const tR = at(id, 'Rules for');
+  const tR = at(id, 'Rules set');
   master.fromTo('#mv-c1 .mv-bar', { scaleX: 0 }, { scaleX: 1, duration: .6, stagger: .1, ease: 'power2.out', immediateRender: false }, tR + .2);
   $$('#mv-c1 .mv-v').forEach((e, i) => counter(tR + .2 + i * .1, e, +e.dataset.to, .7, v => 'USD ' + v.toFixed(0)));
 })();

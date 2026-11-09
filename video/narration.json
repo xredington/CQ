@@ -7,8 +7,8 @@
  {
   "id": "core",
   "pad": 0.3,
-  "text": "Enter Cloud Quarks, by Redington. It orchestrates it all, from one core. One platform. One identity. One data model.",
-  "rate": "+4%"
+  "rate": "+2%",
+  "text": "Enter Cloud Quarks, by Redington. It orchestrates it all, from one core. One platform. One identity. One data model."
  },
  {
   "id": "cqc",
@@ -16,14 +16,29 @@
   "text": "C Q C, Commerce, is live today. It quotes, provisions, bills, reconciles and governs every order, as a running service."
  },
  {
+  "id": "mkt",
+  "pad": 0.3,
+  "text": "And now, the subject we are all here to discuss. C Q M, the Cloud Quarks Marketplace. This is what the marketplace does. It helps every buyer reach the right solution, in the right market, on the right model."
+ },
+ {
   "id": "paths",
   "pad": 0.3,
-  "text": "C Q M, the Marketplace, sells. Know what you want? Go to the catalogue. Not sure? Start at RACE, Redington's A I Centre of Excellence."
+  "text": "Buyers come in two ways. Know what you want? Go straight to the catalogue. Not sure? Start at RACE, Redington's A I Centre of Excellence."
+ },
+ {
+  "id": "catalog",
+  "pad": 0.3,
+  "text": "It all runs on one master product catalogue. Hyperscalers and SaaS vendors. Connected marketplaces. D N T solutions, and I S V solutions. And managed, professional and partner services."
+ },
+ {
+  "id": "aix",
+  "pad": 0.3,
+  "text": "And inside the catalogue sits A I Exchange. The agentic A I catalogue, where businesses find A I agents and models, from providers like Anthropic and Open A I."
  },
  {
   "id": "moves",
   "pad": 0.3,
-  "text": "Then, four moves. A catalogue that powers A I search. Rules for tax and pricing, by geography. A store for every market, spun up, not rebuilt. And every model, from direct to white label."
+  "text": "From there, three more moves. Rules set tax and pricing, by geography. Storefronts give every market its own store. And models take it to market, from direct to white label."
  },
  {
   "id": "cqa",
@@ -33,7 +48,7 @@
  {
   "id": "finale",
   "pad": 2.8,
-  "text": "One core. Two branches. One intelligence layer. That's Cloud Quarks.",
-  "rate": "+4%"
+  "rate": "+2%",
+  "text": "One core. Two branches. One intelligence layer. That's Cloud Quarks."
  }
 ]
