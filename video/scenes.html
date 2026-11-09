@@ -1,0 +1,492 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CloudQuarks Story</title>
+<link rel="stylesheet" href="node_modules/@fontsource/inter/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/inter/500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/inter/600.css">
+<link rel="stylesheet" href="node_modules/@fontsource/inter/700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/space-grotesk/500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/space-grotesk/700.css">
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script src="build/icons.js"></script>
+<style>
+:root{
+  --bg:#040a15; --ink:#eaf1fb; --mut:#8fa3bf; --dim:#566a86;
+  --green:#3ddc84; --green2:#16a34a; --blue:#4c8dff; --blue2:#1d5fbf; --cyan:#38d3e8;
+  --amber:#ffb547; --violet:#a78bfa; --red:#ff5d6c; --navy:#0d2350;
+  --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.11);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden}
+#bg{position:absolute;inset:0}
+.grid{position:absolute;inset:-100px;background-image:linear-gradient(rgba(120,160,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,220,.06) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%)}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.35}
+.vign{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65));pointer-events:none}
+.scene{position:absolute;inset:0;visibility:hidden;opacity:0}
+.abs{position:absolute}
+.h{visibility:hidden;opacity:0}
+.sg{font-family:'Space Grotesk',sans-serif}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(0px)}
+.ico svg{width:100%;height:100%}
+.ico{display:inline-flex;width:32px;height:32px;flex:none}
+.badge{flex:none;display:inline-flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;border-radius:16px;color:#04121f}
+.kicker{font-size:20px;letter-spacing:.32em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.center{left:0;right:0;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-weight:600;font-size:22px;white-space:nowrap}
+/* chrome */
+#chrome{position:absolute;left:56px;top:40px;display:flex;align-items:center;gap:16px;z-index:50}
+#chrome .mk{width:44px;height:44px}
+#chrome .nm{font-family:'Space Grotesk';font-weight:700;font-size:24px;letter-spacing:.01em}
+#chap{font-size:17px;letter-spacing:.28em;color:var(--mut);font-weight:600;text-transform:uppercase;padding-left:18px;border-left:1px solid var(--line);margin-left:6px}
+#prog{position:absolute;left:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--green),var(--blue),var(--cyan));z-index:60}
+#cap{position:absolute;left:0;right:0;bottom:46px;text-align:center;z-index:55}
+#cap span{display:inline-block;max-width:1500px;font-size:33px;font-weight:600;line-height:1.3;padding:12px 30px;border-radius:14px;background:rgba(2,6,14,.74);border:1px solid rgba(255,255,255,.08);color:#f4f8ff}
+#cap span:empty{display:none}
+/* stepper */
+#stepper{position:absolute;right:60px;top:36px;display:flex;gap:10px;z-index:50}
+#stepper .st{display:flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:17px;font-weight:600;color:var(--dim);background:rgba(255,255,255,.03)}
+#stepper .st b{font-family:'Space Grotesk';color:var(--dim)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bg">
+    <div class="glow" id="g1" style="width:900px;height:900px;left:-200px;top:-300px;background:#1d5fbf"></div>
+    <div class="glow" id="g2" style="width:800px;height:800px;right:-200px;bottom:-300px;background:#16a34a"></div>
+    <div class="grid" id="grid"></div>
+    <canvas id="pc" width="1920" height="1080" style="position:absolute;inset:0"></canvas>
+  </div>
+  <div id="scenes"></div>
+  <div class="vign"></div>
+  <div id="chrome" class="h"><svg class="mk" viewBox="-50 -50 100 100" id="miniMark"></svg><span class="nm">CloudQuarks</span><span id="chap"></span></div>
+  
+  <div id="cap"><span></span></div>
+  <div id="prog"></div>
+</div>
+<script>
+// ---------------------------------------------------------------- helpers
+const TL = window.TL;
+const S = {}; TL.scenes.forEach(s => S[s.id] = s);
+const W = 1920, H = 1080;
+gsap.config({ nullTargetWarn: false });
+const master = gsap.timeline({ paused: true });
+const updaters = [];
+const $ = (q, r = document) => r.querySelector(q);
+const $$ = (q, r = document) => [...r.querySelectorAll(q)];
+const ic = (n, c = 'currentColor', s = 32) => `<span class="ico" style="width:${s}px;height:${s}px;color:${c}">${(ICONS[n] || '').replace('<svg', '<svg')}</span>`;
+function at(id, phrase, off = 0) {
+  const s = S[id];
+  const c = s.captions.find(c => c[0].toLowerCase().includes(phrase.toLowerCase()));
+  if (!c) { console.warn('phrase not found', id, phrase); return s.start + off; }
+  return c[1] + off;
+}
+let seed = 7;
+const rnd = () => (seed = (seed * 16807) % 2147483647, (seed - 1) / 2147483646);
+function scene(id, html) {
+  const el = document.createElement('section');
+  el.className = 'scene'; el.id = 's-' + id; el.innerHTML = html;
+  $('#scenes').appendChild(el);
+  const s = S[id];
+  master.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, ease: 'power1.out', immediateRender: false }, Math.max(0, s.start - .45));
+  if (id !== 'finale') master.to(el, { autoAlpha: 0, duration: .55, ease: 'power1.in' }, s.end - .35);
+  return el;
+}
+// entrance helpers (all fromTo with immediateRender:false so seeking is deterministic)
+function pop(t, target, from = {}, to = {}) {
+  const rest = {}; ['x', 'rotation', 'rotationX', 'rotationY'].forEach(k => { if (k in from) rest[k] = 0; });
+  if ('scaleX' in from) rest.scaleX = 1;
+  master.fromTo(target, Object.assign({ autoAlpha: 0, y: 30, scale: .96 }, from),
+    Object.assign({ autoAlpha: 1, y: 0, scale: 1, duration: .7, ease: 'back.out(1.6)', immediateRender: false }, rest, to), t);
+}
+function fade(t, target, dur = .6, extra = {}) {
+  master.fromTo(target, { autoAlpha: 0 }, Object.assign({ autoAlpha: 1, duration: dur, ease: 'power1.out', immediateRender: false }, extra), t);
+}
+function out(t, target, dur = .5, extra = {}) {
+  master.to(target, Object.assign({ autoAlpha: 0, duration: dur, ease: 'power1.in' }, extra), t);
+}
+function draw(t, path, dur = 1, ease = 'power2.inOut') { // stroke draw-on
+  const L = path.getTotalLength ? path.getTotalLength() : 1000;
+  path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
+  master.fromTo(path, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease, immediateRender: false }, t);
+}
+function counter(t, el, to, dur = 1.2, fmt = v => Math.round(v), from = 0) {
+  const p = { v: from };
+  master.fromTo(p, { v: from }, { v: to, duration: dur, ease: 'power2.out', immediateRender: false }, t);
+  updaters.push(() => { el.textContent = fmt(p.v); });
+}
+function typer(t, el, text, dur) {
+  const p = { v: 0 };
+  master.fromTo(p, { v: 0 }, { v: 1, duration: dur, ease: 'none', immediateRender: false }, t);
+  updaters.push(() => { const n = Math.round(p.v * text.length); el.textContent = text.slice(0, n); el.dataset.caret = p.v > 0 && p.v < 1 ? '1' : ''; });
+}
+function lit(t, el, color, dur = .5) { // light up a card
+  master.to(el, { borderColor: color, boxShadow: `0 0 0 1px ${color}, 0 18px 60px -10px ${color}88`, background: 'rgba(255,255,255,.08)', duration: dur }, t);
+}
+function markSVG(size = 1) { // CloudQuarks mark: a core with three orbits
+  return `<circle r="11" fill="url(#cg)"/>
+  <defs><radialGradient id="cg"><stop offset="0" stop-color="#d9ffe9"/><stop offset=".55" stop-color="#3ddc84"/><stop offset="1" stop-color="#16a34a"/></radialGradient></defs>
+  <g fill="none" stroke-width="3.2" stroke-linecap="round">
+   <ellipse class="orb" rx="42" ry="15" stroke="#3ddc84" transform="rotate(0)"/>
+   <ellipse class="orb" rx="42" ry="15" stroke="#4c8dff" transform="rotate(60)"/>
+   <ellipse class="orb" rx="42" ry="15" stroke="#38d3e8" transform="rotate(120)"/>
+  </g>
+  <circle class="e1" r="4.5" fill="#fff"/><circle class="e2" r="4" fill="#fff"/><circle class="e3" r="4" fill="#fff"/>`;
+}
+function animateMark(svg) { // electrons orbit, driven by global time
+  const es = [svg.querySelector('.e1'), svg.querySelector('.e2'), svg.querySelector('.e3')];
+  updaters.push(t => es.forEach((e, i) => {
+    const a = t * (1.4 + i * .25) + i * 2.1, rot = i * 60 * Math.PI / 180;
+    const x = 42 * Math.cos(a), y = 15 * Math.sin(a);
+    e.setAttribute('cx', x * Math.cos(rot) - y * Math.sin(rot)); e.setAttribute('cy', x * Math.sin(rot) + y * Math.cos(rot));
+  }));
+}
+
+// ---------------------------------------------------------------- persistent chrome
+$('#miniMark').innerHTML = markSVG(); animateMark($('#miniMark'));
+const CH = { hook: '', core: '01 · The Core', cqc: '02 · CQC Commerce', paths: '03 · CQM Marketplace', moves: '03 · CQM · Four moves', cqa: '04 · CQA Analytics', finale: '' };
+fade(S.core.start + 2.2, '#chrome', .6);
+out(S.finale.start - .2, '#chrome', .4);
+
+// ================================================================ 1. HOOK
+(() => {
+  const id = 'hook';
+  const people = [['building-2', 'Riyadh', '#4c8dff'], ['store', 'Nairobi', '#3ddc84'], ['rocket', 'Bengaluru', '#ffb547'], ['briefcase', 'Lagos', '#38d3e8'], ['users', 'Dubai', '#a78bfa']];
+  const chips = [];
+  const prod = ['CRM', 'ERP', 'EDR', 'Backup', 'Email', 'BI', 'IaaS', 'DevOps', 'HRMS', 'SIEM', 'Low-code', 'POS', 'IAM', 'Copilot'];
+  const cur = ['AED', 'SAR', 'KES', 'INR', 'USD', 'NGN', 'EGP', 'ZAR'];
+  const tax = ['VAT 5%', 'VAT 15%', 'VAT 16%', 'GST 18%', 'WHT', 'Reverse charge'];
+  const mod = ['Monthly', 'Annual', 'Pay-as-you-go', 'Reseller', 'Direct', 'CSP'];
+  [[prod, '#cfe0ff'], [cur, '#3ddc84'], [tax, '#ffb547'], [mod, '#a78bfa']].forEach(([arr, col]) => arr.forEach(x => chips.push({ x, col })));
+  const el = scene(id, `
+    <div class="abs center sg h" id="hk-q" style="top:330px;font-size:100px;font-weight:700;letter-spacing:-.02em">Every buyer needs <span style="color:var(--green)">technology.</span></div>
+    <div class="abs" style="left:0;right:0;top:530px;display:flex;justify-content:center;gap:26px">
+      ${people.map((p, i) => `<div class="pill h hk-p" style="font-size:30px;padding:16px 28px;border-color:${p[2]}88">${ic(p[1] ? p[0] : 'user', p[2], 32)}${p[1]}</div>`).join('')}
+    </div>
+    <div class="abs" id="hk-chips" style="left:960px;top:520px">
+      ${chips.map(c => `<div class="abs pill h hk-c" style="font-size:24px;color:${c.col};border-color:${c.col}55">${c.x}</div>`).join('')}
+    </div>
+    <div class="abs center sg h" id="hk-big" style="top:455px;font-size:110px;font-weight:700;letter-spacing:-.02em;text-shadow:0 10px 60px #000,0 0 30px #000">Fragmented.</div>
+    <div class="abs" id="hk-orb" style="left:960px;top:540px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:radial-gradient(#fff,#3ddc84 40%,#16a34a 70%,transparent 72%);box-shadow:0 0 120px 40px #3ddc8466;visibility:hidden"></div>
+  `);
+  const t0 = S[id].start;
+  pop(t0, '#hk-q', { y: 40 }, { duration: .6 });
+  pop(t0 + .5, '.hk-p', { y: 40 }, { stagger: .12, duration: .5 });
+  const tF = at(id, 'fragmented');
+  master.to('#hk-q', { autoAlpha: 0, y: -60, duration: .35 }, tF - .2);
+  master.to('.hk-p', { autoAlpha: 0, scale: .6, filter: 'blur(8px)', duration: .4, stagger: .04 }, tF - .2);
+  $$('.hk-c', el).forEach((c, i) => {
+    const a = rnd() * Math.PI * 2, r = 230 + rnd() * 560;
+    const x = Math.cos(a) * r * 1.3, y = Math.sin(a) * r * .6;
+    master.fromTo(c, { autoAlpha: 0, x: 0, y: 0, xPercent: -50, yPercent: -50, scale: .3, rotation: 0 },
+      { autoAlpha: 1, x, y, scale: .9 + rnd() * .5, rotation: (rnd() - .5) * 26, duration: .9, ease: 'expo.out', immediateRender: false }, tF + i * .008);
+    master.to(c, { x: x + (rnd() - .5) * 120, y: y + (rnd() - .5) * 70, rotation: '+=' + (rnd() - .5) * 20, duration: 2, ease: 'sine.inOut' }, tF + .9);
+  });
+  pop(tF + .3, '#hk-big', { scale: 1.3, y: 0 }, { duration: .5 });
+  const tW = S[id].end - 1.0;
+  master.to('#hk-big', { autoAlpha: 0, duration: .3 }, tW);
+  master.to('.hk-c', { x: 0, y: 0, scale: 0, rotation: 0, duration: .8, ease: 'power3.in', stagger: .004 }, tW);
+  master.fromTo('#hk-orb', { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 20, duration: .6, ease: 'power2.out', immediateRender: false }, tW + .6);
+  master.to('#hk-orb', { scale: 260, autoAlpha: 0, duration: .5, ease: 'power2.in' }, tW + 1.1);
+})();
+
+// ================================================================ 2. CORE (logo + CQ)
+(() => {
+  const id = 'core';
+  const ones = [['layers', 'One platform'], ['fingerprint', 'One identity'], ['database', 'One data model']];
+  scene(id, `
+    <div class="abs" id="tt-logo" style="left:0;right:0;top:250px;text-align:center">
+      <svg id="tt-mark" viewBox="-60 -60 120 120" width="220" height="220">${markSVG()}</svg>
+      <div class="sg" style="font-size:150px;font-weight:700;letter-spacing:-.03em;line-height:1;margin-top:10px">Cloud<span style="color:var(--green)">Quarks</span></div>
+      <div id="tt-sub" class="h" style="font-size:38px;color:var(--mut);margin-top:20px;font-weight:500">the architecture of <span style="color:var(--ink)">orchestration</span></div>
+    </div>
+    <div class="abs h" id="co-bar" style="left:260px;top:520px;width:1400px;height:120px;border-radius:22px;background:linear-gradient(90deg,#16a34a,#1f8a4c);display:flex;align-items:center;padding:0 36px;gap:26px;box-shadow:0 0 90px #3ddc8455">
+      <span class="badge" style="width:120px;height:80px;font-size:46px;background:#eaf1fb;color:#16a34a">CQ</span>
+      <div><div class="sg" style="font-size:44px;font-weight:700;letter-spacing:.06em">THE CORE</div><div style="font-size:24px;opacity:.9">the neural layer · everything else is a branch of it</div></div>
+    </div>
+    <div class="abs" style="left:0;right:0;top:690px;display:flex;justify-content:center;gap:30px">
+      ${ones.map((o, i) => `<div class="card h co-o" id="co-o${i}" style="display:flex;align-items:center;gap:18px;padding:22px 34px;border-color:#3ddc8466">${ic(o[0], '#3ddc84', 40)}<span class="sg" style="font-size:40px;font-weight:700">${o[1]}</span></div>`).join('')}
+    </div>
+    <div class="abs h" id="co-tags" style="left:0;right:0;top:830px;text-align:center;font-size:22px;letter-spacing:.3em;color:var(--cyan);font-weight:700">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
+  `);
+  animateMark($('#tt-mark'));
+  const t0 = S[id].start;
+  pop(t0, '#tt-logo', { scale: .6, y: 0 }, { duration: .9, ease: 'expo.out' });
+  fade(t0 + .8, '#tt-sub', .5);
+  const tC = at(id, 'CloudQuarks orchestrates') + 1.9;
+  master.to('#tt-logo', { y: -160, scale: .58, duration: .7, ease: 'power3.inOut' }, tC - .3);
+  out(tC - .3, '#tt-sub', .3);
+  pop(tC + .2, '#co-bar', { scaleX: .3, y: 0 }, { duration: .7, ease: 'expo.out' });
+  ones.forEach((o, i) => pop(at(id, o[1]), `#co-o${i}`, { y: 40 }, { duration: .5 }));
+  fade(at(id, 'data model') + .5, '#co-tags', .5);
+})();
+
+// ================================================================ 3. CQC
+(() => {
+  const id = 'cqc';
+  const st = [['file-text', 'Catalogue & quote', 'QUOTED'], ['zap', 'Provisioning', 'PROVISIONED'], ['receipt', 'Billing & invoicing', 'BILLED'], ['scale', 'Reconciliation', 'RECONCILED'],
+    ['chart-column', 'Reporting', 'REPORTED'], ['shield-check', 'Governance & credit', 'GOVERNED'], ['refresh-cw', 'Subscription lifecycle', 'RENEWING'], ['life-buoy', 'Support & servicing', 'SUPPORTED']];
+  const X = i => 70 + i * 228;
+  scene(id, `
+    <div class="abs" style="left:110px;top:170px;display:flex;align-items:center;gap:28px">
+      <div class="badge h" id="cc-b" style="width:190px;height:110px;font-size:58px;background:var(--green)">CQC</div>
+      <div><div class="sg h" id="cc-t" style="font-size:64px;font-weight:700;line-height:1.05">CloudQuarks Commerce</div>
+      <div class="h" id="cc-s" style="font-size:30px;color:var(--mut);margin-top:6px">the engine that <span style="color:var(--green);font-weight:700">fulfils</span> · order → billed, governed service</div></div>
+    </div>
+    <div class="abs h" id="cc-live" style="right:110px;top:200px;display:flex;align-items:center;gap:14px;font-weight:800;font-size:28px;letter-spacing:.16em;color:#04121f;background:var(--green);padding:14px 26px;border-radius:14px"><span id="cc-dot" style="width:16px;height:16px;border-radius:50%;background:#04121f"></span>LIVE TODAY</div>
+    ${st.map((s, i) => `<div class="abs card h cc-st" id="cc-st${i}" style="left:${X(i)}px;top:400px;width:206px;height:200px;padding:22px 18px">
+      <div style="width:56px;height:56px;border-radius:14px;background:#3ddc8418;display:flex;align-items:center;justify-content:center">${ic(s[0], '#3ddc84', 32)}</div>
+      <div style="font-size:25px;font-weight:700;margin-top:18px;line-height:1.15">${s[1]}</div>
+      <div class="cc-ok h" style="position:absolute;left:18px;bottom:16px;font-size:18px;font-weight:700;color:var(--green);display:flex;gap:6px;align-items:center">${ic('check', '#3ddc84', 18)}done</div>
+    </div>`).join('')}
+    <div class="abs h" id="cc-track" style="left:90px;top:656px;width:1740px;height:6px;border-radius:3px;background:rgba(255,255,255,.08)"><div id="cc-fill" style="height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#16a34a,#3ddc84);transform-origin:left;transform:scaleX(0)"></div></div>
+    <div class="abs h" id="cc-tok" style="left:0;top:630px;transform:translateX(-50%)"><div style="display:flex;align-items:center;gap:10px;background:#0b1f14;border:2px solid var(--green);padding:10px 18px;border-radius:999px;font-weight:700;font-size:22px;white-space:nowrap;box-shadow:0 0 40px #3ddc8466">${ic('package', '#3ddc84', 24)}<span>ORDER</span><span id="cc-state" style="color:var(--green)"></span></div></div>
+    <div class="abs h" id="cc-eight" style="left:0;right:0;top:730px;text-align:center"><span class="sg" style="font-size:54px;font-weight:700"><span style="color:var(--green)">8</span> capabilities · one <span style="color:var(--green)">transaction layer</span></span></div>
+  `);
+  const t0 = S[id].start;
+  pop(t0, '#cc-b', { scale: .3, y: 0 }, { duration: .5 }); pop(t0 + .2, '#cc-t', { x: -40, y: 0 }, { duration: .5 }); fade(t0 + .6, '#cc-s', .4);
+  pop(at(id, 'CQC') + 1.7, '#cc-live', { scale: .4, y: 0 }, { duration: .5 });
+  master.fromTo('#cc-dot', { opacity: 1 }, { opacity: .2, duration: .4, repeat: 12, yoyo: true, immediateRender: false }, t0 + 1.7);
+  pop(t0 + .5, '.cc-st', { y: 40 }, { stagger: .05, duration: .45 });
+  fade(t0 + 1.2, ['#cc-track', '#cc-tok'], .3);
+  const sp = { i: -1 }; master.set(sp, { i: -1 }, 0);
+  updaters.push(() => { $('#cc-state').textContent = sp.i >= 0 ? '· ' + st[sp.i][2] : ''; });
+  master.set('#cc-tok', { x: X(0) + 103 }, 0);
+  st.forEach((s, i) => {
+    const t = t0 + 1.4 + i * .42;
+    master.to('#cc-tok', { x: X(i) + 103, duration: .35, ease: 'power2.inOut' }, t - .2);
+    master.to('#cc-fill', { scaleX: (X(i) + 103 - 90) / 1740, duration: .35, ease: 'power2.inOut' }, t - .2);
+    lit(t, `#cc-st${i}`, '#3ddc84', .3);
+    master.set(sp, { i }, t);
+    fade(t + .1, `#cc-st${i} .cc-ok`, .25);
+  });
+  pop(t0 + 1.4 + 8 * .42, '#cc-eight', { y: 20 }, { duration: .5 });
+})();
+
+// ================================================================ 4. CQM + two paths
+(() => {
+  const id = 'paths';
+  const isv = [['CRM platform', 94], ['Sales analytics', 88], ['Data integration', 81]];
+  scene(id, `
+    <div class="abs" style="left:0;right:0;top:130px;display:flex;justify-content:center;align-items:center;gap:26px">
+      <div class="badge h" id="pa-b" style="width:150px;height:104px;font-size:56px;background:var(--blue);color:#fff">CQM</div>
+      <div class="h" id="pa-t"><div class="sg" style="font-size:60px;font-weight:700;line-height:1.05">CloudQuarks Marketplace</div><div style="font-size:28px;color:var(--mut)">the surface that <b style="color:var(--blue)">sells</b> · right solution, right market, right model</div></div>
+    </div>
+    <div class="abs card h" id="pa-l" style="left:110px;top:350px;width:820px;height:400px;padding:38px;border-color:#4c8dff66">
+      <div class="kicker" style="color:var(--blue)">Path 1</div>
+      <div class="sg" style="font-size:44px;font-weight:700;margin-top:6px">You know what you want</div>
+      <div style="margin-top:28px;display:flex;align-items:center;gap:16px;background:#0a1630;border:2px solid #4c8dff88;border-radius:16px;padding:18px 22px">${ic('search', '#4c8dff', 32)}<span id="pa-q" style="font-size:28px;font-weight:500"></span></div>
+      <div class="h" id="pa-r0" style="margin-top:20px;display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:14px;border:2px solid #4c8dff;background:rgba(76,141,255,.1)">${ic('shield-check', '#4c8dff', 34)}<div><div style="font-size:25px;font-weight:600">Endpoint protection suite</div><div style="font-size:19px;color:var(--mut)">per device · monthly</div></div><div class="h" id="pa-buy" style="margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--blue);padding:12px 20px;border-radius:10px;font-weight:700;font-size:22px">${ic('shopping-cart', '#fff', 24)}Buy</div></div>
+    </div>
+    <div class="abs card h" id="pa-r" style="left:990px;top:350px;width:820px;height:400px;padding:38px;border-color:#3ddc8466">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="kicker" style="color:var(--green)">Path 2</div><div class="sg" style="font-size:44px;font-weight:700;margin-top:6px">Not sure? Start at RACE</div></div>
+      </div>
+      <div class="h" id="pa-race" style="margin-top:6px;display:flex;align-items:baseline;gap:14px"><span class="sg" style="font-size:46px;font-weight:700;letter-spacing:.06em;font-style:italic;color:#7fe0ff">RACE</span><span style="font-size:20px;color:var(--mut)">Redington's AI Centre of Excellence</span></div>
+      <div class="h" id="pa-u" style="margin-top:16px;margin-left:110px;background:#1b2a44;border-radius:18px 18px 4px 18px;padding:14px 20px;font-size:23px">"We lose track of leads across three countries."</div>
+      <div class="h" id="pa-a" style="margin-top:14px;background:#0f2a1c;border:1px solid #3ddc8455;border-radius:18px 18px 18px 4px;padding:14px 20px">
+        <div style="display:flex;gap:10px;align-items:center;font-size:20px;color:var(--green);font-weight:700">${ic('sparkles', '#3ddc84', 22)}Right technology + right ISV</div>
+        <div style="margin-top:10px;display:flex;gap:10px">${isv.map(x => `<div style="flex:1;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:rgba(255,255,255,.04)"><div style="font-size:18px;font-weight:700">${x[0]}</div><div style="font-size:18px;color:var(--green);font-weight:700">${x[1]}% match</div></div>`).join('')}</div>
+      </div>
+    </div>
+  `);
+  const t0 = S[id].start;
+  pop(t0, '#pa-b', { scale: .3, y: 0 }, { duration: .5 }); pop(t0 + .2, '#pa-t', { x: 40, y: 0 }, { duration: .5 });
+  const t1 = at(id, 'Know what');
+  pop(t1 - .3, '#pa-l', { x: -60, y: 0 }, { duration: .5 });
+  typer(t1 + .2, $('#pa-q'), 'Endpoint security · 200 devices', .9);
+  pop(t1 + 1.1, '#pa-r0', { y: 20 }, { duration: .4 });
+  pop(t1 + 1.5, '#pa-buy', { scale: .4, y: 0 }, { duration: .4 });
+  const t2 = at(id, 'Not sure');
+  pop(t2 - .3, '#pa-r', { x: 60, y: 0 }, { duration: .5 });
+  pop(t2 + .1, '#pa-race', { scale: .5, y: 0 }, { duration: .4 });
+  pop(t2 + .4, '#pa-u', { y: 20 }, { duration: .35 });
+  pop(t2 + .9, '#pa-a', { y: 20 }, { duration: .4 });
+})();
+
+// ================================================================ 5. FOUR MOVES
+(() => {
+  const id = 'moves';
+  const cat = ['Marketplace portfolio', 'Software portfolio', 'SaaS', 'ISV solutions', 'Professional services', 'Listing services', 'AI portfolio'];
+  const tax = [['UAE', 'VAT', 5], ['KSA', 'VAT', 15], ['Kenya', 'VAT', 16], ['India', 'GST', 18]];
+  const stores = [['Africa', 'regional portfolio', '#3ddc84'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
+  const models = [['handshake', 'Direct'], ['network', 'Indirect'], ['store', 'Reseller mini-shop'], ['palette', 'White-label B2B2C'], ['blocks', 'Platform-as-a-Service']];
+  const card = (i, title, sub, body, c) => `<div class="abs card h mv-c" id="mv-c${i}" style="left:${90 + i * 440}px;top:250px;width:420px;height:610px;padding:28px;border-color:${c}66">
+    <div class="sg" style="font-size:22px;font-weight:700;color:${c}">0${i + 1}</div>
+    <div class="sg" style="font-size:42px;font-weight:700;line-height:1.05">${title}</div>
+    <div style="font-size:20px;color:var(--mut);margin:6px 0 18px">${sub}</div>${body}</div>`;
+  scene(id, `
+    <div class="abs h" id="mv-h" style="left:90px;top:130px"><div class="sg" style="font-size:60px;font-weight:700">Four moves, <span style="color:var(--blue)">in order</span></div></div>
+    ${card(0, 'Cataloguing', 'everything that can be sold, in one place',
+      cat.map(x => `<div class="mv-i" style="font-size:22px;font-weight:600;padding:8px 0;border-top:1px solid var(--line)">${x}</div>`).join('') +
+      `<div class="mv-i" style="margin-top:10px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,#a78bfa33,#4c8dff22);border:1px solid #a78bfa;font-weight:700;font-size:21px;display:flex;gap:8px;align-items:center">${ic('sparkles', '#a78bfa', 24)}AI Exchange · RAG search</div>`, '#a78bfa')}
+    ${card(1, 'Rules', 'anchored by geography · tax, pricing, eligibility',
+      `<div style="font-size:18px;color:var(--mut);margin-bottom:8px">USD 100 subscription →</div>` +
+      tax.map(t => `<div class="mv-i" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:21px;font-weight:600"><span>${t[0]} · ${t[1]} ${t[2]}%</span><b class="mv-v" data-to="${100 + t[2]}">0</b></div><div style="height:12px;border-radius:6px;background:rgba(255,255,255,.07);margin-top:6px;overflow:hidden"><div class="mv-bar" style="height:100%;width:${(100 + t[2]) / 118 * 100}%;background:linear-gradient(90deg,#4c8dff,#ffb547);transform-origin:left"></div></div></div>`).join('') +
+      `<div class="mv-i" style="font-size:22px;font-weight:700;color:var(--green);margin-top:6px">Set once. Applied everywhere.</div>`, '#ffb547')}
+    ${card(2, 'Storefronts', 'one store per market',
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">` + stores.map(s => `<div class="mv-i" style="border:1px solid ${s[2]}88;border-radius:14px;padding:14px;height:150px;background:${s[2]}12"><div style="display:flex;gap:5px;margin-bottom:10px">${['#ff5d6c', '#ffb547', '#3ddc84'].map(c => `<span style="width:8px;height:8px;border-radius:50%;background:${c}"></span>`).join('')}</div><div class="sg" style="font-size:28px;font-weight:700;color:${s[2]}">${s[0]}</div><div style="font-size:16px;color:var(--mut)">${s[1]}</div></div>`).join('') +
+      `<div class="mv-i" style="border:2px dashed #38d3e8;border-radius:14px;padding:14px;height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--cyan)">${ic('plus', '#38d3e8', 34)}<div style="font-weight:700;font-size:19px;margin-top:6px">Next market</div><div style="font-size:15px;color:var(--mut)">spin up, don't rebuild</div></div></div>`, '#3ddc84')}
+    ${card(3, 'Models', 'how it reaches the market',
+      models.map(m => `<div class="mv-i" style="display:flex;align-items:center;gap:14px;padding:14px 14px;margin-bottom:10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03)">${ic(m[0], '#38d3e8', 28)}<span style="font-size:22px;font-weight:600">${m[1]}</span></div>`).join('') +
+      `<div class="mv-i" style="font-size:20px;color:var(--mut);margin-top:6px">Explore · transact · build</div>`, '#38d3e8')}
+  `);
+  const t0 = S[id].start;
+  pop(t0, '#mv-h', { x: -40, y: 0 }, { duration: .5 });
+  const ph = ['AI-ready', 'Rules by', 'store for', 'every model'];
+  master.fromTo('.mv-c', { autoAlpha: 0, y: 40 }, { autoAlpha: .35, y: 0, duration: .4, stagger: .1, immediateRender: false }, t0 + .4);
+  master.set('.mv-c .mv-i', { autoAlpha: 0 }, 0);
+  ph.forEach((p, i) => {
+    const t = at(id, p) - .1;
+    master.to(`#mv-c${i}`, { autoAlpha: 1, scale: 1.02, duration: .35 }, t);
+    lit(t, `#mv-c${i}`, ['#a78bfa', '#ffb547', '#3ddc84', '#38d3e8'][i], .35);
+    master.fromTo(`#mv-c${i} .mv-i`, { autoAlpha: 0, x: -14 }, { autoAlpha: 1, x: 0, duration: .3, stagger: .07, immediateRender: false }, t + .1);
+    if (i) master.to(`#mv-c${i - 1}`, { scale: 1, boxShadow: 'none', duration: .35 }, t);
+  });
+  const tR = at(id, 'Rules by');
+  master.fromTo('#mv-c1 .mv-bar', { scaleX: 0 }, { scaleX: 1, duration: .6, stagger: .1, ease: 'power2.out', immediateRender: false }, tR + .2);
+  $$('#mv-c1 .mv-v').forEach((e, i) => counter(tR + .2 + i * .1, e, +e.dataset.to, .7, v => 'USD ' + v.toFixed(0)));
+})();
+
+// ================================================================ 12. CQA
+(() => {
+  const id = 'cqa';
+  const sp = (pts, w = 230, h = 110) => { const mx = Math.max(...pts), mn = Math.min(...pts); return pts.map((p, i) => `${i ? 'L' : 'M'}${(i / (pts.length - 1) * w).toFixed(1)} ${(h - (p - mn) / (mx - mn) * h).toFixed(1)}`).join(' '); };
+  const act = [30, 34, 33, 39, 42, 41, 47, 50], fc = [50, 54, 57, 61];
+  const fcPath = `M${(7 / 11 * 230).toFixed(1)} ${(110 - (50 - 30) / 31 * 110).toFixed(1)} ` + fc.map((v, i) => `L${((8 + i) / 11 * 230).toFixed(1)} ${(110 - (v - 30) / 31 * 110).toFixed(1)}`).join(' ');
+  const actPath = act.map((v, i) => `${i ? 'L' : 'M'}${(i / 11 * 230).toFixed(1)} ${(110 - (v - 30) / 31 * 110).toFixed(1)}`).join(' ');
+  const usage = [20, 22, 21, 23, 22, 24, 23, 58, 25, 24, 23, 25];
+  const tiles = [
+    ['trending-up', 'Forecasting', `<path d="${actPath}" stroke="#38d3e8" stroke-width="4" fill="none" class="cq-l"/><path d="${fcPath}" stroke="#38d3e8" stroke-width="4" fill="none" stroke-dasharray="8 7" class="cq-l"/>`, 'Next quarter +12%', 'Forecasting'],
+    ['refresh-cw', 'Churn & renewal risk', [['Acct · Retail', 82, '#ff5d6c'], ['Acct · Health', 64, '#ffb547'], ['Acct · Edu', 35, '#3ddc84'], ['Acct · Logistics', 22, '#3ddc84']].map((r, i) => `<text x="0" y="${16 + i * 28}" font-size="14" fill="#8fa3bf">${r[0]}</text><rect class="cq-b" x="110" y="${4 + i * 28}" width="${r[1] * 1.2}" height="16" rx="4" fill="${r[2]}"/>`).join(''), '3 renewals need action', 'Churn'],
+    ['activity', 'Usage anomalies', `<path d="${sp(usage)}" stroke="#a78bfa" stroke-width="4" fill="none" class="cq-l"/><circle class="cq-dot" cx="${7 / 11 * 230}" cy="0" r="10" fill="none" stroke="#ff5d6c" stroke-width="4"/>`, 'Spike detected · day 8', 'Usage anomalies'],
+    ['users', 'Partner performance', [92, 78, 66, 51, 40].map((v, i) => `<rect class="cq-b" x="0" y="${i * 22}" width="${v * 2.3}" height="15" rx="4" fill="${i ? '#4c8dff' : '#3ddc84'}"/>`).join(''), 'Top tier +18% QoQ', 'Partner performance'],
+    ['wallet', 'FinOps & spend', [[40, 20], [44, 22], [38, 30], [50, 26], [46, 34], [52, 30]].map((v, i) => `<rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[0] - v[1]}" width="26" height="${v[0]}" fill="#4c8dff"/><rect class="cq-c" x="${i * 38 + 6}" y="${110 - v[1]}" width="26" height="${v[1]}" fill="#38d3e8"/>`).join(''), 'Idle spend flagged', 'FinOps'],
+    ['gauge', 'Margin integrity', `<path d="M25 105 A90 90 0 0 1 205 105" stroke="rgba(255,255,255,.1)" stroke-width="16" fill="none"/><path class="cq-g" d="M25 105 A90 90 0 0 1 205 105" stroke="#3ddc84" stroke-width="16" fill="none"/><text x="115" y="100" text-anchor="middle" font-size="30" font-weight="700" fill="#eaf1fb" class="cq-gv">0%</text>`, 'Leakage caught early', 'margin integrity'],
+  ];
+  const flows = ['Quote', 'Order', 'Invoice', 'Renewal'];
+  scene(id, `
+    <div class="abs h" id="qa-c" style="left:360px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--green);background:#3ddc8414;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--green)">CQC</span><span style="font-size:24px;color:var(--mut)">Commerce</span></div>
+    <div class="abs h" id="qa-m" style="left:1020px;top:130px;width:540px;height:90px;border-radius:18px;border:2px solid var(--blue);background:#4c8dff14;display:flex;align-items:center;justify-content:center;gap:16px"><span class="sg" style="font-size:40px;font-weight:700;color:var(--blue)">CQM</span><span style="font-size:24px;color:var(--mut)">Marketplace</span></div>
+    <div class="abs" id="qa-flow" style="left:0;top:0">${Array.from({ length: 16 }, (_, i) => `<div class="abs pill h qa-f" style="left:${(i % 2 ? 1290 : 630) + ((i * 37) % 120) - 60}px;top:230px;font-size:18px;padding:6px 14px;color:#bff4fb;border-color:#38d3e855;transform:translateX(-50%)">${flows[i % 4]}</div>`).join('')}</div>
+    <div class="abs h" id="qa-bd" style="left:0;right:0;top:300px;text-align:center;font-size:40px;font-weight:700" class="sg"><span id="qa-bd1" class="h">Better data.</span> <span id="qa-bd2" class="h" style="color:var(--cyan)">Better decisions.</span></div>
+    <div class="abs h" id="qa-a" style="left:200px;top:400px;width:1520px;height:110px;border-radius:20px;background:linear-gradient(90deg,#0d2350,#173a7a);border:2px solid #38d3e8;display:flex;align-items:center;padding:0 40px;gap:24px;box-shadow:0 0 80px #38d3e844">
+      <span class="sg" style="font-size:56px;font-weight:700;color:var(--cyan)">CQA</span><div><div class="sg" style="font-size:32px;font-weight:700">CloudQuarks Analytics</div><div style="font-size:22px;color:var(--mut)">the layer that learns, under both engines</div></div>
+      ${ic('brain', '#38d3e8', 56).replace('class="ico"', 'class="ico" style="margin-left:auto"')}
+    </div>
+    ${tiles.map((t, i) => `<div class="abs card h qa-t" id="qa-t${i}" style="left:${90 + i * 292}px;top:560px;width:272px;height:300px;padding:20px">
+      <div style="display:flex;align-items:center;gap:10px">${ic(t[0], '#38d3e8', 26)}<span style="font-size:20px;font-weight:700;line-height:1.15">${t[1]}</span></div>
+      <svg viewBox="-5 -15 240 135" width="232" height="140" style="margin-top:16px;overflow:visible">${t[2]}</svg>
+      <div style="font-size:17px;color:var(--mut);margin-top:8px;font-weight:600">${t[3]}</div></div>`).join('')}
+    <div class="abs h" id="qa-note" style="right:90px;top:872px;font-size:16px;color:var(--dim)">Illustrative data</div>
+  `);
+  const t0 = S[id].start;
+  pop(t0, ['#qa-c', '#qa-m'], { y: -30 }, { stagger: .15 });
+  pop(t0 + .3, '#qa-a', { y: 40, scale: .9 }, { duration: .6 });
+  const tF = t0 + .5;
+  $$('.qa-f').forEach((f, i) => {
+    master.fromTo(f, { autoAlpha: 0, y: 0 }, { keyframes: [{ autoAlpha: 1, y: 40, duration: .4 }, { y: 150, duration: .9, ease: 'power1.in' }, { autoAlpha: 0, duration: .2 }], immediateRender: false }, tF + i * .05);
+  });
+  fade(t0 + 2.8, '#qa-bd', .01); pop(t0 + 2.8, '#qa-bd1', { y: 20 }); pop(t0 + 3.2, '#qa-bd2', { y: 20 });
+  tiles.forEach((t, i) => {
+    const ti = t0 + 1.0 + i * .22; pop(ti, `#qa-t${i}`, { y: 50 }, { duration: .45 });
+    $$(`#qa-t${i} .cq-l`).forEach(p => draw(ti + .3, p, 1.2));
+    master.fromTo(`#qa-t${i} .cq-b`, { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: .8, stagger: .1, ease: 'power2.out', immediateRender: false }, ti + .3);
+    master.fromTo(`#qa-t${i} .cq-c`, { scaleY: 0, transformOrigin: 'center bottom' }, { scaleY: 1, duration: .6, stagger: .05, ease: 'power2.out', immediateRender: false }, ti + .3);
+  });
+  const dot = $('#qa-t2 .cq-dot'); const mx = 58, mn = 20; dot.setAttribute('cy', (110 - (58 - mn) / (mx - mn) * 110));
+  master.fromTo(dot, { attr: { r: 0 } }, { attr: { r: 14 }, duration: .35, repeat: 3, yoyo: true, immediateRender: false }, t0 + 2.2);
+  const g = $('#qa-t5 .cq-g'); draw((t0 + 2.1) + .3, g, 1.2, 'power2.out');
+  master.to(g, { strokeDashoffset: g.getTotalLength() * .013, duration: .01 }, (t0 + 2.1) + 1.5);
+  counter((t0 + 2.1) + .3, $('#qa-t5 .cq-gv'), 98.7, 1.2, v => v.toFixed(1) + '%');
+  fade(t0 + 1, '#qa-note');
+})();
+
+// ================================================================ 13. FINALE: the full architecture
+(() => {
+  const id = 'finale';
+  const cqc = [['Cataloguing & quotation', 'quote to order, multi-vendor'], ['Provisioning', 'automated, vendor-native'], ['Billing & invoicing', 'usage, subscription, hybrid'], ['Reconciliation', 'margin integrity, no leakage'], ['Reporting', 'partner, vendor, customer views'], ['Governance & credit', 'limits, approvals, compliance'], ['Subscription lifecycle', 'renew, modify, cancel, upsell'], ['Support & servicing', 'tickets, escalation, SLA']];
+  const cols = [
+    ['01', 'Cataloguing', 'everything that can be sold', ['Marketplace portfolio', 'Software portfolio', 'SaaS portfolio', 'ISV solutions', 'Professional services', 'Listing services', 'AI portfolio', 'AI Exchange']],
+    ['02', 'Rules', 'anchored by geography', ['Tax logic & currency', 'Legal framework', 'Portfolio eligibility', 'Pricing & margin', 'Entitlements', 'Partner tiering']],
+    ['03', 'Storefronts', 'one store per market', ['Africa', 'India', 'GCC', '+ Next market']],
+    ['04', 'Models', 'how it reaches the market', ['Direct', 'Indirect', 'Reseller mini-shop', 'White-label B2B2C', 'Platform-as-a-Service']],
+  ];
+  const cqa = ['Forecasting', 'Churn & renewal risk', 'Usage anomalies', 'Partner performance', 'FinOps & spend', 'Margin integrity'];
+  scene(id, `
+    <div class="abs" id="fi-d" style="left:0;top:0;width:1920px;height:1080px">
+      <div class="abs h" id="fi-cq" style="left:90px;top:110px;width:1740px;height:86px;border-radius:16px;background:linear-gradient(90deg,#16a34a,#1f8a4c);display:flex;align-items:center;padding:0 28px;gap:22px">
+        <span class="badge" style="width:84px;height:58px;font-size:32px;background:#eaf1fb;color:#16a34a">CQ</span><div><div class="sg" style="font-size:28px;font-weight:700;letter-spacing:.06em">THE CORE</div><div style="font-size:18px;opacity:.85">the neural layer · one platform, one identity, one data model</div></div>
+        <div style="margin-left:auto;font-size:18px;font-weight:600;text-align:right">One catalogue of truth · one billing spine · one identity across every store</div></div>
+      <div class="abs card h" id="fi-cqc" style="left:90px;top:220px;width:400px;height:560px;padding:20px;border-color:#3ddc84">
+        <div style="display:flex;align-items:center;gap:12px"><span class="badge" style="width:74px;height:46px;font-size:24px;background:var(--green)">CQC</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--green)">COMMERCE</div><div style="font-size:15px;color:var(--mut)">the engine that fulfils</div></div></div>
+        ${cqc.map(c => `<div style="margin-top:9px;padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line)"><div style="font-size:17px;font-weight:700">${c[0]}</div><div style="font-size:13px;color:var(--mut)">${c[1]}</div></div>`).join('')}
+      </div>
+      <div class="abs card h" id="fi-cqm" style="left:520px;top:220px;width:1310px;height:560px;padding:20px;border-color:#4c8dff">
+        <div style="display:flex;align-items:center;gap:12px"><span class="badge" style="width:74px;height:46px;font-size:24px;background:var(--blue);color:#fff">CQM</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--blue)">MARKETPLACE</div><div style="font-size:15px;color:var(--mut)">the surface that sells · right solution, right market, right model</div></div>
+          <div style="margin-left:auto;display:flex;gap:12px"><span class="pill" style="font-size:16px;border-color:#4c8dff;color:#cfe0ff">PATH 1 · you know what you want</span><span class="pill" style="font-size:16px;border-color:#3ddc84;color:#c8f7dc">PATH 2 · start at RACE</span></div></div>
+        <div style="display:flex;gap:14px;margin-top:16px">${cols.map((c, i) => `<div class="fi-col" id="fi-col${i}" style="flex:1;border-radius:14px;border:1px solid var(--line);padding:14px;height:440px;background:rgba(255,255,255,.03)"><div style="font-size:15px;color:var(--blue);font-weight:700">${c[0]}</div><div class="sg" style="font-size:24px;font-weight:700">${c[1]}</div><div style="font-size:14px;color:var(--mut);margin-bottom:8px">${c[2]}</div>${c[3].map(x => `<div style="font-size:15px;padding:6px 0;border-top:1px solid var(--line);font-weight:600;${x === 'AI Exchange' ? 'color:#a78bfa' : ''}">${x}</div>`).join('')}</div>`).join('')}</div>
+      </div>
+      <div class="abs h" id="fi-cqa" style="left:90px;top:806px;width:1740px;height:86px;border-radius:16px;background:linear-gradient(90deg,#0d2350,#173a7a);border:1px solid #38d3e8;display:flex;align-items:center;padding:0 24px;gap:20px">
+        <span class="badge" style="width:84px;height:58px;font-size:30px;background:var(--cyan)">CQA</span><div><div class="sg" style="font-size:20px;font-weight:700;color:var(--cyan)">ANALYTICS</div><div style="font-size:15px;color:var(--mut)">the layer that learns</div></div>
+        <div style="margin-left:auto;display:flex;gap:22px">${cqa.map(x => `<span style="font-size:17px;font-weight:600;display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:var(--cyan)"></span>${x}</span>`).join('')}</div></div>
+      <div class="abs h" id="fi-scan" style="left:60px;width:1800px;height:6px;top:100px;background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 40px 10px #3ddc8488"></div>
+    </div>
+    
+    <div class="abs" id="fi-end" style="left:0;right:0;top:260px;text-align:center;visibility:hidden">
+      <svg id="fi-mark" viewBox="-60 -60 120 120" width="200" height="200">${markSVG()}</svg>
+      <div class="sg" style="font-size:136px;font-weight:700;letter-spacing:-.03em;line-height:1">Cloud<span style="color:var(--green)">Quarks</span></div>
+      <div style="font-size:36px;color:var(--mut);margin-top:20px">One core · Two branches · One intelligence layer</div>
+      <div style="font-size:22px;letter-spacing:.3em;color:var(--dim);margin-top:30px;font-weight:600">MODULAR · API-FIRST · CLOUD-NATIVE · HEADLESS</div>
+    </div>
+  `);
+  animateMark($('#fi-mark'));
+  pop(at(id, 'One core') - .1, '#fi-cq', { y: -30 }, { duration: .5 });
+  pop(at(id, 'Two branches') - .1, '#fi-cqc', { x: -50, y: 0 }, { duration: .5 });
+  pop(at(id, 'Two branches') + .05, '#fi-cqm', { x: 50, y: 0 }, { duration: .5 });
+  [0, 1, 2, 3].forEach(i => {
+    const t = at(id, 'Two branches') + .45 + i * .15;
+    master.to(`#fi-col${i}`, { borderColor: '#4c8dff', background: 'rgba(76,141,255,.14)', duration: .2 }, t);
+    master.to(`#fi-col${i}`, { borderColor: 'rgba(255,255,255,.11)', background: 'rgba(255,255,255,.03)', duration: .4 }, t + .5);
+  });
+  pop(at(id, 'intelligence') - .1, '#fi-cqa', { y: 30 }, { duration: .5 });
+  const tR = at(id, 'intelligence') + .6;
+  master.fromTo('#fi-scan', { autoAlpha: 0, top: 100 }, { keyframes: [{ autoAlpha: 1, duration: .1 }, { top: 900, duration: .7, ease: 'power1.inOut' }, { autoAlpha: 0, duration: .1 }], immediateRender: false }, tR);
+  const tE = at(id, "That's CloudQuarks");
+  master.to('#fi-d', { opacity: 0, scale: .92, duration: .5 }, tE - .1);
+  pop(tE + .1, '#fi-end', { scale: .85, y: 0 }, { duration: 1, ease: 'expo.out' });
+})();
+
+// ---------------------------------------------------------------- global updaters
+const cap = $('#cap span'), chap = $('#chap'), prog = $('#prog'), pc = $('#pc').getContext('2d');
+const allCaps = TL.scenes.flatMap(s => s.captions);
+const P = Array.from({ length: 70 }, () => [rnd() * W, rnd() * H, .2 + rnd() * .8, rnd() * 6.28]);
+function renderAt(t) {
+  master.totalTime(Math.min(t, master.duration()));
+  updaters.forEach(u => u(t));
+  // captions (hold a line through short gaps)
+  let c = '';
+  for (let i = 0; i < allCaps.length; i++) { const a = allCaps[i], nx = allCaps[i + 1]; if (t >= a[1] - .05 && t < Math.min(a[2] + .5, nx ? nx[1] - .05 : 1e9)) { c = a[0]; break; } }
+  if (cap.textContent !== c) cap.textContent = c;
+  const sc = TL.scenes.find(s => t >= s.start - .4 && t < s.end - .3);
+  chap.textContent = sc ? CH[sc.id] : '';
+  prog.style.width = (t / TL.total * 100) + '%';
+  // ambient particles + drifting glows
+  pc.clearRect(0, 0, W, H);
+  for (const p of P) {
+    const x = (p[0] + t * 14 * p[2]) % W, y = (p[1] + Math.sin(t * .4 + p[3]) * 30 - t * 6 * p[2] + H * 4) % H;
+    pc.globalAlpha = .25 + .35 * p[2]; pc.fillStyle = p[2] > .6 ? '#3ddc84' : '#4c8dff';
+    pc.beginPath(); pc.arc(x, y, 1 + p[2] * 1.8, 0, 6.283); pc.fill();
+  }
+  $('#g1').style.transform = `translate(${Math.sin(t * .07) * 120}px,${Math.cos(t * .05) * 80}px)`;
+  $('#g2').style.transform = `translate(${Math.cos(t * .06) * 140}px,${Math.sin(t * .08) * 90}px)`;
+  $('#grid').style.transform = `translateY(${(t * 8) % 80}px)`;
+}
+window.renderAt = renderAt;
+window.TOTAL = TL.total;
+document.fonts.ready.then(() => { renderAt(0); window.READY = true; });
+</script>
+</body>
+</html>

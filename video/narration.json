@@ -1,0 +1,37 @@
+[
+ {
+  "id": "hook",
+  "pad": 0.2,
+  "text": "Every buyer needs technology. But the market is fragmented."
+ },
+ {
+  "id": "core",
+  "pad": 0.2,
+  "text": "CloudQuarks orchestrates it all, from one core. One platform. One identity. One data model."
+ },
+ {
+  "id": "cqc",
+  "pad": 0.2,
+  "text": "C Q C, Commerce, is live today, billing and governing every order."
+ },
+ {
+  "id": "paths",
+  "pad": 0.2,
+  "text": "C Q M, the Marketplace, sells. Know what you want? Go to the catalogue. Not sure? Start at RACE."
+ },
+ {
+  "id": "moves",
+  "pad": 0.2,
+  "text": "Then, four moves. An A I ready catalogue. Rules by geography. A store for every market. And every model, from direct to white label."
+ },
+ {
+  "id": "cqa",
+  "pad": 0.2,
+  "text": "Underneath, C Q A, Analytics, learns from it all."
+ },
+ {
+  "id": "finale",
+  "pad": 3.0,
+  "text": "One core. Two branches. One intelligence layer. That's CloudQuarks."
+ }
+]

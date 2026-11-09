@@ -5,3 +5,7 @@ __pycache__/
 # Secrets
 .env
 .env.local
+
+# Video build
+video/node_modules/
+video/build/
