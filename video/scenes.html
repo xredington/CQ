@@ -361,7 +361,7 @@ out(S.finale.start - .2, '#chrome', .4);
   const id = 'catalog';
   const cols = [
     ['cloud', 'Hyperscalers + SaaS vendors', '#4c8dff', ['AWS', 'Microsoft Azure', 'Microsoft 365', 'Google Cloud', 'Autodesk', 'Adobe'], 'Hyperscalers'],
-    ['link', 'Connected marketplaces', '#38d3e8', ['AWS · Azure · GCP', 'Huawei & Alibaba Cloud', 'Anthropic · OpenAI', 'AI Exchange'], 'Connected'],
+    ['link', 'Hyperscaler marketplaces', '#38d3e8', ['AWS · Azure · GCP', 'Huawei & Alibaba Cloud', 'AI Exchange', 'NEXT:Anthropic Marketplace', 'NEXT:OpenAI Marketplace'], 'Hyperscaler marketplaces'],
     ['blocks', 'Third-party offerings', '#ffb547', ['DNT solutions', 'Tier 2 + 3 vendor offers'], 'DNT'],
     ['briefcase', 'Services', '#5cc062', ['Managed services', 'Professional services', 'Partner services'], 'managed'],
   ];
@@ -373,7 +373,7 @@ out(S.finale.start - .2, '#chrome', .4);
       <div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:52px;border-radius:14px;background:${c[2]}22;display:flex;align-items:center;justify-content:center">${ic(c[0], c[2], 30)}</div>
       <div class="sg" style="font-size:16px;font-weight:700;color:${c[2]}">0${i + 1}</div></div>
       <div class="sg" style="font-size:31px;font-weight:700;line-height:1.1;margin:14px 0 16px;min-height:70px">${c[1]}</div>
-      ${c[3].map(x => `<div class="ct-i" style="font-size:21px;font-weight:600;padding:8px 14px;margin-bottom:7px;border-radius:10px;border:1px solid ${x === 'AI Exchange' ? '#a78bfa' : 'var(--line)'};background:${x === 'AI Exchange' ? 'linear-gradient(135deg,#a78bfa33,#4c8dff22)' : 'rgba(255,255,255,.03)'};${x === 'AI Exchange' ? 'color:#e4dcff' : ''}">${x}</div>`).join('')}
+      ${c[3].map(x => x.startsWith('NEXT:') ? `<div class="ct-i" style="font-size:20px;font-weight:600;padding:7px 14px;margin-bottom:7px;border-radius:10px;border:1.5px dashed #a78bfa;color:#e4dcff;display:flex;justify-content:space-between;align-items:center">${x.slice(5)}<span style="font-size:13px;font-weight:800;letter-spacing:.12em;color:#04121f;background:#a78bfa;padding:3px 8px;border-radius:6px">NEXT</span></div>` : `<div class="ct-i" style="font-size:21px;font-weight:600;padding:8px 14px;margin-bottom:7px;border-radius:10px;border:1px solid ${x === 'AI Exchange' ? '#a78bfa' : 'var(--line)'};background:${x === 'AI Exchange' ? 'linear-gradient(135deg,#a78bfa33,#4c8dff22)' : 'rgba(255,255,255,.03)'};${x === 'AI Exchange' ? 'color:#e4dcff' : ''}">${x}</div>`).join('')}
     </div>`).join('')}
     <div class="abs h" id="ct-src" style="left:110px;top:830px;width:1700px;display:flex;align-items:center;gap:16px;padding:16px 24px;border-radius:16px;border:1px dashed #4c8dff77;background:rgba(76,141,255,.06)">
       ${ic('network', '#4c8dff', 28)}<span style="font-size:22px;font-weight:700">Marketplace source</span><span style="font-size:20px;color:var(--mut)">onboarded via</span>
@@ -393,52 +393,65 @@ out(S.finale.start - .2, '#chrome', .4);
   pop(atWord(id, 'partner', .6), '#ct-src', { y: 30 }, { duration: .5 });
 })();
 
-// ================================================================ 4c. AI EXCHANGE
+// ================================================================ 4c. AI EXCHANGE: today and next
 (() => {
   const id = 'aix';
-  const agents = [['message-square', 'Customer support agent'], ['trending-up', 'Sales agent'], ['wallet', 'Finance copilot'], ['code-xml', 'Coding assistant'], ['file-text', 'Document AI'], ['shield-check', 'Security analyst']];
+  const agents = [['message-square', 'Customer support agent'], ['trending-up', 'Sales agent'], ['file-text', 'Document AI'], ['code-xml', 'Coding assistant'], ['wallet', 'Finance copilot'], ['shield-check', 'Security analyst']];
+  const ang = [-90, -30, 30, 90, 150, 210].map(d => d * Math.PI / 180);
+  const prov = [['Anthropic', 0], ['OpenAI', Math.PI]];
   const R = 300, cx = 1340, cy = 520;
+  const row = (rid, tag, c, title, sub) => `<div class="abs h" id="${rid}" style="left:110px;width:640px;display:flex;gap:18px;align-items:flex-start">
+      <span style="flex:none;font-size:16px;font-weight:800;letter-spacing:.16em;color:#04121f;background:${c};padding:6px 12px;border-radius:8px;margin-top:6px">${tag}</span>
+      <div><div style="font-size:30px;font-weight:700;line-height:1.2">${title}</div><div style="font-size:21px;color:var(--mut);margin-top:4px">${sub}</div></div></div>`;
   scene(id, `
     <div class="abs h" id="ax-glow" style="left:${cx - 420}px;top:${cy - 420}px;width:840px;height:840px;border-radius:50%;background:radial-gradient(circle,#a78bfa44,transparent 65%)"></div>
-    <div class="abs h" id="ax-h" style="left:110px;top:250px;width:640px">
+    <div class="abs h" id="ax-h" style="left:110px;top:200px;width:640px">
       <div class="kicker" style="color:var(--violet)">Inside the catalogue</div>
       <div class="sg" style="font-size:120px;font-weight:700;line-height:.95;margin-top:14px;letter-spacing:-.02em">AI<span style="color:var(--violet)">EXCHANGE</span></div>
-      <div style="font-size:36px;font-weight:600;margin-top:22px">The <span style="color:var(--violet)">agentic AI</span> catalogue</div>
-      <div style="font-size:24px;color:var(--mut);margin-top:10px;line-height:1.4">AI agents and models, discoverable and purchasable alongside everything else in the marketplace</div>
     </div>
-    <div class="abs h" id="ax-prov" style="left:110px;top:720px;display:flex;gap:14px;align-items:center">
-      <span style="font-size:20px;color:var(--mut)">Model providers</span>
-      ${['Anthropic', 'OpenAI', '+ more'].map((x, i) => `<span class="pill ax-p" id="ax-p${i}" style="font-size:24px;color:#e4dcff;border-color:#a78bfa88">${x}</span>`).join('')}
-    </div>
+    ${row('ax-today', 'TODAY', '#5cc062', 'AI agents listed by our ISV partners', 'discoverable and purchasable in the marketplace')}
+    ${row('ax-next', 'NEXT', '#a78bfa', 'Agentic AI from Anthropic & OpenAI', 'expanding beyond ISV-listed agents')}
     <svg class="abs" style="left:0;top:0" width="1920" height="1080">
       <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#a78bfa" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 10" id="ax-orbit"/>
-      ${agents.map((a, i) => { const t = i / 6 * Math.PI * 2 - Math.PI / 2; return `<line class="ax-ln" id="ax-ln${i}" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(t) * R}" y2="${cy + Math.sin(t) * R}" stroke="#a78bfa" stroke-width="2.5" stroke-opacity=".6"/>`; }).join('')}
+      ${ang.map((t, i) => `<line class="ax-ln" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(t) * R}" y2="${cy + Math.sin(t) * R}" stroke="#5cc062" stroke-width="2.5" stroke-opacity=".6"/>`).join('')}
+      ${prov.map((p, i) => `<line class="ax-pl" id="ax-pl${i}" x1="${cx}" y1="${cy}" x2="${cx + Math.cos(p[1]) * R}" y2="${cy}" stroke="#a78bfa" stroke-width="3" stroke-dasharray="8 8"/>`).join('')}
     </svg>
     <div class="abs h" id="ax-hub" style="left:${cx - 105}px;top:${cy - 105}px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,#2a1d55,#140d2c);border:4px solid #a78bfa;box-shadow:0 0 80px #a78bfaaa;display:flex;flex-direction:column;align-items:center;justify-content:center">
       ${ic('bot', '#e4dcff', 64)}<div class="sg" style="font-size:24px;font-weight:700;margin-top:6px">AI Exchange</div></div>
-    ${agents.map((a, i) => { const t = i / 6 * Math.PI * 2 - Math.PI / 2; return `<div class="abs h ax-a" id="ax-a${i}" style="left:${cx + Math.cos(t) * R - 130}px;top:${cy + Math.sin(t) * R - 38}px;width:260px;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#150f2bee;border:1px solid #a78bfa99">${ic(a[0], '#a78bfa', 28)}<span style="font-size:20px;font-weight:700">${a[1]}</span></div>`; }).join('')}
-    <div class="abs h" id="ax-eg" style="left:${cx - 200}px;top:${cy + R + 70}px;width:400px;text-align:center;font-size:17px;color:var(--dim)">example agent categories</div>
+    ${agents.map((a, i) => `<div class="abs h ax-a" id="ax-a${i}" style="left:${cx + Math.cos(ang[i]) * R - 130}px;top:${cy + Math.sin(ang[i]) * R - 38}px;width:260px;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#0f1d14ee;border:1px solid #5cc06299">${ic(a[0], '#5cc062', 28)}<span style="font-size:20px;font-weight:700">${a[1]}</span></div>`).join('')}
+    ${prov.map((p, i) => `<div class="abs h ax-pv" id="ax-pv${i}" style="left:${cx + Math.cos(p[1]) * R - 120}px;top:${cy - 42}px;width:240px;height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;background:#1a1236f2;border:2px dashed #a78bfa;box-shadow:0 0 40px #a78bfa55">
+      <span class="sg" style="font-size:28px;font-weight:700">${p[0]}</span><span style="font-size:14px;font-weight:800;letter-spacing:.16em;color:#a78bfa">AGENTIC AI · NEXT</span></div>`).join('')}
+    <div class="abs h" id="ax-eg" style="left:${cx - 260}px;top:${cy + R + 64}px;width:520px;text-align:center;font-size:18px;color:var(--mut)"><span style="color:#5cc062">●</span> listed by ISV partners (examples) &nbsp; <span style="color:#a78bfa">◌</span> coming next</div>
   `);
   const t0 = S[id].start;
+  // stack the two rows under the title
+  master.set('#ax-today', { top: 470 }, 0); master.set('#ax-next', { top: 620 }, 0);
   fade(t0, '#ax-glow', 1);
   pop(atWord(id, 'AI Exchange'), '#ax-h', { x: -50, y: 0 }, { duration: .7 });
   pop(atWord(id, 'AI Exchange', .2), '#ax-hub', { scale: .2, y: 0 }, { duration: .8 });
-  master.fromTo('#ax-orbit', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'agentic'));
+  master.fromTo('#ax-orbit', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, immediateRender: false }, atWord(id, 'ISV partners'));
   master.to('#ax-orbit', { rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 40, ease: 'none' }, t0);
-  $$('.ax-ln').forEach((l, i) => draw(atWord(id, 'agents') + i * .12, l, .4));
-  pop(atWord(id, 'agents', .2), '.ax-a', { scale: .4, y: 0 }, { stagger: .12, duration: .5 });
-  fade(atWord(id, 'agents', 1), '#ax-eg', .4);
-  fade(atWord(id, 'providers'), '#ax-prov', .3);
-  pop(atWord(id, 'Anthropic'), '#ax-p0', { scale: .4, y: 0 }, { duration: .4 });
-  pop(atWord(id, 'Open AI'), '#ax-p1', { scale: .4, y: 0 }, { duration: .4 });
-  pop(atWord(id, 'Open AI', .6), '#ax-p2', { scale: .4, y: 0 }, { duration: .4 });
-  master.fromTo('#ax-hub', { boxShadow: '0 0 40px #a78bfa66' }, { boxShadow: '0 0 120px #a78bfacc', duration: .8, repeat: 9, yoyo: true, immediateRender: false }, atWord(id, 'agentic'));
+  pop(atWord(id, 'ISV partners'), '#ax-today', { x: -40, y: 0 }, { duration: .5 });
+  $$('.ax-ln').forEach((l, i) => draw(atWord(id, 'AI agents') + i * .1, l, .4));
+  pop(atWord(id, 'AI agents', .1), '.ax-a', { scale: .4, y: 0 }, { stagger: .1, duration: .5 });
+  fade(atWord(id, 'AI agents', .8), '#ax-eg', .4);
+  // next
+  const tN = atWord(id, 'Next');
+  pop(tN, '#ax-next', { x: -40, y: 0 }, { duration: .5 });
+  master.to('#ax-today', { opacity: .55, duration: .5 }, tN);
+  master.to('.ax-a', { opacity: .5, duration: .6 }, atWord(id, 'Anthropic') - .2);
+  draw(atWord(id, 'Anthropic') - .2, $('#ax-pl0'), .5);
+  pop(atWord(id, 'Anthropic'), '#ax-pv0', { scale: .3, y: 0 }, { duration: .6 });
+  draw(atWord(id, 'Open AI') - .2, $('#ax-pl1'), .5);
+  pop(atWord(id, 'Open AI'), '#ax-pv1', { scale: .3, y: 0 }, { duration: .6 });
+  master.fromTo('.ax-pv', { boxShadow: '0 0 20px #a78bfa44' }, { boxShadow: '0 0 70px #a78bfaaa', duration: .7, repeat: 5, yoyo: true, immediateRender: false }, atWord(id, 'Open AI', .6));
+  master.fromTo('#ax-hub', { boxShadow: '0 0 40px #a78bfa66' }, { boxShadow: '0 0 120px #a78bfacc', duration: .8, repeat: 11, yoyo: true, immediateRender: false }, atWord(id, 'AI Exchange', 1));
 })();
 
 // ================================================================ 5. FOUR MOVES
 (() => {
   const id = 'moves';
-  const cat = ['Hyperscalers & SaaS vendors', 'Connected marketplaces', 'DNT solutions', 'Managed & professional services'];
+  const cat = ['Hyperscalers & SaaS vendors', 'Hyperscaler marketplaces', 'DNT solutions', 'Managed & professional services'];
   const tax = [['UAE', 'VAT', 5], ['KSA', 'VAT', 15], ['Kenya', 'VAT', 16], ['India', 'GST', 18]];
   const stores = [['Africa', 'regional portfolio', '#5cc062'], ['India', 'local tax & currency', '#ffb547'], ['GCC', 'entity-led', '#4c8dff']];
   const models = [['handshake', 'Direct'], ['network', 'Indirect'], ['store', 'Reseller mini-shop'], ['palette', 'White-label B2B2C'], ['blocks', 'Platform-as-a-Service']];
